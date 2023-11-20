@@ -45,6 +45,19 @@ jobs:
           code-coverage-cobertura: code-coverage/coverage.xml
           test-results-junit: test-results/results.xml
 
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage
+          path: code-coverage/coverage.xml
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: test-results/results.xml
+
       # You can use "run-command" to execute custom MATLAB scripts, functions, or statements.
       #- name: Run custom testing procedure
       #  uses: matlab-actions/run-command@v1
