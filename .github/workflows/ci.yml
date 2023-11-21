@@ -34,16 +34,7 @@ jobs:
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v1
 
-      # Runs a set of commands using the runners shell
-      - name: Run all tests and generate artifacts
-        uses: matlab-actions/run-tests@v1
+      - name: Build a standalone application / executable
+        uses: matlab-actions/run-command@v1
         with:
-          source-folder: code
-          code-coverage-cobertura: code-coverage/coverage.xml
-          test-results-junit: test-results/results.xml
-
-      # You can use "run-command" to execute custom MATLAB scripts, functions, or statements.
-      #- name: Run custom testing procedure
-      #  uses: matlab-actions/run-command@v1
-      #  with:
-      #    command: disp('Running my custom testing procedure!'); addpath('code'); results = runtests('IncludeSubfolders', true); assertSuccess(results);
+          command: compiler.build.standaloneApplication("code/dayofyear.m");
