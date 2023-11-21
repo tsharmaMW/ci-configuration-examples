@@ -37,4 +37,4 @@ jobs:
       - name: Build a standalone application / executable
         uses: matlab-actions/run-command@v1
         with:
-          command: pwd; # mcc -m "code/dayofyear.m"
+          command: mcc -m code/dayofyear.m
