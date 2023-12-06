@@ -34,8 +34,8 @@ jobs:
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v1
 
-      - name: Build a standalone application / executable
+      # - name: Build a standalone application / executable
         # uses: matlab-actions/run-command@v1
         # with:
         #   command: mcc -m code/dayofyear.m
-        run: mcc -m code/dayofyear.m;
+        # run: mcc -m code/dayofyear.m;
