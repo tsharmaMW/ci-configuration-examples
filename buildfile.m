@@ -8,7 +8,7 @@ plan = buildplan(localfunctions);
 % Add a task to identify code issues
 plan("check") = CodeIssuesTask;
 
-plan("mex") = mexTask;
+plan.DefaultTasks = "mex";
 
 end
 
