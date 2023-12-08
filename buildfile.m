@@ -8,8 +8,8 @@ plan = buildplan(localfunctions);
 % Add a task to identify code issues
 plan("check") = CodeIssuesTask;
 
-% Add a task to run tests
-plan("test") = TestTask;
+% Add a task to run tests and generate test and coverage results
+plan("test") = TestTask(SourceFiles="quadraticSolver.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
 
 % plan.DefaultTasks = "mex";
 
@@ -18,4 +18,5 @@ end
 function mexTask(~)
 % Create a mex file
     mex code/yprime.c
+    disp(mexext)
 end
