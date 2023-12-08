@@ -39,6 +39,12 @@ jobs:
         with:
           tasks: check test mex
 
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage ${{ matrix.os }} ${{ matrix.release }}
+          path: code-coverage/coverage.xml
+
       # - name: Build a mex file
       #   uses: matlab-actions/run-command@v1
       #   with:
