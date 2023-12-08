@@ -8,4 +8,11 @@ plan = buildplan(localfunctions);
 % Add a task to identify code issues
 plan("check") = CodeIssuesTask;
 
+plan("mex") = mexTask;
+
+end
+
+function mexTask(~)
+% Create a mex file
+    mex code/yprime.c
 end
