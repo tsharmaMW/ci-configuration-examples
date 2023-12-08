@@ -37,7 +37,7 @@ jobs:
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: mex
+          tasks: check test mex
 
       # - name: Build a mex file
       #   uses: matlab-actions/run-command@v1

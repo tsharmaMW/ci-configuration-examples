@@ -8,7 +8,10 @@ plan = buildplan(localfunctions);
 % Add a task to identify code issues
 plan("check") = CodeIssuesTask;
 
-plan.DefaultTasks = "mex";
+% Add a task to run tests
+plan("test") = TestTask;
+
+% plan.DefaultTasks = "mex";
 
 end
 
