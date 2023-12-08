@@ -43,7 +43,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage ${{ matrix.os }} ${{ matrix.release }}
-          path: code-coverage/coverage.xml
+          path: code-coverage/results.xml
+
+      # - name: Upload mex files
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: mexFileOutput
+      #     path: think
 
       # - name: Build a mex file
       #   uses: matlab-actions/run-command@v1
