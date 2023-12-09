@@ -13,10 +13,12 @@ plan("test") = TestTask(SourceFiles="code/quadraticSolver.m", TestResults="test-
 
 % plan.DefaultTasks = "mex";
 
+plan("testMex") = TestTask(SourceFiles="code/arrayProduct.cpp");
+
 end
 
 function mexTask(~)
 % Create a mex file
-    mex code/yprime.c
+    mex code/arrayProduct.cpp
     disp(mexext)
 end
