@@ -19,7 +19,8 @@ end
 
 function mexTask(~)
 % Create a mex file
-    mex code/arrayProduct.cpp
-    disp(mexext)
-    disp(arrayProduct(2,[1 2;3 4]))
+    mex code/arrayProduct.cpp;
+    disp(mexext);
+    addpath(code);
+    disp(arrayProduct(2,[1 2;3 4]));
 end
