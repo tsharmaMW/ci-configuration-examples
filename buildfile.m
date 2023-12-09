@@ -13,14 +13,13 @@ plan("test") = TestTask(SourceFiles="code/quadraticSolver.m", TestResults="test-
 
 % plan.DefaultTasks = "mex";
 
-plan("testMex") = TestTask(SourceFiles="code/arrayProduct.cpp");
+plan("testMex") = TestTask(SourceFiles="arrayProduct.cpp");
 
 end
 
 function mexTask(~)
 % Create a mex file
-    mex code/arrayProduct.cpp;
+    mex arrayProduct.cpp;
     disp(mexext);
-    addpath("code");
     disp(arrayProduct(2,[1 2;3 4]));
 end
