@@ -21,5 +21,6 @@ function mexTask(~)
 % Create a mex file
     mex arrayProduct.cpp;
     disp(mexext);
+    dir;
     disp(arrayProduct(2,[1 2;3 4]));
 end
