@@ -24,4 +24,5 @@ function mexTask(~)
     dir;
     % searching for error in ubuntu says to install gcc
     disp(arrayProduct(2,[1 2;3 4]));
+    disp(arrayProduct(1));
 end
