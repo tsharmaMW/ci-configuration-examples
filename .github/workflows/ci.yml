@@ -37,7 +37,7 @@ jobs:
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: test mex check testMex
+          tasks:  mex check test testMex
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
