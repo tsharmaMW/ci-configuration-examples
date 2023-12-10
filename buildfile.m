@@ -9,7 +9,7 @@ plan = buildplan(localfunctions);
 plan("check") = CodeIssuesTask;
 
 % Add a task to run tests and generate test and coverage results
-plan("test") = TestTask(TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
+plan("test") = TestTask(SourceFiles="arrayProduct.cpp", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
 
 % plan.DefaultTasks = "mex";
 
