@@ -22,5 +22,6 @@ function mexTask(~)
     mex arrayProduct.cpp;
     disp(mexext);
     dir;
+    % searching for error in ubuntu says to install gcc
     disp(arrayProduct(2,[1 2;3 4]));
 end
