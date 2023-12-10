@@ -13,7 +13,7 @@ plan("test") = TestTask(SourceFiles="code/quadraticSolver.m", TestResults="test-
 
 % plan.DefaultTasks = "mex";
 
-plan("testMex") = TestTask(SourceFiles="arrayProduct.cpp");
+plan("testMex") = TestTask();
 
 end
 
