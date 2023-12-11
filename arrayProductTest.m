@@ -8,5 +8,14 @@ classdef arrayProductTest < matlab.unittest.TestCase
         function validateNumberOfInputs(testCase)
             testCase.verifyError(@()arrayProduct(2), "MyToolbox:arrayProduct:nrhs");
         end
+        function validateMultiplierDatatype(testCase)
+            testCase.verifyError(@()arrayProduct('a',[1, 2, 3]), "MyToolbox:arrayProduct:notScalar");
+        end
+        function validateMatrixDatatype(testCase)
+            testCase.verifyError(@()arrayProduct(2,['a', 2, 3]), "MyToolbox:arrayProduct:notDouble");
+        end
+        function validateMatrixAsRowVector(testCase)
+            testCase.verifyError(@()arrayProduct(2,[1, 2, 3; 4, 5, 6]), "MyToolbox:arrayProduct:notRowVector");
+        end
     end
 end
