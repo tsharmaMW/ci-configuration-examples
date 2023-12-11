@@ -44,17 +44,9 @@ jobs:
         with:
           name: code-coverage ${{ matrix.os }} ${{ matrix.release }}
           path: code-coverage/results.xml
-
-      # - name: Upload mex files
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: mexFileOutput
-      #     path: think
-
-      # - name: Build a mex file
-      #   uses: matlab-actions/run-command@v1
-      #   with:
-      #     command: mex code/yprime.c
+        with:
+          name: test-results ${{ matrix.os }} ${{ matrix.release }}
+          path: test-results/results.xml
 
       # - name: Build a standalone application / executable
         # uses: matlab-actions/run-command@v1

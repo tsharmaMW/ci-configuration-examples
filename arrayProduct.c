@@ -37,24 +37,24 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     /* check for proper number of arguments */
     if(nrhs!=2) {
-        mexErrMsgIdAndTxt("MyToolbox:arrayProduct:nrhs","Two inputs required.");
+        mexErrMsgIdAndTxt("ArrayProduct:TwoInputsRequired","Two inputs required.");
     }
     /* make sure the first input argument is scalar */
     if( !mxIsDouble(prhs[0]) || 
          mxIsComplex(prhs[0]) ||
          mxGetNumberOfElements(prhs[0])!=1 ) {
-        mexErrMsgIdAndTxt("MyToolbox:arrayProduct:notScalar","Input multiplier must be a scalar.");
+        mexErrMsgIdAndTxt("ArrayProduct:NotScalar","Input multiplier must be a scalar.");
     }
     
     /* make sure the second input argument is type double */
     if( !mxIsDouble(prhs[1]) || 
          mxIsComplex(prhs[1])) {
-        mexErrMsgIdAndTxt("MyToolbox:arrayProduct:notDouble","Input matrix must be type double.");
+        mexErrMsgIdAndTxt("ArrayProduct:NotDouble","Input matrix must be type double.");
     }
     
     /* check that number of rows in second input argument is 1 */
     if(mxGetM(prhs[1])!=1) {
-        mexErrMsgIdAndTxt("MyToolbox:arrayProduct:notRowVector","Input must be a row vector.");
+        mexErrMsgIdAndTxt("ArrayProduct:NotRowVector","Input must be a row vector.");
     }
     
     /* get the value of the scalar input  */
