@@ -32,9 +32,9 @@ jobs:
       
       # Sets up MATLAB on the GitHub Actions runner
       - name: Setup MATLAB
-        uses: matlab-actions/setup-matlab@v2-beta
-        with:
-          products: MATLAB_Compiler_SDK
+        uses: matlab-actions/setup-matlab@v1
+        # with:
+        #   products: MATLAB_Compiler_SDK
 
       - name: Run build
         uses: matlab-actions/run-build@v1
