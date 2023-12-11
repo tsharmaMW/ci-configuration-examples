@@ -5,9 +5,5 @@ classdef arrayProductTest < matlab.unittest.TestCase
             expSolution = [2 4;6 8];
             testCase.verifyEqual(actSolution,expSolution)
         end
-        % function checkNumberOfArguments(testCase)
-        %     testCase.verifyError(@()arrayProduct(1), ...
-        %         "Two inputs required")
-        % end
     end
 end
