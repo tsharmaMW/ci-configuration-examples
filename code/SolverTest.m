@@ -11,8 +11,7 @@ classdef SolverTest < matlab.unittest.TestCase
             testCase.verifyEqual(actSolution,expSolution)
         end
         function nonnumericInput(testCase)
-            testCase.verifyError(@()quadraticSolver(1,"-3",2), ...
-                "quadraticSolver:InputMustBeNumeric")
+            testCase.verifyError(@()quadraticSolver(1,"-3",2), "quadraticSolver:InputMustBeNumeric")
         end
     end
 end
