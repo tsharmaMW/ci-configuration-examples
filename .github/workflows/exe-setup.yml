@@ -13,6 +13,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  MATHWORKS_TOKEN: Chg9cB5H9rXkEQ9/ZXr7LYLOLFOHn91r9VLOjMp8JHDsr1BrvaMKREZ8c2XhuUaK1glRNH1FDU+vdlKAi8rSOklS3Pv5eGp6BS7yEh4Oc+ZnSOLb3fxMHDkKh6PNUzlYt3zYiM7VVmQGuQHJI+5kMg==
+  MATHWORKS_ACCOUNT: kapilg@mathworks.com
+
 jobs:
   # This workflow contains a single job called "build"
   build:
