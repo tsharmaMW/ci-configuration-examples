@@ -15,7 +15,7 @@ end
 
 function mexTask(~)
 % Create a mex file
-    mex arrayProduct.cpp;
+    mex arrayProduct.c;
     disp(mexext);
     dir;
 end
