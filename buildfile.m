@@ -20,6 +20,7 @@ end
 
 function listVerTask(~)
     ver;
+    license('inuse');
 end
 
 function createExecutableTask(~)
