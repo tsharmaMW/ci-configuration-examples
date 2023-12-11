@@ -37,18 +37,15 @@ jobs:
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: check mex testMex
+          tasks: checkCode createMex testMex
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage ${{ matrix.os }} ${{ matrix.release }}
           path: code-coverage/results.xml
+
+      - name: Upload test results          
+        uses: actions/upload-artifact@v3
           name: test-results ${{ matrix.os }} ${{ matrix.release }}
           path: test-results/results.xml
-
-      # - name: Build a standalone application / executable
-        # uses: matlab-actions/run-command@v1
-        # with:
-        #   command: mcc -m code/dayofyear.m
-        # run: mcc -m code/dayofyear.m;
