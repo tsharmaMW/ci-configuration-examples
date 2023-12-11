@@ -18,6 +18,10 @@ function createMexTask(~)
     mex arrayProduct.c;
 end
 
+function listVerTask(~)
+    ver;
+end
+
 function createExecutableTask(~)
 % Create an executable
     mcc -m code/quadraticSolver.m;

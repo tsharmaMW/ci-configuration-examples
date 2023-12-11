@@ -39,4 +39,4 @@ jobs:
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: createExecutable
+          tasks: listVer createExecutable
