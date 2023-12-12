@@ -14,8 +14,3 @@ plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-r
 plan("createMex") = MEXTask("arrayProduct.c");
 
 end
-
-(* function createMexTask(~)
-% Create a mex file
-    mex arrayProduct.c;
-end *)
