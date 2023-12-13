@@ -35,10 +35,10 @@ jobs:
       # - name: Setup MATLAB
       #   uses: matlab-actions/setup-matlab@v1
 
-      -name: Run custom testing procedure
-       uses: matlab-actions/run-command@v1
-       with:
-         command: disp('Running my custom testing procedure!'); ver; disp("--------"); license('inuse');
+      - name: Run custom testing procedure
+        uses: matlab-actions/run-command@v1
+        with:
+          command: disp('Running my custom testing procedure!'); ver; disp("--------"); license('inuse');
 
       - name: Run build
         uses: matlab-actions/run-build@v1
