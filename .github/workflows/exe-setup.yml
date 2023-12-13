@@ -18,9 +18,9 @@ jobs:
   build:
 
     # A job will run for all the OS present in the matrix
-    strategy:
-      matrix:
-        os: [ubuntu-20.04, windows-2019, macos-12]
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-20.04, windows-2019, macos-12]
     
     # The type of runner that the job will run on
     # runs-on: ${{ matrix.os }}
