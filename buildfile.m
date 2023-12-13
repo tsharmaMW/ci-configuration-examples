@@ -21,9 +21,6 @@ end
 function listVerTask(~)
     ver;
     license('inuse');
-    disp("______________________________________");
-    disp(getenv("MATHWORKS_ACCOUNT"));
-    disp(getenv("MATHWORKS_TOKEN"));
 end
 
 function createExecutableTask(~)
