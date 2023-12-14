@@ -5,10 +5,10 @@ import matlab.buildtool.tasks.TestTask
 % Create a plan from task functions
 plan = buildplan(localfunctions);
 
-Add a task to identify code issues
+% Add a task to identify code issues
 plan("checkCode") = CodeIssuesTask;
 
-Add a task to run tests and generate test and coverage results
+% Add a task to run tests and generate test and coverage results
 plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
 
 end
