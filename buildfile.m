@@ -9,7 +9,7 @@ plan = buildplan(localfunctions);
 plan("checkCode") = CodeIssuesTask;
 
 % Add a task to run tests and generate test and coverage results
-plan("testExe") = TestTask(SourceFiles="quadraticSolver.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
+plan("testExe") = TestTask(SourceFiles="code/quadraticSolver.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
 
 end
 
