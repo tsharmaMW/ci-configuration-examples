@@ -17,4 +17,5 @@ function createExecutableTask(~)
 % Create an executable
     mcc -m code/quadraticSolver.m;
     dir;
+    quadraticSolver(1,-3,2);
 end
