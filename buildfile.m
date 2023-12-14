@@ -9,13 +9,8 @@ plan = buildplan(localfunctions);
 plan("checkCode") = CodeIssuesTask;
 
 % Add a task to run tests and generate test and coverage results
-plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
+plan("testExe") = TestTask(SourceFiles="quadraticSolver.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
 
-end
-
-function createMexTask(~)
-% Create a mex file
-    mex arrayProduct.c;
 end
 
 function createExecutableTask(~)
