@@ -48,15 +48,15 @@ jobs:
 
       - name: Upload binary to Gitlab Package Registry
         env:
-          GITLAB_TOKEN: ${{ secrets.UPLOAD_EXE}}
+          PRIVATE_TOKEN: ${{ secrets.UPLOAD_EXE}}
         run: |
-          GITLAB_API_URL = "https://insidelabs-git.mathworks.com/tsharma"
-          GITLAB_PROJECT_ID = "matrix-build-binaries"
+          GITLAB_API_URL = "https://gitlab.com/api/v4/tsharma"
+          GITLAB_PROJECT_ID = "82064"
           PACKAGE_NAME = "Executable"
           PACKAGE_VERSION = "1.0.0"
           BINARY_PATH = "./quadraticSolver"
           FILE_NAME = "quadraticSolver"
 
-          curl --header "JOB-TOKEN: $GITLAB_TOKEN" \ --upload-file "$BINARY_PATH" \ "$GITLAB_API_URL/$GITLAB_PROJECT_ID/packages/generic/$PACKAGE_NAME/$PACKAGE_VERSION/$FILE_NAME"
+          curl --header "JOB-TOKEN: $PRIVATE_TOKEN" \ --upload-file "$BINARY_PATH" \ "$GITLAB_API_URL/$GITLAB_PROJECT_ID/packages/generic/$PACKAGE_NAME/$PACKAGE_VERSION/$FILE_NAME"
       
         
