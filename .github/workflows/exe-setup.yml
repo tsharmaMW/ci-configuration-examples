@@ -49,8 +49,8 @@ jobs:
       - name: Upload generated binary
         uses: actions/upload-artifact@v3
         with:
-          name: QuadraticSolver ${{ matrix.os }} ${{ matrix.release}}
-          path: quadraticSolver
+          name: QuadraticSolver-${{ matrix.os }}-${{ matrix.release}}
+          path: quadraticSolver*
 
       # - name: Upload binary to Gitlab Package Registry
       #   env:
