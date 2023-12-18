@@ -47,7 +47,7 @@ jobs:
           tasks: checkCode createExecutable
 
       - name: Upload generated binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: QuadraticSolver-${{ matrix.os }}-${{ matrix.release}}
           path: quadraticSolver*
