@@ -54,6 +54,8 @@ jobs:
 
       - name: Download generated binary
         uses: actions/download-artifact@v4
+        with:
+          name: QuadraticSolver-${{ matrix.os }}-${{ matrix.release}}
 
       # - name: Upload binary to Gitlab Package Registry
       #   env:
