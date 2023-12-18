@@ -44,19 +44,25 @@ jobs:
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: checkCode createExecutable 
+          tasks: checkCode createExecutable
 
-      - name: Upload binary to Gitlab Package Registry
-        env:
-          PRIVATE_TOKEN: ${{ secrets.UPLOAD_EXE}}
-        run: |
-          GITLAB_API_URL = "https://gitlab.com/api/v4/tsharma"
-          GITLAB_PROJECT_ID = "82064"
-          PACKAGE_NAME = "Executable"
-          PACKAGE_VERSION = "1.0.0"
-          BINARY_PATH = "./quadraticSolver"
-          FILE_NAME = "quadraticSolver"
+      - name: Upload generated binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: QuadraticSolver ${{ matrix.os }} ${{ matrix.release}}
+          path: quadraticSolver
 
-          curl --header "JOB-TOKEN: $PRIVATE_TOKEN" \ --upload-file "$BINARY_PATH" \ "$GITLAB_API_URL/$GITLAB_PROJECT_ID/packages/generic/$PACKAGE_NAME/$PACKAGE_VERSION/$FILE_NAME"
+      # - name: Upload binary to Gitlab Package Registry
+      #   env:
+      #     PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN}}
+      #   run: |
+      #     GITLAB_API_URL = "https://gitlab.com/api/v4/tsharma"
+      #     GITLAB_PROJECT_ID = "82064"
+      #     PACKAGE_NAME = "Executable"
+      #     PACKAGE_VERSION = "1.0.0"
+      #     BINARY_PATH = "./quadraticSolver"
+      #     FILE_NAME = "quadraticSolver"
+
+      #     curl --header "JOB-TOKEN: $PRIVATE_TOKEN" \ --upload-file "$BINARY_PATH" \ "$GITLAB_API_URL/$GITLAB_PROJECT_ID/packages/generic/$PACKAGE_NAME/$PACKAGE_VERSION/$FILE_NAME"
       
         
