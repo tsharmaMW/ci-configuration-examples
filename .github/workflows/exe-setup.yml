@@ -101,7 +101,6 @@ jobs:
             console.log('created release', { release });
         
             for (let file of await fs.readdir('.')) {
-              # file.replace(/\.[^/.]+$/, "")
               if(file == "quadraticSolver"){
                 console.log('uploading', file);
 
