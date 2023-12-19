@@ -93,8 +93,6 @@ jobs:
             const release = await github.repos.createRelease({
               owner, repo,
               tag_name: v-${{ matrix.os }}-${{github.run_id}}
-              release_name: Release-${{ matrix.os }}-${{github.run_id}}
-              draft: true,
               target_commitish: sha
             });
 
