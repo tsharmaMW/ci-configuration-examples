@@ -57,26 +57,47 @@ jobs:
       #   with:
       #     name: QuadraticSolver-${{ matrix.os }}-${{ matrix.release}}
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v-${{ matrix.os }}-${{github.run_id}}
-          release_name: Release-${{ matrix.os }}-${{github.run_id}}
-          draft: false
-          prerelease: false
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: v-${{ matrix.os }}-${{github.run_id}}
+      #     release_name: Release-${{ matrix.os }}-${{github.run_id}}
+      #     draft: false
+      #     prerelease: false
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Upload Release Asset
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: quadraticSolver
+      #     asset_name: QuadraticSolver-${{ matrix.os }}
+      #     asset_content_type: application/octet-stream
+
+      - name: Upload
+        uses: actions/github-script@v3
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: quadraticSolver
-          asset_name: QuadraticSolver-${{ matrix.os }}
-          asset_content_type: application/octet-stream
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const path = require('path');
+            const fs = require('fs');
+            const release_id = '${{ needs.create_release.outputs.id }}';
+            for (let file of await fs.readdirSync('./')) {
+              if (file === 'quadraticSolver') {
+                console.log('uploadReleaseAsset', file);
+                await github.repos.uploadReleaseAsset({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  release_id: release_id,
+                  name: file,
+                  data: await fs.readFileSync(`./${file}`)
+                });
+              }
+            }
 
       # - name: Upload binary to Gitlab Package Registry
       #   env:
