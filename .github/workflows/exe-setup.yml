@@ -94,7 +94,7 @@ jobs:
               owner, repo,
               tag_name: v-${{ matrix.os }}-${{github.run_id}}
               release_name: Release-${{ matrix.os }}-${{github.run_id}}
-              draft: false,
+              draft: true,
               target_commitish: sha
             });
 
