@@ -101,8 +101,8 @@ jobs:
             console.log('created release', { release });
         
             for (let file of await fs.readdir('.')) {
-              file.replace(/\.[^/.]+$/, "")
-              if(file == "quadraticSolver"){
+              let fileName = file.replace(/\.[^/.]+$/, "")
+              if(fileName == "quadraticSolver"){
                 console.log('uploading', file);
 
                 await github.repos.uploadReleaseAsset({
