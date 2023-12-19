@@ -92,15 +92,16 @@ jobs:
 
             const release = await github.repos.createRelease({
               owner, repo,
-              tag_name: process.env.GITHUB_REF,
-              draft: true,
+              tag_name: v-${{ matrix.os }}-${{github.run_id}}
+              release_name: Release-${{ matrix.os }}-${{github.run_id}}
+              draft: false,
               target_commitish: sha
             });
 
             console.log('created release', { release });
         
             for (let file of await fs.readdir('.')) {
-              // do whatever filtering you want here, I'm just uploading all the files
+              file.replace(/\.[^/.]+$/, "")
               if(file == "quadraticSolver"){
                 console.log('uploading', file);
 
