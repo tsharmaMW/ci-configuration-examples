@@ -63,8 +63,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v-${{ matrix.os }}
-          release_name: Release-${{ matrix.os }}
+          tag_name: v-${{ matrix.os }}-${{github.run_id}}
+          release_name: Release-${{ matrix.os }}-${{github.run_id}}
           draft: false
           prerelease: false
 
