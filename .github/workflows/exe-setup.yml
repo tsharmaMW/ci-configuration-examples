@@ -63,8 +63,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v-quadSolver-2
-          release_name: Release-${{ github.ref }}
+          tag_name: v-${{ matrix.os }}
+          release_name: Release-${{ matrix.os }}
           draft: false
           prerelease: false
 
@@ -74,8 +74,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: quadraticSolver
-          asset_name: QuadraticSolver-release-latest
+          asset_path: quadraticSolver*
+          asset_name: QuadraticSolver-${{ matrix.os }}
           asset_content_type: application/octet-stream
 
       # - name: Upload binary to Gitlab Package Registry
