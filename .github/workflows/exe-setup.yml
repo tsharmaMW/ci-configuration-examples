@@ -93,6 +93,7 @@ jobs:
             const release = await github.repos.createRelease({
               owner, repo,
               tag_name: process.env.GITHUB_REF,
+              draft: true,
               target_commitish: sha
             });
 
