@@ -8,14 +8,9 @@ plan = buildplan(localfunctions);
 % Add a task to identify code issues
 plan("checkCode") = CodeIssuesTask;
 
-% Add a task to run tests and generate test and coverage results
-plan("testExe") = TestTask(SourceFiles="code/SolverTest.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
-
 end
 
 function createExecutableTask(~)
 % Create an executable
     mcc -m code/quadraticSolver.m;
-    dir;
-    % quadraticSolver(1,-3,2);
 end
