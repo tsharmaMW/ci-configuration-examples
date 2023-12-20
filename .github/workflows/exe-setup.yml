@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
 env:
-  MATHWORKS_TOKEN: ${{ secrets.MATHWORKS_TOKEN }}
-  MATHWORKS_ACCOUNT: ${{ secrets.MATHWORKS_ACCOUNT }}
+  MATHWORKS_TOKEN: gv8qAx4MC2cqxQLN3CJ0QBWgDFAUp9Ht/lf4DR2m0TyIpbYKRDOSOYi0f76X23BKPpWQLjnl4I3FGAHampAz8xaM9FHEAW4QPj37LnhMUscKmnJf2XS0p6hy4zTbM2c1UznG4/lX0xCvxx1Vvte6qg==
+  MATHWORKS_ACCOUNT: kapilg@mathworks.com
 
 jobs:
   # This workflow contains a single job called "build"
