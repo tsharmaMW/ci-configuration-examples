@@ -92,7 +92,7 @@ jobs:
 
             const release = await github.repos.createRelease({
               owner, repo,
-              tag_name: "v_tag_name",
+              tag_name: "v-${{ matrix.os }}",
               target_commitish: sha
             });
 
