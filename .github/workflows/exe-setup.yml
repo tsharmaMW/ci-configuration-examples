@@ -26,13 +26,9 @@ jobs:
       matrix:
         os: [ubuntu-20.04, windows-latest] # macos-12
     
-    # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
-    # runs-on: self-hosted
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
       # Sets up MATLAB on the GitHub Actions runner
@@ -46,58 +42,24 @@ jobs:
         with:
           tasks: checkCode createExecutable
 
-      # - name: Upload generated binary
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: QuadraticSolver-${{ matrix.os }}-${{ matrix.release}}
-      #     path: quadraticSolver*
-
-      # - name: Download generated binary
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: QuadraticSolver-${{ matrix.os }}-${{ matrix.release}}
-
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: v-${{ matrix.os }}-${{github.run_id}}
-      #     release_name: Release-${{ matrix.os }}-${{github.run_id}}
-      #     draft: false
-      #     prerelease: false
-
-      # - name: Upload Release Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: quadraticSolver
-      #     asset_name: QuadraticSolver-${{ matrix.os }}
-      #     asset_content_type: application/octet-stream
-
       - name: Create Release
         uses: actions/github-script@v2
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log('environment', process.versions);
             
             const fs = require('fs').promises;
-            
+  
             const { repo: { owner, repo }, sha } = context;
             console.log({ owner, repo, sha });
 
             const release = await github.repos.createRelease({
               owner, repo,
-              tag_name: "v-${{ matrix.os }}-${{github.run_id}}",
+              tag_name: "Binary-${{ matrix.os }}-${{github.run_id}}",
+              release_name: "R--${{github.run_id}}"
               target_commitish: sha
             });
 
-            console.log('created release', { release });
-        
             for (let file of await fs.readdir('.')) {
               const fileName = file.replace(/\.[^/.]+$/, "")
               if(fileName == "quadraticSolver"){
@@ -111,18 +73,3 @@ jobs:
                 });            
               }
             }
-
-      # - name: Upload binary to Gitlab Package Registry
-      #   env:
-      #     PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN}}
-      #   run: |
-      #     GITLAB_API_URL = "https://gitlab.com/api/v4/tsharma"
-      #     GITLAB_PROJECT_ID = "82064"
-      #     PACKAGE_NAME = "Executable"
-      #     PACKAGE_VERSION = "1.0.0"
-      #     BINARY_PATH = "./quadraticSolver"
-      #     FILE_NAME = "quadraticSolver"
-
-      #     curl --header "JOB-TOKEN: $PRIVATE_TOKEN" \ --upload-file "$BINARY_PATH" \ "$GITLAB_API_URL/$GITLAB_PROJECT_ID/packages/generic/$PACKAGE_NAME/$PACKAGE_VERSION/$FILE_NAME"
-      
-        
