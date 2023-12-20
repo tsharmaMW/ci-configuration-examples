@@ -56,7 +56,7 @@ jobs:
             const release = await github.repos.createRelease({
               owner, repo,
               tag_name: "Binary-${{ matrix.os }}-${{github.run_id}}",
-              release_name: "R--${{github.run_id}}"
+              release_name: "R--${{github.run_id}}",
               target_commitish: sha
             });
 
