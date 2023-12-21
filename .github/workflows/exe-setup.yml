@@ -24,7 +24,7 @@ jobs:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-latest] # macos-12
+        os: [ubuntu-20.04, windows-latest, macos-12]
     
     runs-on: ${{ matrix.os }}
 
@@ -43,32 +43,41 @@ jobs:
           tasks: checkCode createExecutable
 
       - name: Create Release
-        uses: actions/github-script@v2
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
+          repo_token: "${{secrets.GITHUB_TOKEN}}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Binary-${{ matrix.os }}-${{github.run_id}}"
+          files: quadraticSolver.*
+
+      # - name: Create Release
+      #   uses: actions/github-script@v2
+      #   with:
+      #     github-token: ${{secrets.GITHUB_TOKEN}}
+      #     script: |
             
-            const fs = require('fs').promises;
+      #       const fs = require('fs').promises;
   
-            const { repo: { owner, repo }, sha } = context;
+      #       const { repo: { owner, repo }, sha } = context;
 
-            const release = await github.repos.createRelease({
-              owner, repo,
-              tag_name: "Binary-${{ matrix.os }}-${{github.run_id}}",
-              release_name: "R-${{github.run_id}}",
-              target_commitish: sha
-            });
+      #       const release = await github.repos.createRelease({
+      #         owner, repo,
+      #         tag_name: "Binary-${{ matrix.os }}-${{github.run_id}}",
+      #         release_name: "R-${{github.run_id}}",
+      #         target_commitish: sha
+      #       });
 
-            for (let file of await fs.readdir('.')) {
-              const fileName = file.replace(/\.[^/.]+$/, "")
-              if(fileName == "quadraticSolver"){
-                console.log('uploading', file);
+      #       for (let file of await fs.readdir('.')) {
+      #         const fileName = file.replace(/\.[^/.]+$/, "")
+      #         if(fileName == "quadraticSolver"){
+      #           console.log('uploading', file);
 
-                await github.repos.uploadReleaseAsset({
-                  owner, repo,
-                  release_id: release.data.id,
-                  name: file,
-                  data: await fs.readFile(`./${file}`)
-                });            
-              }
-            }
+      #           await github.repos.uploadReleaseAsset({
+      #             owner, repo,
+      #             release_id: release.data.id,
+      #             name: file,
+      #             data: await fs.readFile(`./${file}`)
+      #           });            
+      #         }
+      #       }
