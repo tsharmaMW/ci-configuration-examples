@@ -48,7 +48,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{secrets.GITHUB_TOKEN}}"
-          automatic_release_tag: "${{ matrix.os }}-${{ release }}-latest"
+          automatic_release_tag: "${{ matrix.os }}-${{ matrix.release }}-latest"
           prerelease: false
-          title: "Binary-${{ matrix.os }}-${{ release }}"
+          title: "Binary-${{ matrix.os }}-${{ matrix.release }}"
           files: quadraticSolver*
