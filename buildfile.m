@@ -18,7 +18,7 @@ end
 
 function createMexTask(~)
     % Create a mex file
-    mex arrayProduct.c --outdir toolbox/;
+    mex arrayProduct.c -outdir toolbox/;
 end
 
 % function toolboxTask(~)
