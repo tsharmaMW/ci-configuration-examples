@@ -6,6 +6,8 @@ import matlab.buildtool.tasks.TestTask
 % Create a plan from task functions
 plan = buildplan(localfunctions);
 
+plan("testMex").Dependencies = ["setup"]
+
 % Add a task to identify code issues
 plan("checkCode") = CodeIssuesTask;
 
@@ -19,6 +21,11 @@ end
 function createMexTask(~)
     % Create a mex file
     mex arrayProduct.c -outdir toolbox/;
+end
+
+function setupTask(context)
+    % Setup paths for the build
+    addpath(fullfile(context.Plan.RootFolder,"toolbox"));
 end
 
 % function toolboxTask(~)
