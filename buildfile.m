@@ -18,5 +18,11 @@ end
 
 function createMexTask(~)
     % Create a mex file
-    mex arrayProduct.c;
+    mex arrayProduct.c --outdir toolbox/;
 end
+
+% function toolboxTask(~)
+%     % Create an mltbx toolbox package
+%     dir toolbox/*.mex*
+%     matlab.addons.toolbox.packageToolbox("Array-Product.prj","release/Array-Product.mltbx");
+% end
