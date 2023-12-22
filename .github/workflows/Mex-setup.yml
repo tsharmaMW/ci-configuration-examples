@@ -32,16 +32,22 @@ jobs:
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: checkCode createMex testMex
+          tasks: checkCode createMex testMex toolbox
 
-      - name: Upload code coverage report
+      - name: Upload toolbox
         uses: actions/upload-artifact@v3
         with:
-          name: code-coverage ${{ matrix.os }} ${{ matrix.release }}
-          path: code-coverage/results.xml
+          name: ${{ matrix.os }} Toolbox File
+          path: ./**/*.mltbx
 
-      - name: Upload test results          
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results ${{ matrix.os }} ${{ matrix.release }}
-          path: test-results/results.xml
+      # - name: Upload code coverage report
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: code-coverage ${{ matrix.os }} ${{ matrix.release }}
+      #     path: code-coverage/results.xml
+
+      # - name: Upload test results          
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: test-results ${{ matrix.os }} ${{ matrix.release }}
+      #     path: test-results/results.xml

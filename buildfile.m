@@ -11,7 +11,6 @@ plan("checkCode") = CodeIssuesTask;
 
 % Add a task to run tests and generate test and coverage results
 plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
-
 plan("testMex").Dependencies = ["setup"]
 
 % plan("createMex") = MEXTask("arrayProduct.c");
@@ -24,12 +23,12 @@ function createMexTask(~)
 end
 
 function setupTask(context)
-    % Setup paths for the build
+    % Setup path for the build
     addpath(fullfile(context.Plan.RootFolder,"toolbox"));
 end
 
-% function toolboxTask(~)
-%     % Create an mltbx toolbox package
-%     dir toolbox/*.mex*
-%     matlab.addons.toolbox.packageToolbox("Array-Product.prj","release/Array-Product.mltbx");
-% end
+function toolboxTask(~)
+    % Create an mltbx toolbox package
+    dir toolbox/*.mex*
+    matlab.addons.toolbox.packageToolbox("Array-Product.prj","release/Array-Product.mltbx");
+end
