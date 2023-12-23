@@ -38,8 +38,4 @@ function toolboxTask(~)
     opts.MinimumMatlabRelease = "R2023a";
 
     matlab.addons.toolbox.packageToolbox(opts);
-
-    dir;
-    disp("-------");
-    dir toolbox/*.mex*;
 end
