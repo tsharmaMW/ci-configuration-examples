@@ -34,11 +34,11 @@ jobs:
         with:
           tasks: checkCode createMex testMex toolbox
 
-      - name: Upload toolbox
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.os }} Toolbox File
-          path: ./**/*.mltbx
+      # - name: Upload toolbox
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ matrix.os }} Toolbox File
+      #     path: ./**/*.mltbx
 
       # - name: Upload code coverage report
       #   uses: actions/upload-artifact@v3
