@@ -34,7 +34,7 @@ function toolboxTask(~)
     toolboxFolder = "toolbox";
     opts = matlab.addons.toolbox.ToolboxOptions(toolboxFolder,identifier);
     
-    opts.ToolboxName = "Array Product Toolbox";
+    opts.ToolboxName = "Cross Platform - Array Product Toolbox";
     opts.MinimumMatlabRelease = "R2023a";
 
     matlab.addons.toolbox.packageToolbox(opts);
