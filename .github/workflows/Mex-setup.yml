@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
 
+  compile-and-test-mex:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
@@ -20,24 +20,60 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      # Sets up MATLAB on the GitHub Actions runner
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v1
 
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: checkCode createMex testMex toolbox
+          tasks: checkCode createMex testMex
 
-      - name: Upload toolbox
+      - name: Upload mex
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.os }} Toolbox File
+          name: Mex-${{ matrix.os }}
+          path: .toolbox/*.mex*
+          
+  create-and-release-toolbox:
+    needs: compile-and-test-mex
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup MATLAB
+        uses: matlab-actions/setup-matlab@v1
+
+      - name: Download windows mex file
+        uses: actions/download-artifact@v3
+        with: 
+          name: Mex-windows-2019
+          path: toolbox
+
+      - name: Download mac mex file
+        uses: actions/download-artifact@v3
+        with: 
+          name: Mex-macos-12
+          path: toolbox
+
+      - name: Download linux mex file
+        uses: actions/download-artifact@v3
+        with: 
+          name: Mex-ubuntu-20.04
+          path: toolbox    
+        
+      - name: Run build
+        uses: matlab-actions/run-build@v1
+        with:
+          tasks: toolbox
+
+      - name: Upload cross platform toolbox
+        uses: actions/upload-artifact@v3
+        with:
+          name: Cross platform toolbox
           path: ./*.mltbx
 
       # - name: Upload code coverage report
