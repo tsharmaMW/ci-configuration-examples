@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Mex-${{ matrix.os }}
-          path: .toolbox/*.mex*
+          path: toolbox/**/*.mex*
           
   create-and-release-toolbox:
     needs: compile-and-test-mex
