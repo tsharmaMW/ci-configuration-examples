@@ -13,7 +13,7 @@ env:
   MATHWORKS_ACCOUNT: ${{secrets.MATHWORKS_ACCOUNT}}
 
 jobs:
-  build-and-release:
+  build-and-upload:
 
     # A job will run for all the OS present in the matrix
     strategy:
