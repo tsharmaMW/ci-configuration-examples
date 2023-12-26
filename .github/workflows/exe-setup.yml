@@ -1,4 +1,4 @@
-name: Compile and Release Executables
+name: Compile and Upload Executables
 
 on:
   push:
@@ -18,10 +18,8 @@ jobs:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        # os: [ubuntu-20.04, windows-latest, macos-12]
-        # release: [R2023a, R2023b]
-        os: [macos-12]
-        release: [R2023b]
+        os: [ubuntu-20.04, windows-latest, macos-12]
+        release: [R2023a, R2023b]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -39,11 +37,8 @@ jobs:
         with:
           command: mcc -m code/quadraticSolver.m;
 
-      - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Upload generated binary
+        uses: actions/upload-artifact@v3
         with:
-          repo_token: "${{secrets.GITHUB_TOKEN}}"
-          automatic_release_tag: "${{ matrix.os }}-${{ matrix.release }}"
-          prerelease: false
-          title: "Binary-${{ matrix.os }}-${{ matrix.release }}"
-          files: ./quadraticSolver*
+          name: QuadraticSolver-${{ matrix.os }}-${{ matrix.release }}
+          path: quadraticSolver*
