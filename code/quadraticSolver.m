@@ -9,5 +9,4 @@ function roots = quadraticSolver(a,b,c)
     
     roots(1) = (-b + sqrt(b^2 - 4*a*c)) / (2*a);
     roots(2) = (-b - sqrt(b^2 - 4*a*c)) / (2*a);
-    
-    end
+end

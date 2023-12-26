@@ -18,14 +18,15 @@ env:
   MATHWORKS_ACCOUNT: kapilg@mathworks.com
 
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  build-and-release:
 
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-latest]
-        release: [R2021b, R2022a, R2023b]
+        # os: [ubuntu-20.04, windows-latest]
+        # release: [R2022b, R2023a, R2023b]
+        os: [macos-12]
+        release: [R2023b]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -38,7 +39,7 @@ jobs:
           release: ${{ matrix.release }}
           products: MATLAB_Compiler_SDK
 
-      - name: Generate binary
+      - name: Compile
         uses: matlab-actions/run-command@v1
         with:
           command: mcc -m code/quadraticSolver.m;
@@ -47,7 +48,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{secrets.GITHUB_TOKEN}}"
-          automatic_release_tag: "${{ matrix.os }}-${{ matrix.release }}-latest"
+          automatic_release_tag: "${{ matrix.os }}-${{ matrix.release }}"
           prerelease: false
           title: "Binary-${{ matrix.os }}-${{ matrix.release }}"
           files: quadraticSolver*
