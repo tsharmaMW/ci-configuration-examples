@@ -1,4 +1,4 @@
-name: Compile and Upload Executables
+name: Build and Publish Executables
 
 on:
   push:
@@ -40,5 +40,5 @@ jobs:
       - name: Upload generated binary
         uses: actions/upload-artifact@v3
         with:
-          name: QuadraticSolver-${{ matrix.os }}-${{ matrix.release }}
+          name: quadraticSolver-${{ matrix.release }}-${{ matrix.os }}
           path: quadraticSolver*
