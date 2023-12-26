@@ -1,19 +1,16 @@
 function plan = buildfile
-import matlab.buildtool.tasks.CodeIssuesTask
-import matlab.buildtool.tasks.TestTask
-% import matlab.buildtool.tasks.MEXTask
+import matlab.buildtool.tasks.CodeIssuesTask;
+import matlab.buildtool.tasks.TestTask;
 
 % Create a plan from task functions
 plan = buildplan(localfunctions);
 
 % Add a task to identify code issues
-plan("checkCode") = CodeIssuesTask;
+plan("check") = CodeIssuesTask;
 
 % Add a task to run tests and generate test and coverage results
 plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
 plan("testMex").Dependencies = ["setup"];
-
-% plan("createMex") = MEXTask("arrayProduct.c");
 
 end
 
@@ -27,15 +24,15 @@ function setupTask(context)
     addpath(fullfile(context.Plan.RootFolder,"toolbox"));
 end
 
-function toolboxTask(~)
+function packageToolboxTask(~)
     % Create an mltbx toolbox package
     dir toolbox/*.mex*;
-    identifier = "myToolboxUuid";
+    identifier = "arrayProduct";
     toolboxFolder = "toolbox";
     opts = matlab.addons.toolbox.ToolboxOptions(toolboxFolder,identifier);
     
     opts.ToolboxName = "Cross Platform - Array Product Toolbox";
-    opts.MinimumMatlabRelease = "R2023a";
+    opts.MinimumMatlabRelease = "R2023b";
 
     matlab.addons.toolbox.packageToolbox(opts);
 end

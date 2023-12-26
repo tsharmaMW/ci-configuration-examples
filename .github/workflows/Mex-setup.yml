@@ -1,4 +1,4 @@
-name: MEX Setup
+name: Compile, Test and Release toolbox
 
 # Controls when the action will run. 
 on:
@@ -29,12 +29,14 @@ jobs:
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: checkCode createMex testMex
+          tasks: check createMex testMex
 
-      - name: Upload mex
+      # Upload test results and coverage in artifacts foler (root)
+
+      - name: Upload mex file
         uses: actions/upload-artifact@v3
         with:
-          name: Mex-${{ matrix.os }}
+          name: mex-${{ matrix.os }}
           path: toolbox/**/*.mex*
           
   create-and-release-toolbox:
@@ -47,37 +49,25 @@ jobs:
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v1
 
-      # - name: Download windows mex file
-      #   uses: actions/download-artifact@v3
-      #   with: 
-      #     name: Mex-windows-2019
-      #     path: toolbox
-
-      # - name: Download mac mex file
-      #   uses: actions/download-artifact@v3
-      #   with: 
-      #     name: Mex-macos-12
-      #     path: toolbox
-
       - name: Download mex files
         uses: actions/download-artifact@v3
         with: 
           path: toolbox    
-          pattern: Mex-*
+          pattern: mex-*
           merge-multiple: true
         
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
-          tasks: toolbox
+          tasks: packageToolbox
 
-      - name: Create Release
+      - name: Create new release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{secrets.GITHUB_TOKEN}}"
           automatic_release_tag: "cross-platform-toolbox"
           prerelease: false
-          title: "Cross platform toolbox"
+          title: "Cross Platform - Array Product Toolbox"
           files: ./*.mltbx
 
       
