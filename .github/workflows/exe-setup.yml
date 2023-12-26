@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
 env:
-  MATHWORKS_TOKEN: $MATHWORKS_TOKEN
-  MATHWORKS_ACCOUNT: $MATHWORKS_ACCOUNT
+  MATHWORKS_TOKEN: ${{secrets.MATHWORKS_TOKEN}}
+  MATHWORKS_ACCOUNT: ${{secrets.MATHWORKS_ACCOUNT}}
 
 jobs:
   build-and-release:
