@@ -18,8 +18,10 @@ jobs:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-latest, macos-12]
-        release: [R2023a, R2023b]
+        # os: [ubuntu-20.04, windows-latest, macos-12]
+        # release: [R2023a, R2023b]
+        os: [macos-12]
+        release: [R2023b]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -44,4 +46,4 @@ jobs:
           automatic_release_tag: "${{ matrix.os }}-${{ matrix.release }}"
           prerelease: false
           title: "Binary-${{ matrix.os }}-${{ matrix.release }}"
-          files: quadraticSolver*
+          files: ./quadraticSolver*
