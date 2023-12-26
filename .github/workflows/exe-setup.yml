@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
 env:
-  MATHWORKS_TOKEN: gv8qAx4MC2cqxQLN3CJ0QBWgDFAUp9Ht/lf4DR2m0TyIpbYKRDOSOYi0f76X23BKPpWQLjnl4I3FGAHampAz8xaM9FHEAW4QPj37LnhMUscKmnJf2XS0p6hy4zTbM2c1UznG4/lX0xCvxx1Vvte6qg==
-  MATHWORKS_ACCOUNT: kapilg@mathworks.com
+  MATHWORKS_TOKEN: $MATHWORKS_TOKEN
+  MATHWORKS_ACCOUNT: $MATHWORKS_ACCOUNT
 
 jobs:
   build-and-release:
@@ -24,7 +24,7 @@ jobs:
     strategy:
       matrix:
         # os: [ubuntu-20.04, windows-latest]
-        # release: [R2022b, R2023a, R2023b]
+        # release: [R2023a, R2023b]
         os: [macos-12]
         release: [R2023b]
     runs-on: ${{ matrix.os }}
