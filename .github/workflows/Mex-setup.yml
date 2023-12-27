@@ -14,7 +14,7 @@ jobs:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2019, macos-12]
+        os: [ubuntu-20.04, windows-2022, macos-12]
     
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
@@ -26,13 +26,13 @@ jobs:
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v1
 
-      # Verfies code, creates MEX file and tests it
+      # Runs build to verify code, create MEX file and finally run tests
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
           tasks: check createMex testMex
 
-      # Uploads the files as artifact to GitHub
+      # Uploads the test results, code coverage results and mex files to GitHub
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
         with:
@@ -63,7 +63,7 @@ jobs:
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v1
 
-      # Downloads all the mex files which were uploaded in the previous job as artifacts
+      # Downloads all mex files uploaded to GitHub in the previous job
       - name: Download mex files
         uses: actions/download-artifact@v3
         with: 
@@ -71,7 +71,7 @@ jobs:
           pattern: mex-*
           merge-multiple: true
         
-      # Packages all the files in toolbox folder into a mltbx toolbox package  
+      # Packages all files in toolbox folder into a mltbx toolbox package  
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
