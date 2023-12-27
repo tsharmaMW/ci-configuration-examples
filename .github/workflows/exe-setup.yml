@@ -14,9 +14,10 @@ env:
   MATHWORKS_ACCOUNT: ${{secrets.MATHWORKS_ACCOUNT}}
 
 jobs:
+  # This workflow contains a single job called "build-and-upload"
   build-and-upload:
-
-    # This workflow contains a single job called "build-and-upload"
+  
+    # A job will run for all combinations of OS and release present in the matrix
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-2022, macos-12]
