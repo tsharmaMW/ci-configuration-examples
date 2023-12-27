@@ -8,6 +8,7 @@ on:
 
   workflow_dispatch:
 
+# Utilizes repository-stored secrets to authorize the download of MathWorks products.
 env:
   MATHWORKS_TOKEN: ${{secrets.MATHWORKS_TOKEN}}
   MATHWORKS_ACCOUNT: ${{secrets.MATHWORKS_ACCOUNT}}
@@ -15,28 +16,32 @@ env:
 jobs:
   build-and-upload:
 
-    # A job will run for all the OS present in the matrix
+    # This workflow contains a single job called "build-and-upload"
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-latest, macos-12]
+        os: [ubuntu-20.04, windows-2019, macos-12]
         release: [R2023a, R2023b]
+
+    # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v3
       
-      # Sets up MATLAB on the GitHub Actions runner
+      # Sets up MATLAB on the GitHub Actions runner using setup-matlab@v2-beta, and download MATLAB_Compiler_SDK
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v2-beta
         with:
           release: ${{ matrix.release }}
           products: MATLAB_Compiler_SDK
 
+      # Compiles MATLAB functions for deployment
       - name: Compile
         uses: matlab-actions/run-command@v1
         with:
           command: mcc -m code/quadraticSolver.m;
 
+      # Uploads the generated binary as an artifact to GitHub
       - name: Upload generated binary
         uses: actions/upload-artifact@v3
         with:
