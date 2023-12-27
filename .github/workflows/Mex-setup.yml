@@ -1,6 +1,5 @@
 name: Compile, Test and Release toolbox
 
-# Controls when the action will run. 
 on:
   push:
     branches: [ main ]
@@ -10,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-
+  # This workflow contains two jobs called "compile-and-test-mex" and "create-and-release-toolbox"
   compile-and-test-mex:
     # A job will run for all the OS present in the matrix
     strategy:
@@ -23,14 +22,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
+      # Sets up MATLAB on the GitHub Actions runner
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v1
 
+      # Verfies code, creates MEX file and tests it
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
           tasks: check createMex testMex
 
+      # Uploads the files as artifact to GitHub
       - name: Upload code coverage report
         uses: actions/upload-artifact@v3
         with:
@@ -50,15 +52,18 @@ jobs:
           path: toolbox/**/*.mex*
           
   create-and-release-toolbox:
+    # This job executes only after a successful completion of 'compile-and-test-mex' job
     needs: compile-and-test-mex
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
+      # Sets up MATLAB on the GitHub Actions runner
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v1
 
+      # Downloads all the mex files which were uploaded in the previous job as artifacts
       - name: Download mex files
         uses: actions/download-artifact@v3
         with: 
@@ -66,11 +71,13 @@ jobs:
           pattern: mex-*
           merge-multiple: true
         
+      # Packages all the files in toolbox folder into a mltbx toolbox package  
       - name: Run build
         uses: matlab-actions/run-build@v1
         with:
           tasks: packageToolbox
 
+      # The packaged toolbox is distributed as a GitHub release
       - name: Create new release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
