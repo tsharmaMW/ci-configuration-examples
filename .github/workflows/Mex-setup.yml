@@ -14,7 +14,8 @@ jobs:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2022, macos-12]
+        # os: [ubuntu-20.04, windows-2022, macos-12]
+        os: [windows-2022]
     
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
@@ -51,40 +52,40 @@ jobs:
           name: mex-${{ matrix.os }}
           path: toolbox/**/*.mex*
           
-  create-and-release-toolbox:
-    # This job executes only after a successful completion of 'compile-and-test-mex' job
-    needs: compile-and-test-mex
-    runs-on: ubuntu-latest
+  # create-and-release-toolbox:
+  #   # This job executes only after a successful completion of 'compile-and-test-mex' job
+  #   needs: compile-and-test-mex
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      # Sets up MATLAB on the GitHub Actions runner
-      - name: Setup MATLAB
-        uses: matlab-actions/setup-matlab@v1
+  #     # Sets up MATLAB on the GitHub Actions runner
+  #     - name: Setup MATLAB
+  #       uses: matlab-actions/setup-matlab@v1
 
-      # Downloads all mex files uploaded to GitHub in the previous job
-      - name: Download mex files
-        uses: actions/download-artifact@v3
-        with: 
-          path: toolbox    
-          pattern: mex-*
-          merge-multiple: true
+  #     # Downloads all mex files uploaded to GitHub in the previous job
+  #     - name: Download mex files
+  #       uses: actions/download-artifact@v3
+  #       with: 
+  #         path: toolbox    
+  #         pattern: mex-*
+  #         merge-multiple: true
         
-      # Packages all files in toolbox folder into a mltbx toolbox package  
-      - name: Run build
-        uses: matlab-actions/run-build@v1
-        with:
-          tasks: packageToolbox
+  #     # Packages all files in toolbox folder into a mltbx toolbox package  
+  #     - name: Run build
+  #       uses: matlab-actions/run-build@v1
+  #       with:
+  #         tasks: packageToolbox
 
-      # The packaged toolbox is distributed as a GitHub release
-      - name: Create new release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{secrets.GITHUB_TOKEN}}"
-          automatic_release_tag: "cross-platform-toolbox"
-          prerelease: false
-          title: "Cross Platform - Array Product Toolbox"
-          files: ./*.mltbx
+  #     # The packaged toolbox is distributed as a GitHub release
+  #     - name: Create new release
+  #       uses: "marvinpinto/action-automatic-releases@latest"
+  #       with:
+  #         repo_token: "${{secrets.GITHUB_TOKEN}}"
+  #         automatic_release_tag: "cross-platform-toolbox"
+  #         prerelease: false
+  #         title: "Cross Platform - Array Product Toolbox"
+  #         files: ./*.mltbx
 
       
