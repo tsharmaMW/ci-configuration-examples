@@ -10,7 +10,7 @@ plan("check") = CodeIssuesTask;
 
 % Add a task to run tests and generate test and coverage results
 plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
-plan("testMex").Dependencies = ["setup"];
+% plan("testMex").Dependencies = ["setup"];
 
 end
 
