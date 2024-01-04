@@ -90,7 +90,7 @@ jobs:
           draft: false
           prerelease: false
           release_name: "Cross Platform - Array Product Toolbox"
-          tag_name: "cross-platform-toolbox"
+          tag_name: "cross-platform-toolbox-${{github.run_id}}"
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
