@@ -5,23 +5,15 @@ import matlab.buildtool.tasks.TestTask;
 % Create a plan from task functions
 plan = buildplan(localfunctions);
 
-% Add a task to identify code issues
-plan("check") = CodeIssuesTask;
-
 % Add a task to run tests and generate test and coverage results
-plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-results/results.xml", CodeCoverageResults="code-coverage/results.xml");
-% plan("testMex").Dependencies = ["setup"];
+plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-results/results.xml");
+plan("testMex").Dependencies = ["createMex"];
 
 end
 
 function createMexTask(~)
-    % Create a mex file
+    % Create a MEX file
     mex arrayProduct.c -outdir toolbox/;
-end
-
-function setupTask(context)
-    % Setup path for the build
-    addpath(fullfile(context.Plan.RootFolder,"toolbox"));
 end
 
 function packageToolboxTask(~)
