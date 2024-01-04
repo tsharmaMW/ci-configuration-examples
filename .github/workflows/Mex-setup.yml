@@ -14,7 +14,8 @@ jobs:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2022, macos-12]
+        # os: [ubuntu-20.04, windows-2022, macos-12]
+        os: [ubuntu-20.04]
     
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
@@ -71,14 +72,32 @@ jobs:
         with:
           tasks: packageToolbox
 
-      # The packaged toolbox is distributed as a GitHub release
-      - name: Create new release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{secrets.GITHUB_TOKEN}}"
-          automatic_release_tag: "cross-platform-toolbox"
-          prerelease: false
-          title: "Cross Platform - Array Product Toolbox"
-          files: ./*.mltbx
+      # # The packaged toolbox is distributed as a GitHub release
+      # - name: Create new release
+      #   uses: "marvinpinto/action-automatic-releases@latest"
+      #   with:
+      #     repo_token: "${{secrets.GITHUB_TOKEN}}"
+      #     automatic_release_tag: "cross-platform-toolbox"
+      #     prerelease: false
+      #     title: "Cross Platform - Array Product Toolbox"
+      #     files: ./*.mltbx
 
-      
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          draft: false
+          prerelease: false
+          release_name: "Cross Platform - Array Product Toolbox"
+          tag_name: "cross-platform-toolbox"
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: toolbox.mltbx
+          asset_name: Cross-platform-toolbox
+          asset_content_type: application/zip
