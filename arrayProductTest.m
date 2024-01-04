@@ -1,4 +1,10 @@
 classdef arrayProductTest < matlab.unittest.TestCase
+    methods (TestClassSetup)
+        function setup(testCase)
+            import matlab.unittest.fixtures.PathFixture
+            testCase.applyFixture(PathFixture(fullfile("toolbox")))
+        end
+    end
     methods(Test)
         function validateCalculationResult(testCase)
             actSolution = arrayProduct(5,[1.5, 2, 9]);
