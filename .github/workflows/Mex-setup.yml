@@ -14,8 +14,7 @@ jobs:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        # os: [ubuntu-20.04, windows-2022, macos-12]
-        os: [ubuntu-20.04]
+        os: [ubuntu-20.04, windows-2022, macos-12]
     
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
@@ -72,16 +71,7 @@ jobs:
         with:
           tasks: packageToolbox
 
-      # # The packaged toolbox is distributed as a GitHub release
-      # - name: Create new release
-      #   uses: "marvinpinto/action-automatic-releases@latest"
-      #   with:
-      #     repo_token: "${{secrets.GITHUB_TOKEN}}"
-      #     automatic_release_tag: "cross-platform-toolbox"
-      #     prerelease: false
-      #     title: "Cross Platform - Array Product Toolbox"
-      #     files: ./*.mltbx
-
+      # The packaged toolbox is distributed as a GitHub release
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
