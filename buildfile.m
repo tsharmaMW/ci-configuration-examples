@@ -6,7 +6,7 @@ import matlab.buildtool.tasks.TestTask;
 plan = buildplan(localfunctions);
 
 % Add a task to run tests and generate test and coverage results
-plan("testMex") = TestTask(SourceFiles="arrayProductTest.m", TestResults="test-results/results.xml");
+plan("testMex") = TestTask(TestResults="test-results/results.xml");
 plan("testMex").Dependencies = ["createMex"];
 
 end
