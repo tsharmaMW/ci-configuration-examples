@@ -12,7 +12,7 @@ end
 
 function createMexTask(~)
     % Create a MEX file
-    mex arrayProduct.c -outdir toolbox/;
+    mex code/arrayProduct.c -outdir toolbox/;
 end
 
 function packageToolboxTask(~)
