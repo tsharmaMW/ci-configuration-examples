@@ -3,8 +3,6 @@ name: Build and Publish Executables
 on:
   push:
     branches: [ generateExecutable ]
-  pull_request:
-    branches: [ generateExecutable ]
 
   workflow_dispatch:
 
@@ -21,7 +19,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-2022, macos-12]
-        release: [R2023a, R2023b]
+        release: [R2022a, R2023b]
 
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
