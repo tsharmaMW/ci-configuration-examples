@@ -2,9 +2,9 @@ name: Build and Publish Executables
 
 on:
   push:
-    branches: [ generateExecutable ]
+    branches: [generateExecutable]
 
-  workflow_dispatch:
+  # workflow_dispatch:
 
 # Utilizes repository-stored secrets to authorize the download of MathWorks products.
 env:
@@ -14,7 +14,6 @@ env:
 jobs:
   # This workflow contains a single job called "build-and-upload"
   build-and-upload:
-  
     # A job will run for all combinations of OS and release present in the matrix
     strategy:
       matrix:
@@ -26,7 +25,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       # Sets up MATLAB on the GitHub Actions runner using setup-matlab@v2-beta, and download MATLAB_Compiler_SDK
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v2-beta
