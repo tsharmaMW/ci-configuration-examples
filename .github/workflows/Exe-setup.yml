@@ -36,7 +36,7 @@ jobs:
 
       # Compiles MATLAB functions for deployment
       - name: Compile
-        uses: matlab-actions/run-command@v1
+        uses: matlab-actions/run-command@v2
         with:
           command: mcc -m code/quadraticSolver.m;
 
