@@ -2,7 +2,7 @@ name: Build and Publish Executables
 
 on:
   push:
-    branches: [advancedConfigs]
+    branches: [main]
 
   workflow_dispatch:
 

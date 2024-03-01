@@ -1,0 +1,12 @@
+version: 2.1
+orbs:
+  matlab: mathworks/matlab@1
+jobs:
+  build:
+    machine:
+      image: ubuntu-2204:2024.01.1
+    steps:
+      - checkout
+      - matlab/install
+      - matlab/run-build:
+          tasks: mex test
