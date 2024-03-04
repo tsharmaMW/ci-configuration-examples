@@ -10,8 +10,9 @@ executors:
     macos:
       xcode: 14.2.0
   windows:
+    resource_class: 'windows.medium'
     machine:
-      image: windows-default
+      image: default
 
 
 jobs:
