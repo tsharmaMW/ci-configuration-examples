@@ -2,6 +2,18 @@ version: 2.1
 orbs:
   matlab: mathworks/matlab@1
 
+executors:
+  linux: # a Linux VM running Ubuntu 20.04
+    machine:
+      image: ubuntu-2004:202107-02
+  macos: # macos executor running Xcode
+    macos:
+      xcode: 14.2.0
+  windows:
+    machine:
+      image: 'windows-server-2022-gui:current'
+
+
 jobs:
   compile-and-test-mex:
     parameters:
@@ -32,7 +44,7 @@ workflows:
       - compile-and-test-mex:
           matrix:
             parameters:
-              os: ["ubuntu-2204", "xcode", "windows-server-2019"]
+              os: ["linux", "macos", "windows"]
       - create-and-release-toolbox:
           requires:
             - compile-and-test-mex
