@@ -2,11 +2,28 @@ version: 2.1
 orbs:
   matlab: mathworks/matlab@1
 jobs:
-  build:
+  compile-and-test-mex:
     machine:
       image: ubuntu-2204:2024.01.1
     steps:
       - checkout
       - matlab/install
       - matlab/run-build:
-          tasks: mex
+          tasks: mex test
+      - store_artifacts:
+          path: toolbox/**/*.mex*
+
+  create-and-release-toolbox:
+    machine:
+      image: ubuntu-2204:2024.01.1
+    steps:
+      - checkout
+      - matlab/install
+      # - matlab/run-build:
+      #     tasks: mex test
+
+workflows:
+  toolbox-create-package-release:
+    jobs:
+      -compile-and-test-mex
+      -create-and-release-toolbox
