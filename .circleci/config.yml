@@ -12,9 +12,10 @@ jobs:
       - matlab/run-build:
           tasks: mex test
       - store_artifacts:
-          path: toolbox/**/*.mex*
-
+          path: toolbox/
+          
   create-and-release-toolbox:
+    requires: compile-and-test-mex
     machine:
       image: ubuntu-2204:2024.01.1
     steps:
