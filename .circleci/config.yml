@@ -33,7 +33,7 @@ workflows:
       - compile-and-test-mex
           matrix:
             parameters:
-              os: [linux, macos, windows]
+              os: ["linux", "macos", "windows"]
       - create-and-release-toolbox:
           requires:
             - compile-and-test-mex
