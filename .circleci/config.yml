@@ -12,7 +12,7 @@ jobs:
       - matlab/run-build:
           tasks: mex test
       - store_artifacts:
-          path: toolbox/**/
+          path: toolbox/**/*.mex*
 
   create-and-release-toolbox:
     requires: compile-and-test-mex
