@@ -30,7 +30,7 @@ jobs:
 workflows:
   toolbox-create-package-release:
     jobs:
-      - compile-and-test-mex
+      - compile-and-test-mex:
           matrix:
             parameters:
               os: ["linux", "macos", "windows"]
