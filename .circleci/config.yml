@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   matlab: mathworks/matlab@1
+
 jobs:
   compile-and-test-mex:
     machine:
@@ -25,5 +26,5 @@ jobs:
 workflows:
   toolbox-create-package-release:
     jobs:
-      -compile-and-test-mex
-      -create-and-release-toolbox
+      - compile-and-test-mex
+      - create-and-release-toolbox
