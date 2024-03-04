@@ -6,8 +6,7 @@ jobs:
   compile-and-test-mex:
     parameters:
       os:
-        type: executor
-    executor: << parameter.os >>
+        type: string
     machine:
       image: ubuntu-2204:2024.01.1
     steps:
@@ -17,6 +16,7 @@ jobs:
           tasks: mex test
       - store_artifacts:
           path: toolbox/*
+          destination: mex-<< parameter.os >>
 
   create-and-release-toolbox:
     machine:
