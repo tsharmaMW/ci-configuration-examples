@@ -4,6 +4,10 @@ orbs:
 
 jobs:
   compile-and-test-mex:
+    parameters:
+      os:
+        type: executor
+    executor: << parameter.os >>
     machine:
       image: ubuntu-2204:2024.01.1
     steps:
@@ -27,6 +31,9 @@ workflows:
   toolbox-create-package-release:
     jobs:
       - compile-and-test-mex
+          matrix:
+            parameters:
+              os: [linux, macos, windows]
       - create-and-release-toolbox:
           requires:
             - compile-and-test-mex
