@@ -5,7 +5,7 @@ orbs:
 executors:
   linux: # a Linux VM running Ubuntu 20.04
     machine:
-      image: ubuntu-2204
+      image: default
   macos: # macos executor running Xcode
     macos:
       xcode: 14.2.0
