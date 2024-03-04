@@ -7,15 +7,14 @@ jobs:
     parameters:
       os:
         type: string
-    machine:
-      image: ubuntu-2204:2024.01.1
+    executor: << parameters.os >>
     steps:
       - checkout
       - matlab/install
       - matlab/run-build:
           tasks: mex test
       - store_artifacts:
-          path: toolbox/*
+          path: toolbox/
           destination: mex-<< parameters.os >>
 
   create-and-release-toolbox:
