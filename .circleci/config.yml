@@ -3,15 +3,15 @@ orbs:
   matlab: mathworks/matlab@1
 
 executors:
-  linux:
+  linux: # a Linux VM running Ubuntu 20.04
     machine:
-      image: ubuntu-2004
+      image: ubuntu-2204
   macos: # macos executor running Xcode
-    machine:
-      image: xcode
+    macos:
+      xcode: 14.2.0
   windows:
     machine:
-      image: windows-server-2022-gui
+      image: windows-default
 
 
 jobs:
