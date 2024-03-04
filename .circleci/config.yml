@@ -16,7 +16,7 @@ jobs:
           tasks: mex test
       - store_artifacts:
           path: toolbox/*
-          destination: mex-<< parameter.os >>
+          destination: mex-<< parameters.os >>
 
   create-and-release-toolbox:
     machine:
