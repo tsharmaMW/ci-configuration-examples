@@ -1,0 +1,51 @@
+version: 2.1
+orbs:
+  matlab: mathworks/matlab@1
+
+executors:
+  linux: # a Linux VM running Ubuntu 20.04
+    machine:
+      image: default
+  macos: # macos executor running Xcode
+    macos:
+      xcode: 14.2.0
+  windows:
+    resource_class: 'windows.medium'
+    machine:
+      image: default
+
+
+jobs:
+  compile-and-test-mex:
+    parameters:
+      os:
+        type: executor
+    executor: << parameters.os >>
+    steps:
+      - checkout
+      - matlab/install
+      - matlab/run-build:
+          tasks: mex test
+      - store_artifacts:
+          path: toolbox/
+          destination: mex-<< parameters.os >>
+
+  create-and-release-toolbox:
+    machine:
+      image: ubuntu-2204:2024.01.1
+    steps:
+      - checkout
+      - matlab/install
+      # - matlab/run-build:
+      #     tasks: mex test
+
+workflows:
+  toolbox-create-package-release:
+    jobs:
+      - compile-and-test-mex:
+          matrix:
+            parameters:
+              os: [linux, macos, windows]
+      - create-and-release-toolbox:
+          requires:
+            - compile-and-test-mex
