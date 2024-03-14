@@ -22,9 +22,6 @@ jobs:
         type: executor
     executor: << parameters.os >>
     steps:
-      - add_ssh_keys: # adding this ssh key here since there were issues checking out the code for windows
-          fingerprints:
-            - "SHA256:l3MSZEkGStk59gklvg29TxPIMcPd84t+/5j8p9oS0gg"
       - checkout
       - matlab/install
       - matlab/run-build:
