@@ -10,10 +10,9 @@ executors:
     macos:
       xcode: 14.2.0
   windows:
-    resource_class: 'windows.medium'
+    resource_class: "windows.medium"
     machine:
       image: default
-
 
 jobs:
   compile-and-test-mex:
@@ -45,9 +44,12 @@ workflows:
       - compile-and-test-mex:
           matrix:
             parameters:
-              os: [{executor: linux, name: "linux"},
-                   {executor: macos, name: "macos"},
-                   {executor: windows, name: "windows"}]
+              os:
+                [
+                  { executor: linux, name: "linux" },
+                  { executor: macos, name: "macos" },
+                  { executor: windows, name: "windows" },
+                ]
       - create-and-release-toolbox:
           requires:
             - compile-and-test-mex
