@@ -19,8 +19,8 @@ jobs:
   compile-and-test-mex:
     parameters:
       os:
-        type: executor
-    executor: << parameters.os >>
+        type: object
+    executor: << parameters.os.executor >>
     steps:
       - checkout
       - matlab/install
@@ -28,7 +28,7 @@ jobs:
           tasks: mex test
       - store_artifacts:
           path: toolbox/
-          destination: mex-<< parameters.os >>
+          destination: mex-<< parameters.os.name >>
 
   create-and-release-toolbox:
     machine:
@@ -45,7 +45,9 @@ workflows:
       - compile-and-test-mex:
           matrix:
             parameters:
-              os: [linux, macos, windows]
+              os: [{executor: linux, name: "linux"},
+                   {executor: macos, name: "macos"},
+                   {executor: windows, name: "windows"}]
       - create-and-release-toolbox:
           requires:
             - compile-and-test-mex
