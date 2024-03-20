@@ -27,9 +27,13 @@ jobs:
           tasks: mex test
       - store_artifacts:
           path: test-results/results.xml
-      - store_artifacts:
-          path: toolbox/
-          destination: mex-<< parameters.os>> # This is a circle CI limitation which doesn't allows us to get the dynamic names of executors
+      - persist_to_workspace:
+          root: .
+          paths:
+            - toolbox
+      # - store_artifacts:
+      #     path: toolbox/
+      #     # destination: mex-<< parameters.os>> # This is a circle CI limitation which doesn't allows us to get the dynamic names of executors
 
   create-and-release-toolbox:
     machine:
@@ -37,6 +41,11 @@ jobs:
     steps:
       - checkout
       - matlab/install
+      - attach_workspace:
+        at: .
+      - run:
+          command: ls -la
+          name: List workspace contents
       # - matlab/run-build:
       #     tasks: mex test
 
