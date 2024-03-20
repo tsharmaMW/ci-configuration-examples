@@ -37,7 +37,7 @@ jobs:
 
   create-and-release-toolbox:
     docker:
-      image: circleci/golang:1.8
+      - image: circleci/golang:1.8
     steps:
       - checkout
       - matlab/install
