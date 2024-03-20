@@ -50,6 +50,11 @@ jobs:
           name: List workspace contents
       - matlab/run-build:
           tasks: packageToolbox
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            go get github.com/tcnksm/ghr
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} toolbox.mltbx
 
 workflows:
   toolbox-create-package-release:
