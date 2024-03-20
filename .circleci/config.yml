@@ -37,7 +37,7 @@ jobs:
 
   create-and-release-toolbox:
     machine:
-      image: ubuntu-2204:2024.01.1
+      image: circleci/golang:1.8
     steps:
       - checkout
       - matlab/install
