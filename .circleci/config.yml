@@ -44,7 +44,9 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          command: ls -la
+          command: |
+                    cd toolbox
+                    ls -la
           name: List workspace contents
       # - matlab/run-build:
       #     tasks: mex test
