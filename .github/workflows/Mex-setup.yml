@@ -2,7 +2,7 @@ name: Compile, Test and Release toolbox
 
 on:
   push:
-    branches: [ main ]
+    # branches: [ main ]
     
   workflow_dispatch:
 
