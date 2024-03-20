@@ -36,8 +36,8 @@ jobs:
       #     # destination: mex-<< parameters.os>> # This is a circle CI limitation which doesn't allows us to get the dynamic names of executors
 
   create-and-release-toolbox:
-    docker:
-      - image: cibuilds/github:0.10
+    machine:
+      image: ubuntu-2204:2024.01.1
     steps:
       - checkout
       - matlab/install
@@ -53,7 +53,7 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
-            go get github.com/tcnksm/ghr
+            go install github.com/tcnksm/ghr@latest
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} -n "Cross-Platform Array Product Toolbox" toolbox.mltbx
 
 workflows:
