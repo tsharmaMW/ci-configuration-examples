@@ -48,8 +48,8 @@ jobs:
                     cd toolbox
                     ls -la
           name: List workspace contents
-      # - matlab/run-build:
-      #     tasks: mex test
+      - matlab/run-build:
+          tasks: packageToolbox
 
 workflows:
   toolbox-create-package-release:
