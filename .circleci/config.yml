@@ -55,7 +55,8 @@ jobs:
           command: |
             go install github.com/tcnksm/ghr@latest
             TOOLBOX="Cross-Platform Array Product Toolbox"
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n ${TOOLBOX} "v7.1.3" "./toolbox.mltbx"
+            VERSION=$(my-binary --version)
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n ${TOOLBOX} -delete ${VERSION} toolbox.mltbx
 
 workflows:
   toolbox-create-package-release:
