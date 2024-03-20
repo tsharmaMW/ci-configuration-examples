@@ -26,6 +26,8 @@ jobs:
       - matlab/run-build:
           tasks: mex test
       - store_artifacts:
+          path: test-results/results.xml
+      - store_artifacts:
           path: toolbox/
           destination: mex-<< parameters.os>> # This is a circle CI limitation which doesn't allows us to get the dynamic names of executors
 
