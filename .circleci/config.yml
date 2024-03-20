@@ -36,7 +36,7 @@ jobs:
       #     # destination: mex-<< parameters.os>> # This is a circle CI limitation which doesn't allows us to get the dynamic names of executors
 
   create-and-release-toolbox:
-    machine:
+    docker:
       image: circleci/golang:1.8
     steps:
       - checkout
@@ -54,7 +54,7 @@ jobs:
           name: "Publish Release on GitHub"
           command: |
             go get github.com/tcnksm/ghr
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} toolbox.mltbx
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} -n "Cross-Platform Array Product Toolbox" toolbox.mltbx
 
 workflows:
   toolbox-create-package-release:
