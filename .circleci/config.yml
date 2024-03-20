@@ -30,7 +30,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - toolbox
+            - toolbox/**/*.mex*
       # - store_artifacts:
       #     path: toolbox/
       #     # destination: mex-<< parameters.os>> # This is a circle CI limitation which doesn't allows us to get the dynamic names of executors
