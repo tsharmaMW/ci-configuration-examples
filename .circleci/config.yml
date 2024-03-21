@@ -56,7 +56,7 @@ jobs:
             go install github.com/tcnksm/ghr@latest
             TOOLBOX="Cross-Platform-Array-Product-Toolbox"
             VERSION="v7.1.3"
-            ghr -t ${GITHUB_TOKEN} -c ${CIRCLE_SHA1} ${VERSION} toolbox.mltbx
+            ghr -t ${GITHUB_TOKEN} -c "main" ${VERSION} toolbox.mltbx
 
 workflows:
   toolbox-create-package-release:
