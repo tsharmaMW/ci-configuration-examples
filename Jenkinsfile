@@ -14,6 +14,7 @@ def generateStage(nodeLabel) {
                 echo "Running on ${nodeLabel}"
                 runMATLABBuild(tasks: 'mex test')
                 junit testResults: 'test-results/results.xml', skipPublishingChecks: true
+                stash includes: 'toolbox/*.mex*', name: "${nodeLabel}MexFile"
             }
         }
     }
@@ -41,6 +42,16 @@ pipeline {
                 matlab 'R2023b'
             }
             steps {
+                script {
+                    // Loop through agents to unstash files
+                    agents.each { agentLabel ->
+                        // Define stash name based on agent label
+                        def stashName = "${agentLabel}MexFile"
+                        echo "Unstashing ${stashName}"
+                        unstash stashName
+                    }
+                }
+                sh "ls -la ${pwd()}/toolbox"
                 runMATLABBuild(tasks: 'packageToolbox')
                 echo 'Run after successful completion of previous stage'
             }
