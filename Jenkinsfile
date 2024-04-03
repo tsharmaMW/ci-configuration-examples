@@ -26,6 +26,9 @@ def parallelStagesMap = agents.collectEntries {
 
 pipeline {
     agent none
+    triggers {
+        githubPush()
+    }
     stages {
         stage('Create and test blah blah mex files') {
             steps {
