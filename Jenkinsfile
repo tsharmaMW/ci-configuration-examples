@@ -1,4 +1,5 @@
-def agents = ['linux', 'windows']
+//def agents = ['linux', 'windows']
+def agents = []
 
 def generateStage(nodeLabel) {
     return {
@@ -54,7 +55,7 @@ pipeline {
                         unstash stashName
                     }
                 }
-                sh "ls -la ${pwd()}/toolbox"
+                //sh "ls -la ${pwd()}/toolbox"
                 runMATLABBuild(tasks: 'packageToolbox')
                 echo 'Run after successful completion of previous stage'
                 // create release
