@@ -68,6 +68,7 @@ pipeline {
                     def createReleaseCmd = """curl -XPOST -H "Authorization:token ${GITHUB_TOKEN}" --data "{\\"name\\": \\"${name}\\"}" https://api.github.com/repos/${repoOwner}/${repoName}/releases"""
                     def release = sh(script: createReleaseCmd, returnStdout: true).trim()
                     def id = release.tokenize(',')[0].replaceAll(/[^0-9]/, '')
+                    echo "Create Release Response: ${release}"
 
                     // Upload the artifact
                     def artifactPath = "toolbox.mltbx"
