@@ -1,5 +1,4 @@
-//def agents = ['linux', 'windows']
-def agents = []
+def agents = ['linux', 'windows']
 
 def generateStage(nodeLabel) {
     return {
@@ -42,6 +41,9 @@ pipeline {
             agent {
                 label 'linux'
             }
+            environment {
+                GITHUB_TOKEN = credentials('github-token') // Assumes you've stored your GitHub token as a Jenkins credential
+            }
             tools {
                 matlab 'R2023b'
                 git 'Default'
@@ -56,10 +58,17 @@ pipeline {
                         unstash stashName
                     }
                 }
-                //sh "ls -la ${pwd()}/toolbox"
+                sh "ls -la ${pwd()}/toolbox"
                 runMATLABBuild(tasks: 'packageToolbox')
-                echo 'Run after successful completion of previous stage'
                 // create release
+                script {
+                    def name = "Cross-Platform Array Product Toolbox"
+                    def repoOwner = "tsharma"
+                    def repoName = "ci-configuration-examples"
+                    def createReleaseCmd = """curl -XPOST -H "Authorization:token ${GITHUB_TOKEN}" --data "{\\"name\\": \\"${name}\\"}" https://api.github.com/repos/${repoOwner}/${repoName}/releases"""
+                }
+                echo 'Run after successful completion of previous stage'
+                
             }
         }
     } 
