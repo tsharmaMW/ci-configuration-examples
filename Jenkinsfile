@@ -44,6 +44,7 @@ pipeline {
             }
             tools {
                 matlab 'R2023b'
+                git 'Git'
             }
             steps {
                 script {
