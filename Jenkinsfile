@@ -54,6 +54,7 @@ pipeline {
                 sh "ls -la ${pwd()}/toolbox"
                 runMATLABBuild(tasks: 'packageToolbox')
                 echo 'Run after successful completion of previous stage'
+                // create release
             }
         }
     } 
