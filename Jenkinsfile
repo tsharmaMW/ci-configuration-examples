@@ -1,46 +1,41 @@
-def agents = ['linux', 'windows']
-
-def generateStage(nodeLabel) {
-    return {
-        def matlabver
-        stage("Runs on ${nodeLabel}") {
-            node(nodeLabel){
-                matlabver = tool 'R2023b'
-                if (isUnix()) {
-                    env.PATH = "${matlabver}/bin:${env.PATH}"   // Linux or macOS agent
-                } else {
-                    env.PATH = "${matlabver}\\bin;${env.PATH}"   // Windows agent
-                }  
-                echo "Running on ${nodeLabel}"
-                runMATLABBuild(tasks: 'mex test')
-                junit testResults: 'test-results/results.xml', skipPublishingChecks: true
-                stash includes: 'toolbox/*.mex*', name: "${nodeLabel}MexFile"
-            }
-        }
-    }
-}
-
-def parallelStagesMap = agents.collectEntries {
-    ["${it}" : generateStage(it)]
-}
-
 pipeline {
     agent none
     triggers {
         githubPush()
     }
     stages {
-        stage('Compile and test MEX') {
-            steps {
-                script {
-                    parallel parallelStagesMap
+        stage('Compile and test MEX on matrix agents') {
+            matrix {
+                axes {
+                    axis {
+                        name 'OS'
+                        values 'linux', 'windows'
+                    }
+                }
+                stages {
+                    stage("Compile and test MEX") {
+                        agent { label "${OS}" } // Assumes you have labels corresponding to the OS types
+                        steps {
+                            script {
+                                matlabver = tool 'R2023b'
+                                if (isUnix()) {
+                                    env.PATH = "${matlabver}/bin:${env.PATH}"   // Linux or macOS agent
+                                } else {
+                                    env.PATH = "${matlabver}\\bin;${env.PATH}"   // Windows agent
+                                }  
+                                echo "Running on ${OS}"
+                                runMATLABBuild(tasks: 'mex test')
+                                junit testResults: 'test-results/results.xml', skipPublishingChecks: true
+                                stash includes: 'toolbox/*.mex*', name: "${OS}MexFile"
+                            }
+                        }
+                    }
+                    
                 }
             }
         }
         stage('Create and release toolbox') {
-            agent {
-                label 'linux'
-            }
+            agent { label 'linux' }
             environment {
                 GITHUB_TOKEN = credentials('github-token') // Assumes you've stored your GitHub token as a Jenkins credential
             }
@@ -51,6 +46,7 @@ pipeline {
             steps {
                 script {
                     // Loop through agents to unstash files
+                    def agents = ['linux', 'windows']
                     agents.each { agentLabel ->
                         // Define stash name based on agent label
                         def stashName = "${agentLabel}MexFile"
