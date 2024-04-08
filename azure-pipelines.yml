@@ -2,8 +2,8 @@ pool:
   vmImage: ubuntu-latest
 steps:
   - task: InstallMATLAB@1
-  - run: pwd
-  - run: matlab -batch pwd
+  - script: pwd
+  - script: matlab -batch pwd
   # - task: RunMATLABBuild@1
   #   inputs:
   #     tasks: test packageToolbox
