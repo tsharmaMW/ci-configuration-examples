@@ -1,7 +1,7 @@
 pool:
   vmImage: ubuntu-latest
 steps:
-  - task: InstallMATLAB@0
+  - task: InstallMATLAB@1
   - task: RunMATLABBuild@0
     inputs:
       tasks: test packageToolbox
