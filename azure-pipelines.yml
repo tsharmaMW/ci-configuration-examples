@@ -3,7 +3,7 @@ pool:
 steps:
   - task: InstallMATLAB@1
   - script: pwd
-  - script: matlab -batch pwd
+  # - script: matlab -batch pwd
   - task: RunMATLABBuild@1
     inputs:
       tasks: test packageToolbox
