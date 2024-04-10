@@ -7,7 +7,7 @@ strategy:
     windows:
       imageName: macOS-latest
 pool:
-  vmImage: ubuntu-latest
+  vmImage: $(imageName)
 steps:
   - task: InstallMATLAB@1
   - task: RunMATLABBuild@1
