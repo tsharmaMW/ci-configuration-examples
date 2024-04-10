@@ -5,10 +5,10 @@ jobs:
       matrix:
         linux:
           imageName: ubuntu-latest
-        mac:
-          imageName: macOS-latest
-        windows:
-          imageName: windows-latest
+        # mac:
+        #   imageName: macOS-latest
+        # windows:
+        #   imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -22,13 +22,10 @@ jobs:
         artifact: 'test-results-$(imageName)'
       - task: CopyFiles@2
         inputs:
-          SourceFolder: toolbox
-          Contents: '**/*.mex*'
+          Contents: 'toolbox/**/*.mex*'
           TargetFolder: toolbox/tmpMexFolder
       - publish: 'toolbox/tmpMexFolder'
         artifact: mex-$(imageName)
-      # - publish: 'toolbox/**/*.mex*'
-      #   artifact: mex-$(imageName)
 
   - job: CreateAndReleaseToolbox
     pool:
@@ -36,7 +33,7 @@ jobs:
     steps:
       - task: InstallMATLAB@1
       - download: current
-        patterns: mex-*
+        patterns: mex*
       - task: RunMATLABBuild@1
         inputs:
           tasks: packageToolbox
