@@ -16,16 +16,23 @@ jobs:
       - task: RunMATLABBuild@1
         inputs:
           tasks: mex test
-      - task: PublishPipelineArtifact@1
-        inputs:
-          targetPath: 'test-results/results.xml'
-          artifact: 'test-results-$(imageName)'
-          publishLocation: 'pipeline'
         env:
           MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
+      - publish: 'test-results/results.xml'
+        artifact: 'test-results-$(imageName)'
+      - publish: 'toolbox/**/*.mex*'
+        artifact: mex-$(imageName)
 
   - job: CreateAndReleaseToolbox
     pool:
       vmImage: ubuntu-latest
     steps:
       - task: InstallMATLAB@1
+      - download: current
+        patterns: mex-*
+      - task: RunMATLABBuild@1
+        inputs:
+          tasks: packageToolbox
+        env:
+          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
+    dependsOn: CompileAndTestMex
