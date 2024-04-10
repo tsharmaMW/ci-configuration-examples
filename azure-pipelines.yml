@@ -5,10 +5,10 @@ jobs:
       matrix:
         linux:
           imageName: ubuntu-latest
-        # mac:
-        #   imageName: macOS-latest
-        # windows:
-        #   imageName: windows-latest
+        mac:
+          imageName: macOS-latest
+        windows:
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -33,7 +33,7 @@ jobs:
     steps:
       - task: InstallMATLAB@1
       - download: current
-        patterns: mex*
+        patterns: 'mex-*'
       - task: RunMATLABBuild@1
         inputs:
           tasks: packageToolbox
