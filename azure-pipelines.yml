@@ -1,17 +1,31 @@
-strategy:
-  matrix:
-    linux:
-      imageName: ubuntu-latest
-    mac:
-      imageName: windows-latest
-    windows:
-      imageName: macOS-latest
-pool:
-  vmImage: $(imageName)
-steps:
-  - task: InstallMATLAB@1
-  - task: RunMATLABBuild@1
-    inputs:
-      tasks: test packageToolbox
-    env:
-      MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
+jobs:
+
+  - job: CompileAndTestMex
+    strategy:
+      matrix:
+        linux:
+          imageName: ubuntu-latest
+        mac:
+          imageName: macOS-latest
+        windows:
+          imageName: windows-latest
+    pool:
+      vmImage: $(imageName)
+    steps:
+      - task: InstallMATLAB@1
+      - task: RunMATLABBuild@1
+        inputs:
+          tasks: mex test
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: 'test-results/results.xml'
+          artifact: 'test-results-$(imageName)'
+          publishLocation: 'pipeline'
+        env:
+          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
+
+  - job: CreateAndReleaseToolbox
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - task: InstallMATLAB@1
