@@ -35,10 +35,13 @@ jobs:
       - task: InstallMATLAB@1
       - task: DownloadPipelineArtifact@2
         inputs:
-          artifactName: 'mex-*'
-          itemPattern: '**/*.mex*'
-          # itemPattern: 'mex-*/**'
-          targetPath: toolbox
+          # itemPattern: '**/*.mex*'
+          itemPattern: 'mex-*'
+          targetPath: 'tmpMexFolder' # https://github.com/Microsoft/azure-pipelines-tasks/issues/6739
+      - task: CopyFiles@2 # Copy mex assets to correct folder
+        inputs:
+          SourceFolder: 'tmpMexFolder'
+          targetFolder: 'toolbox'
       - task: RunMATLABBuild@1
         inputs:
           tasks: packageToolbox
