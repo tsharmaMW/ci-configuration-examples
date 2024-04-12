@@ -36,7 +36,7 @@ jobs:
       - task: DownloadPipelineArtifact@2
         inputs:
           # itemPattern: '**/*.mex*'
-          itemPattern: 'mex-*'
+          itemPattern: 'mex-*/*'
           targetPath: 'tmpMexFolder' # https://github.com/Microsoft/azure-pipelines-tasks/issues/6739
       - task: CopyFiles@2 # Copy mex assets to correct folder
         inputs:
