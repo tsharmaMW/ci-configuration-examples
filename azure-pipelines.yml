@@ -35,7 +35,7 @@ jobs:
       - task: InstallMATLAB@1
       - task: DownloadPipelineArtifact@2
         inputs:
-          itemPattern: 'mex-*/**/*.mex*'
+          itemPattern: 'mex-*/**'
           targetPath: toolbox
       - task: RunMATLABBuild@1
         inputs:
