@@ -5,10 +5,10 @@ jobs:
       matrix:
         linux:
           imageName: ubuntu-latest
-        mac:
-          imageName: macOS-latest
-        windows:
-          imageName: windows-latest
+        # mac:
+        #   imageName: macOS-latest
+        # windows:
+        #   imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -34,8 +34,8 @@ jobs:
       - task: InstallMATLAB@1
       - task: DownloadPipelineArtifact@2
         inputs:
-          patterns: 'mex-*'
-          path: toolbox
+          itemPattern: 'mex-*'
+          targetPath: toolbox
       - task: RunMATLABBuild@1
         inputs:
           tasks: packageToolbox
