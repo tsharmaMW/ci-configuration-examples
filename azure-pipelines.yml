@@ -41,6 +41,7 @@ jobs:
       - task: CopyFiles@2 # Copy mex assets to correct folder
         inputs:
           SourceFolder: 'tmpMexFolder'
+          Contents: '**/*.mex*'
           targetFolder: 'toolbox'
       - task: RunMATLABBuild@1
         inputs:
