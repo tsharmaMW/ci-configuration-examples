@@ -17,6 +17,8 @@ end
 
 function packageToolboxTask(~)
     % Create an mltbx toolbox package
+    dir;
+    dir toolbox;
     dir toolbox/*.mex*;
     identifier = "arrayProduct";
     toolboxFolder = "toolbox";
