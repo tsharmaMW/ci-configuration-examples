@@ -32,8 +32,10 @@ jobs:
       vmImage: ubuntu-latest
     steps:
       - task: InstallMATLAB@1
-      - download: current
-        patterns: 'mex-*'
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          patterns: 'mex-*'
+          path: toolbox
       - task: RunMATLABBuild@1
         inputs:
           tasks: packageToolbox
