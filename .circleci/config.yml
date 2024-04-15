@@ -54,8 +54,7 @@ jobs:
           name: "Publish Release on GitHub"
           command: |
             go install github.com/tcnksm/ghr@latest
-            VERSION="v7.1.3"
-            ghr -t ${GITHUB_TOKEN} -c ${CIRCLE_SHA1} -n "Cross-Platform Array Product Toolbox" ${VERSION} toolbox.mltbx
+            ghr -t ${GITHUB_TOKEN} -c ${CIRCLE_SHA1} -n "Cross-Platform Array Product Toolbox" ${pipeline.id} toolbox.mltbx
 
 workflows:
   toolbox-create-package-release:
