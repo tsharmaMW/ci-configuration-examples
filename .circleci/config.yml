@@ -9,13 +9,13 @@ executors:
   macos: # macos executor running Xcode
     macos:
       xcode: 14.2.0
-  # windows:
-  #   resource_class: "windows.medium"
-  #   machine:
-  #     image: default
   windows:
-    resource_class: "tsharmamw/windows"
-    machine: true
+    resource_class: "windows.medium"
+    machine:
+      image: default
+  # windows:
+  #   resource_class: "tsharmamw/windows"
+  #   machine: true
 
 jobs:
   compile-and-test-mex:
@@ -63,7 +63,7 @@ workflows:
       - compile-and-test-mex:
           matrix:
             parameters:
-              os: [linux, macos, windows] #Removing windows for now as MATLAB install fails there
+              os: [linux, macos] #Removing windows for now as MATLAB install fails there
       - create-and-release-toolbox:
           requires:
             - compile-and-test-mex
