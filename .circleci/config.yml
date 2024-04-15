@@ -54,7 +54,7 @@ jobs:
           name: "Publish Release on GitHub"
           command: |
             go install github.com/tcnksm/ghr@latest
-            ghr -t ${GITHUB_TOKEN} -c ${CIRCLE_SHA1} -n "Cross-Platform Array Product Toolbox" ${pipeline.id} toolbox.mltbx
+            ghr -t ${GITHUB_TOKEN} -c ${CIRCLE_SHA1} -n "Cross-Platform Array Product Toolbox" <<pipeline.id>> toolbox.mltbx
 
 workflows:
   toolbox-create-package-release:
@@ -62,7 +62,7 @@ workflows:
       - compile-and-test-mex:
           matrix:
             parameters:
-              os: [linux, macos] #Removing windows for now as MATLAB install fails there
+              os: [linux] #Removing windows for now as MATLAB install fails there
       - create-and-release-toolbox:
           requires:
             - compile-and-test-mex
