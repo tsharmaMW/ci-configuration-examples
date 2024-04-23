@@ -20,40 +20,40 @@ jobs:
           MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       - publish: 'test-results/results.xml'
         artifact: 'test-results-$(imageName)'
-      # - task: CopyFiles@2
-      #   inputs:
-      #     SourceFolder: 'toolbox'
-      #     Contents: '**/*.mex*'
-      #     TargetFolder: toolbox/tmpMexFolder
-      # - publish: 'toolbox/tmpMexFolder'
-      #   artifact: mex-$(imageName)
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: 'toolbox'
+          Contents: '**/*.mex*'
+          TargetFolder: toolbox/tmpMexFolder
+      - publish: 'toolbox/tmpMexFolder'
+        artifact: mex-$(imageName)
 
   - job: CreateAndReleaseToolbox
     pool:
       vmImage: ubuntu-latest
     steps:
       - task: InstallMATLAB@1
-      # - task: DownloadPipelineArtifact@2
-      #   inputs:
-      #     itemPattern: 'mex-*/*'
-      #     targetPath: 'tmpMexFolder' # https://github.com/Microsoft/azure-pipelines-tasks/issues/6739
-      # - task: CopyFiles@2 # Copy mex assets to correct folder
-      #   inputs:
-      #     SourceFolder: 'tmpMexFolder'
-      #     Contents: '**/*.mex*'
-      #     flattenFolders: true
-      #     targetFolder: 'toolbox'
-      # - task: RunMATLABBuild@1
-      #   inputs:
-      #     tasks: packageToolbox
-      #   env:
-      #     MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
-      # - task: GitHubRelease@1
-      #   inputs:
-      #     gitHubConnection: tsharmaMW
-      #     title: "Cross-Platform Array Product Toolbox"
-      #     assets: 'toolbox.mltbx'
-      #     tagSource: 'userSpecifiedTag'
-      #     tag: '$(Build.BuildNumber)'
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          itemPattern: 'mex-*/*'
+          targetPath: 'tmpMexFolder' # https://github.com/Microsoft/azure-pipelines-tasks/issues/6739
+      - task: CopyFiles@2 # Copy mex assets to correct folder
+        inputs:
+          SourceFolder: 'tmpMexFolder'
+          Contents: '**/*.mex*'
+          flattenFolders: true
+          targetFolder: 'toolbox'
+      - task: RunMATLABBuild@1
+        inputs:
+          tasks: packageToolbox
+        env:
+          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
+      - task: GitHubRelease@1
+        inputs:
+          gitHubConnection: tsharmaMW
+          title: "Cross-Platform Array Product Toolbox"
+          assets: 'toolbox.mltbx'
+          tagSource: 'userSpecifiedTag'
+          tag: '$(Build.BuildNumber)'
 
     dependsOn: CompileAndTestMex
