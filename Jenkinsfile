@@ -1,8 +1,5 @@
 pipeline {
     agent none
-    triggers {
-        githubPush()
-    }
     stages {
         stage('Compile and test MEX on matrix agents') {
             matrix {
@@ -22,11 +19,10 @@ pipeline {
                                     env.PATH = "${matlabver}/bin:${env.PATH}"   // Linux or macOS agent
                                 } else {
                                     env.PATH = "${matlabver}\\bin;${env.PATH}"   // Windows agent
-                                }  
-                                echo "Running on ${OS}"
+                                }
                                 runMATLABBuild(tasks: 'mex test')
                                 junit testResults: 'test-results/results.xml', skipPublishingChecks: true
-                                stash includes: 'toolbox/*.mex*', name: "${OS}MexFile"
+                                stash includes: 'toolbox/*.mex*', name: "mex-${OS}"
                             }
                         }
                     }
@@ -37,24 +33,19 @@ pipeline {
         stage('Create and release toolbox') {
             agent { label 'linux' }
             environment {
-                GITHUB_TOKEN = credentials('github-token') // Assumes you've stored your GitHub token as a Jenkins credential
+                GITHUB_TOKEN = credentials('github-token') // Store your GitHub token as a Jenkins credential
             }
             tools {
                 matlab 'R2023b'
-                git 'Default'
             }
             steps {
                 script {
                     // Loop through agents to unstash files
                     def agents = ['linux', 'windows']
-                    agents.each { agentLabel ->
-                        // Define stash name based on agent label
-                        def stashName = "${agentLabel}MexFile"
-                        echo "Unstashing ${stashName}"
-                        unstash stashName
+                    agents.each { OS ->
+                        unstash "mex-${OS}"
                     }
                 }
-                sh "ls -la ${pwd()}/toolbox"
                 runMATLABBuild(tasks: 'packageToolbox')
                 script {
                     // Create release
@@ -69,7 +60,6 @@ pipeline {
                     def artifactPath = "toolbox.mltbx"
                     sh """curl -XPOST -H "Authorization:token ${GITHUB_TOKEN}" -H "Content-Type:application/octet-stream" --data-binary @${artifactPath} https://uploads.github.com/repos/${repoOwner}/${repoName}/releases/${id}/assets?name=toolbox.mltbx"""
                 }
-                echo 'Release successfully created on GitHub'
             }
         }
     } 
