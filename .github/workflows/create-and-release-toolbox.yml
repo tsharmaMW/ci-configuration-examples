@@ -72,6 +72,6 @@ jobs:
       # The packaged toolbox is distributed as a GitHub release
       - name: Create relase and upload asset
         run: |
-          gh release create "cross-platform-toolbox-${{github.run_id}}" toolbox.mltbx
+          gh release create "Cross-Platform Array Product Toolbox" toolbox.mltbx
         env:
           GH_TOKEN: ${{ github.token }}
