@@ -1,10 +1,8 @@
 name: Compile, Test and Release toolbox
 
 on:
-  # push:
-    # branches: [ main ]
-    
-  workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
   # This workflow contains two jobs called "compile-and-test-mex" and "create-and-release-toolbox"
