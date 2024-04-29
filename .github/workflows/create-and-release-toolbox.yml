@@ -12,8 +12,7 @@ jobs:
     # A job will run for all the OS present in the matrix
     strategy:
       matrix:
-        # os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
@@ -74,24 +73,5 @@ jobs:
       - name: Create relase and upload asset
         run: |
           gh release create "cross-platform-toolbox-${{github.run_id}}" toolbox.mltbx
-        
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     draft: false
-      #     prerelease: false
-      #     release_name: "Cross-Platform Array Product Toolbox"
-      #     tag_name: "cross-platform-toolbox-${{github.run_id}}"
-
-      # - name: Upload Release Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: toolbox.mltbx
-      #     asset_name: Array Product Toolbox
-      #     asset_content_type: application/octet-stream
+        env:
+          GH_TOKEN: ${{ github.token }}
