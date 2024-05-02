@@ -6,7 +6,7 @@ pipeline {
                 axes {
                     axis {
                         name 'OS'
-                        values 'linux', 'windows'
+                        values 'linux', 'windows', 'macos'
                     }
                 }
                 stages {
@@ -14,7 +14,7 @@ pipeline {
                         agent { label "${OS}" } // Assumes you have labels corresponding to the OS types
                         steps {
                             script {
-                                matlabver = tool 'R2023b'
+                                matlabver = tool 'R2024a'
                                 if (isUnix()) {
                                     env.PATH = "${matlabver}/bin:${env.PATH}"   // Linux or macOS agent
                                 } else {
@@ -36,12 +36,12 @@ pipeline {
                 GITHUB_TOKEN = credentials('github-token') // Store your GitHub token as a Jenkins credential
             }
             tools {
-                matlab 'R2023b'
+                matlab 'R2024a'
             }
             steps {
                 script {
                     // Loop through agents to unstash files
-                    def agents = ['linux', 'windows']
+                    def agents = ['linux', 'windows', 'macos']
                     agents.each { OS ->
                         unstash "mex-${OS}"
                     }
