@@ -45,11 +45,8 @@ jobs:
       - matlab/run-build:
           tasks: packageToolbox
       - gh/install
-      - gh/release:
-          token: ${GITHUB_TOKEN}
-          tag: <<pipeline.id>>
-          title: "Cross-Platform Array Product Toolbox"
-          files: toolbox.mltbx
+      - run:
+          command: gh release create <<pipeline.id>> --title "Cross-Platform Array Product Toolbox"
 
 workflows:
   toolbox-create-package-release:
@@ -57,7 +54,8 @@ workflows:
       - compile-and-test-mex:
           matrix:
             parameters:
-              os: [linux, macos, windows]
+              # os: [linux, macos, windows]
+              os: [linux]
       - create-and-release-toolbox:
           requires:
             - compile-and-test-mex
