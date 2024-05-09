@@ -46,7 +46,7 @@ jobs:
           tasks: packageToolbox
       - gh/install
       - run: |
-          gh release create <<pipeline.id>> --title "Cross-Platform Array Product Toolbox" --repo https://github.com${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}
+          gh release create <<pipeline.id>> --title "Cross-Platform Array Product Toolbox" --repo "https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
 
 workflows:
   toolbox-create-package-release:
