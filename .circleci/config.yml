@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   matlab: mathworks/matlab@1
+  gh: circleci/github-cli@2.3.0
 
 executors:
   linux: # a Linux VM running Ubuntu 20.04
@@ -43,13 +44,11 @@ jobs:
           at: .
       - matlab/run-build:
           tasks: packageToolbox
-      - run:
-          name: "Publish Release on GitHub" # https://circleci.com/blog/publishing-to-github-releases-via-circleci/ (suggests 3p tool)
-          command: |
-            go install github.com/tcnksm/ghr@latest
-            ghr -t ${GITHUB_TOKEN} -c ${CIRCLE_SHA1} -n "Cross-Platform Array Product Toolbox" <<pipeline.id>> toolbox.mltbx
-            # we may also use github cli to create release - it requires a docker image with "gh" command installed
-            # https://github.com/apple/pkl/blob/aeb17588b329ea9f88d07d4663596d3bed5c54ae/.circleci/config.yml#L707
+      - gh/release:
+          token: ${GITHUB_TOKEN}
+          tag: <<pipeline.id>>
+          title: "Cross-Platform Array Product Toolbox"
+          files: toolbox.mltbx
 
 workflows:
   toolbox-create-package-release:
