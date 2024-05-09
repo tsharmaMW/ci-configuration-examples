@@ -44,6 +44,7 @@ jobs:
           at: .
       - matlab/run-build:
           tasks: packageToolbox
+      - github-cli/install
       - gh/release:
           token: ${GITHUB_TOKEN}
           tag: <<pipeline.id>>
