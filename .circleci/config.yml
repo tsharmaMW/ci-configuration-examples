@@ -46,7 +46,9 @@ jobs:
           tasks: packageToolbox
       - gh/install
       - run:
-          command: gh release create <<pipeline.id>> --title "Cross-Platform Array Product Toolbox"
+          command: |
+          gh repo set-default main
+          gh release create <<pipeline.id>> --title "Cross-Platform Array Product Toolbox"
 
 workflows:
   toolbox-create-package-release:
