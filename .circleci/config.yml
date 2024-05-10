@@ -46,7 +46,7 @@ jobs:
           tasks: packageToolbox
       - gh/install
       - run: |
-          gh release create <<pipeline.id>> --title "Cross-Platform Array Product Toolbox" --repo <<pipeline.project.git_url>>
+          gh --log-level debug release create <<pipeline.id>> toolbox.mltbx --title "Cross-Platform Array Product Toolbox" --repo <<pipeline.project.git_url>>
 
 workflows:
   toolbox-create-package-release:
