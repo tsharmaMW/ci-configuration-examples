@@ -12,14 +12,11 @@ pipeline {
                 stages {
                     stage("Compile and test MEX") {
                         agent { label "${OS}" } // Assumes you have labels corresponding to the OS types
+                        tools {
+                            matlab 'R2024a'
+                        }
                         steps {
                             script {
-                                matlabver = tool 'R2024a'
-                                if (isUnix()) {
-                                    env.PATH = "${matlabver}/bin:${env.PATH}"   // Linux or macOS agent
-                                } else {
-                                    env.PATH = "${matlabver}\\bin;${env.PATH}"   // Windows agent
-                                }
                                 runMATLABBuild(tasks: 'mex test')
                                 junit testResults: 'test-results/results.xml', skipPublishingChecks: true
                                 stash includes: 'toolbox/*.mex*', name: "mex-${OS}"
