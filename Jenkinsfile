@@ -45,17 +45,7 @@ pipeline {
                 }
                 runMATLABBuild(tasks: 'packageToolbox')
                 script {
-                    // Create release
-                    def name = "Cross-Platform Array Product Toolbox"
-                    def repoOwner = "tsharmaMW"
-                    def repoName = "ci-configuration-examples"
-                    def createReleaseCmd = """curl -XPOST -H "Authorization: Bearer ${GITHUB_TOKEN}" --data "{\\"tag_name\\": \\"v1.${env.BUILD_NUMBER}.3\\", \\"name\\": \\"${name}\\"}" https://api.github.com/repos/${repoOwner}/${repoName}/releases"""
-                    def release = sh(script: createReleaseCmd, returnStdout: true).trim()
-                    def id = release.tokenize(',')[0].replaceAll(/[^0-9]/, '')
-
-                    // Upload the artifact
-                    def artifactPath = "toolbox.mltbx"
-                    sh """curl -XPOST -H "Authorization:token ${GITHUB_TOKEN}" -H "Content-Type:application/octet-stream" --data-binary @${artifactPath} https://uploads.github.com/repos/${repoOwner}/${repoName}/releases/${id}/assets?name=toolbox.mltbx"""
+                    sh "gh release create v1.${env.BUILD_NUMBER}.0 toolbox.mltbx --title 'Cross-Platform Array Product Toolbox' --repo https://github.com/tsharmaMW/ci-configuration-examples"
                 }
             }
         }
