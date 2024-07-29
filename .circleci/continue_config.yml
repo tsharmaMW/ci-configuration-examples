@@ -1,0 +1,25 @@
+version: '2.1'
+
+parameters:
+  toolbox-distribution:
+    type: boolean
+    default: false
+
+workflows:
+  continue-workflow:
+    when: << pipeline.parameters.toolbox-distribution >>
+    jobs:
+      - continue-toolbox-distribution
+
+jobs:
+  continue-toolbox-distribution:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: Continue Toolbox Distribution
+          command: |
+            circleci config process .circleci/ToolboxDistribution.yml > processed_config.yml
+            circleci config continue -c processed_config.yml
