@@ -3,9 +3,10 @@ version: '2.1'
 parameters:
   toolbox-distribution:
     type: boolean
-    default: true
+    default: false
 
 workflows:
+  version: 2
   continue-workflow:
     when: << pipeline.parameters.toolbox-distribution >>
     jobs:
@@ -19,7 +20,14 @@ jobs:
       - setup_remote_docker
       - checkout
       - run:
+          name: Debug Configuration
+          command: |
+            echo "Processing ToolboxDistribution.yml"
+            cat .circleci/ToolboxDistribution.yml
+      - run:
           name: Continue Toolbox Distribution
           command: |
             circleci config process .circleci/ToolboxDistribution.yml > processed_config.yml
+            echo "Processed Configuration:"
+            cat processed_config.yml
             circleci config continue -c processed_config.yml
