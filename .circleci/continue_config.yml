@@ -1,4 +1,7 @@
 version: '2.1'
+setup: true
+orbs:
+  continuation: circleci/continuation@0.5.0
 
 parameters:
   toolbox-distribution:
@@ -6,28 +9,28 @@ parameters:
     default: false
 
 workflows:
-  version: 2
   continue-workflow:
     when: << pipeline.parameters.toolbox-distribution >>
     jobs:
-      - continue-toolbox-distribution
+      - continuation/continue:
+          configuration_path: .circleci/ToolboxDistribution.yml
 
-jobs:
-  continue-toolbox-distribution:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run:
-          name: Debug Configuration
-          command: |
-            echo "Processing ToolboxDistribution.yml"
-            cat .circleci/ToolboxDistribution.yml
-      - run:
-          name: Continue Toolbox Distribution
-          command: |
-            circleci config process .circleci/ToolboxDistribution.yml > processed_config.yml
-            echo "Processed Configuration:"
-            cat processed_config.yml
-            circleci config continue -c processed_config.yml
+# jobs:
+#   continue-toolbox-distribution:
+#     docker:
+#       - image: circleci/python:3.8
+#     steps:
+#       - setup_remote_docker
+#       - checkout
+#       - run:
+#           name: Debug Configuration
+#           command: |
+#             echo "Processing ToolboxDistribution.yml"
+#             cat .circleci/ToolboxDistribution.yml
+#       - run:
+#           name: Continue Toolbox Distribution
+#           command: |
+#             circleci config process .circleci/ToolboxDistribution.yml > processed_config.yml
+#             echo "Processed Configuration:"
+#             cat processed_config.yml
+#             circleci config continue -c processed_config.yml
