@@ -6,6 +6,6 @@ workflows:
   generate-config:
     jobs:
       - path-filtering/filter:
-          # config-path: .circleci/ToolboxDistribution.yml
+          config-path: .circleci/ToolboxDistribution.yml
           mapping: |
             .* toolbox-distribution true .circleci/ToolboxDistribution.yml
