@@ -3,7 +3,7 @@ version: '2.1'
 parameters:
   toolbox-distribution:
     type: boolean
-    default: false
+    default: true
 
 workflows:
   continue-workflow:
