@@ -15,22 +15,22 @@ workflows:
       - continuation/continue:
           configuration_path: .circleci/ToolboxDistribution.yml
 
-# jobs:
-#   continue-toolbox-distribution:
-#     docker:
-#       - image: circleci/python:3.8
-#     steps:
-#       - setup_remote_docker
-#       - checkout
-#       - run:
-#           name: Debug Configuration
-#           command: |
-#             echo "Processing ToolboxDistribution.yml"
-#             cat .circleci/ToolboxDistribution.yml
-#       - run:
-#           name: Continue Toolbox Distribution
-#           command: |
-#             circleci config process .circleci/ToolboxDistribution.yml > processed_config.yml
-#             echo "Processed Configuration:"
-#             cat processed_config.yml
-#             circleci config continue -c processed_config.yml
+jobs:
+  continue-toolbox-distribution:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: Debug Configuration
+          command: |
+            echo "Processing ToolboxDistribution.yml"
+            cat .circleci/ToolboxDistribution.yml
+      # - run:
+      #     name: Continue Toolbox Distribution
+      #     command: |
+      #       circleci config process .circleci/ToolboxDistribution.yml > processed_config.yml
+      #       echo "Processed Configuration:"
+      #       cat processed_config.yml
+      #       circleci config continue -c processed_config.yml
