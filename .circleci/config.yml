@@ -11,7 +11,6 @@ workflows:
           mapping: |
             .* toolbox-distribution true .circleci/ToolboxDistribution.yml
       - path-filtering/filter:
-          config-path: .circleci/continue_config.yml
+          # config-path: .circleci/continue_config.yml
           mapping: |
             .* toolbox-distribution true .circleci/ToolboxDistribution.yml
-            .* another-workflow true
