@@ -3,11 +3,6 @@ orbs:
   matlab: mathworks/matlab@1
   gh: circleci/github-cli@2.3.0
 
-parameters:
-  toolbox-distribution:
-    type: boolean
-    default: false
-
 executors:
   linux: # a Linux VM running Ubuntu 20.04
     machine:
