@@ -13,8 +13,7 @@ executors:
   windows:
     resource_class: "windows.medium"
     machine:
-      image: 'windows-server-2022-gui:current' 
-      # MATLAB installation seems to fail when we use "default" as the image name - https://app.circleci.com/pipelines/github/tsharmaMW/ci-configuration-examples/112/workflows/9a3f2117-5e4e-431e-9717-c947e08cb50c/jobs/207
+      image: 'windows-server-2022-gui:current'
 
 jobs:
   compile-and-test-mex:
