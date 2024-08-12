@@ -14,8 +14,7 @@ pipeline {
                     stage("Compile and test MEX") {
                         agent { label "${OS}" } // Assumes you have labels corresponding to the OS types
                         tools {
-                            // matlab 'R2024a'
-                            matlab 'R2023b'
+                            matlab 'R2024a'
                         }
                         steps {
                             script {
@@ -36,8 +35,7 @@ pipeline {
                 GITHUB_TOKEN = credentials('github-token') // Store your GitHub token as a Jenkins credential
             }
             tools {
-                // matlab 'R2024a'
-                matlab 'R2023b'
+                matlab 'R2024a'
             }
             steps {
                 script {
