@@ -4,11 +4,15 @@ This repository houses advanced MATLAB related workflows for the most common CI 
 
 If you are just beggining with connecting MATLAB with CI systems, the [ci-configuration-examples](https://github.com/mathworks/ci-configuration-examples) repository is an ideal starting point.
 
+<br>
+
 ## Supported CI platforms
-* Azure DevOps
-* CircleCI
-* GitHub Actions
+* Azure® DevOps
+* CircleCI®
+* GitHub® Actions
 * Jenkins&trade;
+
+<br>
 
 # Workflows in the repository
 
@@ -20,3 +24,8 @@ The repository includes configuration files for these CI platforms:
 * [CircleCI](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.circleci/config.yml)
 * [GitHub Actions](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.github/workflows/create-and-release-toolbox.yml)
 * [Jenkins&trade;](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/Jenkinsfile)
+
+<br>
+
+## Contact Us
+If you have any questions or suggestions, please contact MathWorks at [continuous-integration@mathworks.com](mailto:continuous-integration@mathworks.com).
