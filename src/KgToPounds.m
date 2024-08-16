@@ -1,5 +1,6 @@
 % Define the multiplier and the input matrix
-multiplier = 2.20462262;
+% multiplier = 2.20462262;
+multiplier = 2;
 weightInKg = [1, 2, 3, 4, 5];
 
 % Call the arrayProduct function
