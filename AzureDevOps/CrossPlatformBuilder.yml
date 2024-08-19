@@ -30,12 +30,12 @@ jobs:
           products: 'MATLAB_Compiler_SDK'
       - task: RunMATLABCommand@1
         inputs:
-          command: 'mex src/arrayProduct.c, addpath(pwd), run("src/KgToPounds.m"), mcc -m src/KgToPounds.m -d executable, ls, cd src, ls;'
+          command: 'mex src/arrayProduct.c, addpath(pwd), run("src/KgToPounds.m"), mcc -m src/KgToPounds.m -d executable;'
         env:
           MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: '$(build.artifactstagingdirectory)/src/executable'
+          PathtoPublish: 'executable'
           ArtifactName: 'KgToPounds-$(release)-$(imageName)'
           publishLocation: Container
         
