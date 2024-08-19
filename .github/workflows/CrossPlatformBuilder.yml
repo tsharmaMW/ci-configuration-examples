@@ -37,11 +37,11 @@ jobs:
       - name: Compile
         uses: matlab-actions/run-command@v2
         with:
-          command: mex src/arrayProduct.c, which arrayProduct, addpath(pwd), run("src/KgToPounds.m"), mcc -m src/KgToPounds.m;
+          command: mex src/arrayProduct.c, addpath(pwd), run("src/KgToPounds.m"), mcc -m src/KgToPounds.m;
  
       # Uploads the generated executable as an artifact to GitHub
       - name: Upload generated binary
         uses: actions/upload-artifact@v3
         with:
-          name: testingFunc-${{ matrix.release }}-${{ matrix.os }}
-          path: testingFunc*
+          name: KgToPounds-${{ matrix.release }}-${{ matrix.os }}
+          path: KgToPounds*
