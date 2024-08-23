@@ -27,7 +27,7 @@ jobs:
       - matlab/install:
           release: << parameters.release >>
           products: MATLAB_Compiler_SDK
-          
+
       # Compiles MATLAB function for deployment
       - matlab/run-command:
           command: |
@@ -46,4 +46,4 @@ workflows:
           matrix:
             parameters:
               os: [linux, macos, windows]
-              release: ["R2023a", "R2023b"]
+              release: ["R2023a", "R2023b"] 
