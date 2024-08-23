@@ -34,10 +34,10 @@ jobs:
             mex src/arrayProduct.c
             addpath(pwd)
             run("src/KgToPounds.m")
-            mcc -m src/KgToPounds.m;
+            mcc -m src/KgToPounds.m -d executable;
 
       - store_artifacts:
-          path: KgToPounds*
+          path: executable
 
 workflows:
   build_and_publish_executables:
