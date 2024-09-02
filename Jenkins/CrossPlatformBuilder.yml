@@ -22,10 +22,9 @@ pipeline {
                         steps {
                             script {
                                 runMATLABCommand(command: '
-                                    |
-                                    mex src/arrayProduct.c
-                                    addpath(pwd)
-                                    run("src/KgToPounds.m")
+                                    mex src/arrayProduct.c,
+                                    addpath(pwd),
+                                    run("src/KgToPounds.m"),
                                     mcc -m src/KgToPounds.m;
                                 ')
                             }
