@@ -6,18 +6,18 @@ pipeline {
                 axes {
                     axis {
                         name 'OS'
-                        values 'windows' //values 'linux', 'windows', 'macos'
+                        values 'linux', 'windows', 'macos'
                     }
                     axis {
                         name 'RELEASE'
-                        values 'R2024a' //values 'R2023a', 'R2023b'
+                        values 'R2023a', 'R2023b'
                     }
                 }
                 stages {
                     stage("Build and publish") {
                         agent { label "${OS}" } // Assumes you have labels corresponding to the OS types
                         tools {
-                            matlab "${RELEASE}" // Test with R2024a
+                            matlab "${RELEASE}"
                         }
                         steps {
                             script {
