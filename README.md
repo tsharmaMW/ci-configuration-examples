@@ -20,10 +20,19 @@ If you are just beggining with connecting MATLAB with CI systems, the [ci-config
 This workflow demonstrates compilation, linking, and testing the C source file across multiple Operating Systems, which produces a binary MEX file within a single execution of the job. Finally, the resulting binaries are bundled together into a toolbox, which is then distributed as a GitHub release.
 
 The repository includes configuration files for these CI platforms:
-* [Azure DevOps](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/azure-pipelines.yml)
-* [CircleCI](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.circleci/config.yml)
-* [GitHub Actions](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.github/workflows/create-and-release-toolbox.yml)
-* [Jenkins&trade;](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/Jenkinsfile)
+* [Azure DevOps](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/AzureDevOps/ToolboxDistribution.yml)
+* [CircleCI](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.circleci/ToolboxDistribution.yml)
+* [GitHub Actions](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.github/workflows/ToolboxDistribution.yml)
+* [Jenkins&trade;](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/Jenkins/ToolboxDistribution.yml)
+
+## 2) Building and publishing executables
+This workflow automates the process of building and publishing MATLAB executables across multiple Operating Systems. It installs specific MATLAB releases and compiles MATLAB functions for deployment using the MATLAB Compiler SDK. Finally, the compiled executables are stored as artifacts. It ensures compatibility and efficience in generating deployable applications.
+
+The repository includes configuration files for these CI platforms:
+* [Azure DevOps](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/AzureDevOps/CrossPlatformBuilder.yml)
+* [CircleCI](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.circleci/CrossPlatformBuilder.yml)
+* [GitHub Actions](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.github/workflows/CrossPlatformBuilder.yml)
+* [Jenkins&trade;](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/Jenkins/CrossPlatformBuilder.yml)
 
 <br>
 
