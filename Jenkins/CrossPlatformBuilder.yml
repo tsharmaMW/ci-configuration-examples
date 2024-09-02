@@ -24,10 +24,10 @@ pipeline {
                                 runMATLABCommand(command: 'mex src/arrayProduct.c, addpath(pwd), run("src/KgToPounds.m"), mcc -m src/KgToPounds.m;')
                             }
                         }
-                    }
-                    post {
-                        always {
-                            archiveArtifacts artifacts: 'KgToPounds*'
+                        post {
+                            always {
+                                archiveArtifacts artifacts: 'KgToPounds*'
+                            }
                         }
                     }
                 }
