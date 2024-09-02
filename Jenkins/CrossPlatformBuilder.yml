@@ -1,0 +1,44 @@
+pipeline {
+    agent none
+    stages {
+        stage('Build and publish executables') {
+            matrix {
+                axes {
+                    axis {
+                        name 'OS'
+                        values 'windows', 'windows' //values 'linux', 'windows', 'macos'
+                    }
+                    axis {
+                        name 'RELEASE'
+                        values 'R2024a', 'R2024a' //values 'R2023a', 'R2023b'
+                    }
+                }
+                stages {
+                    stage("Build and publish") {
+                        agent { label "${OS}" } // Assumes you have labels corresponding to the OS types
+                        tools {
+                            matlab "${RELEASE}" // Test with R2024a
+                        }
+                        steps {
+                            script {
+                                runMATLABCommand(command: '
+                                    |
+                                    mex src/arrayProduct.c
+                                    addpath(pwd)
+                                    run("src/KgToPounds.m")
+                                    mcc -m src/KgToPounds.m;
+                                ')
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+        post {
+            always {
+                archiveArtifacts KgToPounds*
+            }
+        }
+    } 
+}
