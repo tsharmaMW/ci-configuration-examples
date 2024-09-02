@@ -6,11 +6,11 @@ pipeline {
                 axes {
                     axis {
                         name 'OS'
-                        values 'windows', 'windows' //values 'linux', 'windows', 'macos'
+                        values 'windows' //values 'linux', 'windows', 'macos'
                     }
                     axis {
                         name 'RELEASE'
-                        values 'R2024a', 'R2024a' //values 'R2023a', 'R2023b'
+                        values 'R2024a' //values 'R2023a', 'R2023b'
                     }
                 }
                 stages {
@@ -25,13 +25,12 @@ pipeline {
                             }
                         }
                     }
-                    
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'KgToPounds*'
+                        }
+                    }
                 }
-            }
-        }
-        post {
-            always {
-                archiveArtifacts artifacts: 'KgToPounds*'
             }
         }
     } 
