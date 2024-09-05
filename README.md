@@ -25,8 +25,8 @@ The repository includes configuration files for these CI platforms:
 * [GitHub Actions](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/.github/workflows/ToolboxDistribution.yml)
 * [Jenkins&trade;](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/Jenkins/ToolboxDistribution.yml)
 
-## 2) Building and publishing executables
-This workflow automates the process of building and publishing MATLAB executables across multiple Operating Systems. It installs specific MATLAB releases and compiles MATLAB functions for deployment using the MATLAB Compiler SDK. Finally, the compiled executables are stored as artifacts. It ensures compatibility and efficience in generating deployable applications.
+## 2) Building and deploying MATLAB standalone applications
+This workflow automates the process of building and deploying MATLAB standalone applications across multiple Operating Systems. It installs specific MATLAB releases and compiles MATLAB functions for deployment using the MATLAB Compiler SDK. Finally, the compiled standalones are stored as artifacts. It ensures compatibility and efficiency in generating deployable applications.
 
 The repository includes configuration files for these CI platforms:
 * [Azure DevOps](https://github.com/tsharmaMW/ci-configuration-examples/blob/main/AzureDevOps/CrossPlatformBuilder.yml)

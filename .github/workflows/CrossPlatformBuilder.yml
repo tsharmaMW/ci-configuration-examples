@@ -1,4 +1,4 @@
-name: Build and Publish Executables
+name: Build and Deploy MATLAB standalone applications
  
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
             mex src/arrayProduct.c
             addpath(pwd)
             run("src/KgToPounds.m")
-            mcc -m src/KgToPounds.m;
+            compiler.build.standaloneApplication("src/KgToPounds.m");
  
       # Uploads the generated executable as an artifact to GitHub
       - name: Upload generated binary

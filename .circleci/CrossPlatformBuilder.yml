@@ -15,7 +15,7 @@ executors:
       image: 'windows-server-2022-gui:current'
 
 jobs:
-  build_and_publish:
+  build_and_deploy:
     parameters:
       os:
         type: executor
@@ -24,6 +24,7 @@ jobs:
     executor: << parameters.os >>
     steps:
       - checkout
+      
       - matlab/install:
           release: << parameters.release >>
           products: MATLAB_Compiler_SDK
@@ -34,15 +35,15 @@ jobs:
             mex src/arrayProduct.c
             addpath(pwd)
             run("src/KgToPounds.m")
-            mcc -m src/KgToPounds.m -d executable;
+            compiler.build.StandaloneApplication("src/KgToPounds.m","OutputDir","executable");
 
       - store_artifacts:
           path: executable
 
 workflows:
-  build_and_publish_executables:
+  build_and_deploy_MATLAB_standalone_applications:
     jobs:
-      - build_and_publish:
+      - build_and_deploy:
           matrix:
             parameters:
               os: [linux, macos, windows]

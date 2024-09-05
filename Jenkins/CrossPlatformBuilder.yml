@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Build and publish executables') {
+        stage('Build and Deploy MATLAB standalone applications') {
             matrix {
                 axes {
                     axis {
@@ -14,14 +14,14 @@ pipeline {
                     }
                 }
                 stages {
-                    stage("Build and publish") {
+                    stage("Build and deploy") {
                         agent { label "${OS}" } // Assumes you have labels corresponding to the OS types
                         tools {
                             matlab "${RELEASE}"
                         }
                         steps {
                             script {
-                                runMATLABCommand(command: 'mex src/arrayProduct.c, addpath(pwd), run("src/KgToPounds.m"), mcc -m src/KgToPounds.m;')
+                                runMATLABCommand(command: 'mex src/arrayProduct.c, addpath(pwd), run("src/KgToPounds.m"), compiler.build.standaloneApplication("src/KgToPounds.m");')
                             }
                         }
                         post {

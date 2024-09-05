@@ -1,5 +1,5 @@
 jobs:
-  - job: build_and_publish_executables
+  - job: build_and_deploy_MATLAB_standalone_applications
     strategy:
       matrix:
         linux-R2023a:
@@ -34,7 +34,7 @@ jobs:
             mex src/arrayProduct.c
             addpath(pwd)
             run("src/KgToPounds.m")
-            mcc -m src/KgToPounds.m -d executable;
+            compiler.build.StandaloneApplication("src/KgToPounds.m","OutputDir","executable");
         env:
           MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       - task: PublishBuildArtifacts@1
