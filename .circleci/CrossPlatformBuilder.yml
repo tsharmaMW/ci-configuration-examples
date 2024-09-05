@@ -24,7 +24,7 @@ jobs:
     executor: << parameters.os >>
     steps:
       - checkout
-      
+
       - matlab/install:
           release: << parameters.release >>
           products: MATLAB_Compiler_SDK
@@ -35,7 +35,7 @@ jobs:
             mex src/arrayProduct.c
             addpath(pwd)
             run("src/KgToPounds.m")
-            compiler.build.StandaloneApplication("src/KgToPounds.m","OutputDir","executable");
+            compiler.build.standaloneApplication("src/KgToPounds.m","OutputDir","executable");
 
       - store_artifacts:
           path: executable
