@@ -43,7 +43,12 @@ jobs:
             which src/KgToPounds.m
             KgToPounds([1,2,3,4,5])
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m")
-            disp(buildResults);
+            save("pythonBuild.mat","buildResults")
+            disp(buildResults)
+            runtests("tests/KgToPoundsEquivalenceTest.m");
+
+      - name: Run equivalence tests
+        uses: matlab-actions/run-tests@v2
             
       # compiler.build.standaloneApplication("src/KgToPounds.m");
 
