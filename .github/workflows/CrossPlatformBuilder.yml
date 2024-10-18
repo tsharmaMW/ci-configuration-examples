@@ -45,6 +45,8 @@ jobs:
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m")
             save("pythonBuild.mat","buildResults")
             disp(buildResults)
+            which -all matlabtest.compiler.TestCase
+            restoredefaultpath
             runtests("tests/KgToPoundsEquivalenceTest.m");
 
       - name: Run equivalence tests
