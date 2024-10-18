@@ -38,7 +38,7 @@ jobs:
         uses: matlab-actions/run-command@v2
         with:
           command: |
-            import matlabtest.compiler.TestCase
+            import matlabtest.compiler.*
             mex src/arrayProduct.c
             addpath(genpath(pwd))
             which src/KgToPounds.m
