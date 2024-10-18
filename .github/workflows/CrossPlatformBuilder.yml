@@ -42,7 +42,7 @@ jobs:
             addpath(genpath(pwd))
             which src/KgToPounds.m
             KgToPounds([1,2,3,4,5])
-            buildResults = compiler.build.pythonPackage("src\KgToPounds.m")
+            buildResults = compiler.build.pythonPackage("src/KgToPounds.m")
             disp(buildResults);
             
       # compiler.build.standaloneApplication("src/KgToPounds.m");
