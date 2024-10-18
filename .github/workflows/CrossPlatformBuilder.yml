@@ -39,8 +39,8 @@ jobs:
         with:
           command: |
             mex src/arrayProduct.c
-            addpath(pwd)
-            which KgToPounds
+            addpath(genpath(pwd))
+            which src/KgToPounds.m
             KgToPounds([1,2,3,4,5])
             buildResults = compiler.build.pythonPackage("src\KgToPounds.m")
             disp(buildResults);
