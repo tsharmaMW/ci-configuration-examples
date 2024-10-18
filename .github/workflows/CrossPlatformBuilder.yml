@@ -38,6 +38,7 @@ jobs:
         uses: matlab-actions/run-command@v2
         with:
           command: |
+            import matlabtest.compiler.TestCase
             mex src/arrayProduct.c
             addpath(genpath(pwd))
             which src/KgToPounds.m
@@ -46,7 +47,6 @@ jobs:
             save("pythonBuild.mat","buildResults")
             disp(buildResults)
             which -all matlabtest.compiler.TestCase
-            restoredefaultpath
             runtests("tests/KgToPoundsEquivalenceTest.m");
 
       - name: Run equivalence tests
