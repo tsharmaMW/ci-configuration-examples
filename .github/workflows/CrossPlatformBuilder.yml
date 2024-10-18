@@ -40,9 +40,13 @@ jobs:
           command: |
             mex src/arrayProduct.c
             addpath(pwd)
-            run("src/KgToPounds.m")
-            compiler.build.standaloneApplication("src/KgToPounds.m");
- 
+            which KgToPounds
+            KgToPounds([1,2,3,4,5])
+            buildResults = compiler.build.pythonPackage("src\KgToPounds.m")
+            disp(buildResults);
+            
+      # compiler.build.standaloneApplication("src/KgToPounds.m");
+
       # Uploads the generated executable as an artifact to GitHub
       - name: Upload generated binary
         uses: actions/upload-artifact@v3
