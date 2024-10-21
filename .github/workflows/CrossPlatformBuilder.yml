@@ -31,7 +31,9 @@ jobs:
         uses: matlab-actions/setup-matlab@v2
         with:
           release: ${{ matrix.release }}
-          products: MATLAB_Compiler_SDK
+          products: >
+            MATLAB_Compiler_SDK
+            MATLAB_Test
  
       # Compiles MATLAB function for deployment
       - name: Compile
@@ -45,7 +47,6 @@ jobs:
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m")
             save("pythonBuild.mat","buildResults")
             disp(buildResults)
-            which -all matlabtest.compiler.TestCase
             runtests("tests/KgToPoundsEquivalenceTest.m");
 
       - name: Run equivalence tests
