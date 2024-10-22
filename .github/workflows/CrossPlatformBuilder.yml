@@ -47,6 +47,16 @@ jobs:
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "pythonBuild");
             save("pythonBuild.mat","buildResults");
             runtests("tests/equivalenceTests/KgToPoundsEquivalenceTest.m");
+            
+            import matlab.unittest.TestRunner;
+            import matlab.unittest.constraints.StartsWithSubstring;
+            import matlab.unittest.selectors.HasBaseFolder;
+            suite = testsuite(pwd, 'IncludeSubfolders', true);
+            suite = suite.selectIf(HasBaseFolder(StartsWithSubstring(fullfile(pwd, 'tests/equivalenceTests'))));
+            runner = TestRunner.withTextOutput();
+            results = runner.run(suite);
+            display(results);
+            assertSuccess(results);
 
       - name: Run equivalence tests
         uses: matlab-actions/run-tests@v2
