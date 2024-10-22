@@ -51,7 +51,7 @@ jobs:
       - name: Run equivalence tests
         uses: matlab-actions/run-tests@v2
         with:
-          select-by-tag: "EquivalenceTest"
+          select-by-tag: EquivalenceTest
             
       # compiler.build.standaloneApplication("src/KgToPounds.m");
 
