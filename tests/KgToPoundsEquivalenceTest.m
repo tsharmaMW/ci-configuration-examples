@@ -9,7 +9,7 @@ classdef KgToPoundsEquivalenceTest < matlabtest.compiler.TestCase
     %     end
     % end
     
-    methods(Test)
+    methods(Test, TestTags = {'EquivalenceTest'})
         function pythonEquivalenceTest(testCase)
             loadedData = load("pythonBuild.mat");
             buildResults = loadedData.buildResults;
