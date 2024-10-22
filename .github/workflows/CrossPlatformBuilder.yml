@@ -44,13 +44,14 @@ jobs:
             addpath(genpath(pwd))
             which src/KgToPounds.m
             KgToPounds([1,2,3,4,5])
-            buildResults = compiler.build.pythonPackage("src/KgToPounds.m")
+            buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = pwd)
             save("pythonBuild.mat","buildResults")
-            disp(buildResults)
             runtests("tests/KgToPoundsEquivalenceTest.m");
 
       - name: Run equivalence tests
         uses: matlab-actions/run-tests@v2
+        with:
+          source-folder: "src"
             
       # compiler.build.standaloneApplication("src/KgToPounds.m");
 
