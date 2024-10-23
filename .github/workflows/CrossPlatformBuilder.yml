@@ -48,20 +48,20 @@ jobs:
             save("pythonBuild.mat","buildResults");
             runtests("tests/equivalenceTests/KgToPoundsEquivalenceTest.m");
             
-            import matlab.unittest.TestRunner;
-            import matlab.unittest.constraints.StartsWithSubstring;
-            import matlab.unittest.selectors.HasBaseFolder;
-            suite = testsuite(pwd, 'IncludeSubfolders', true);
-            suite = suite.selectIf(HasBaseFolder(StartsWithSubstring(fullfile(pwd, 'tests/equivalenceTests'))));
-            runner = TestRunner.withTextOutput();
-            results = runner.run(suite);
-            display(results);
-            assertSuccess(results);
+            # import matlab.unittest.TestRunner;
+            # import matlab.unittest.constraints.StartsWithSubstring;
+            # import matlab.unittest.selectors.HasBaseFolder;
+            # suite = testsuite(pwd, 'IncludeSubfolders', true);
+            # suite = suite.selectIf(HasBaseFolder(StartsWithSubstring(fullfile(pwd, 'tests/equivalenceTests'))));
+            # runner = TestRunner.withTextOutput();
+            # results = runner.run(suite);
+            # display(results);
+            # assertSuccess(results);
 
       - name: Run equivalence tests
         uses: matlab-actions/run-tests@v2
         with:
-          select-by-folder: tests/equivalenceTests
+          select-by-folder: ${{ github.workspace }}/tests/equivalenceTests
             
       # compiler.build.standaloneApplication("src/KgToPounds.m");
 
