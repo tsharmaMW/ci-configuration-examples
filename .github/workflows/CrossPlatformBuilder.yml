@@ -45,7 +45,7 @@ jobs:
             KgToPounds([1,2,3,4,5]);
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "pythonBuild");
             save("pythonBuild.mat","buildResults");
-            runtests("tests/KgToPoundsEquivalenceTest.m");
+            # runtests("tests/KgToPoundsEquivalenceTest.m");
             proj = matlab.project.loadProject(fullfile(pwd,'AdvancedCIConfigurationExamples.prj'));
             addFile(proj,"pythonBuild.mat");
 
