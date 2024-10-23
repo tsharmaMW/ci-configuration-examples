@@ -46,6 +46,8 @@ jobs:
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "pythonBuild");
             save("pythonBuild.mat","buildResults");
             runtests("tests/KgToPoundsEquivalenceTest.m");
+            proj = currentProject;
+            addFile(proj,"pythonBuild.mat");
 
       - name: Compile
         uses: matlab-actions/run-command@v2
