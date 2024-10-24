@@ -45,8 +45,6 @@ jobs:
             KgToPounds([1,2,3,4,5]);
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "pythonBuild");
             save("pythonBuild.mat","buildResults");
-            proj = matlab.project.loadProject(fullfile(pwd,'AdvancedCIConfigurationExamples.prj'));
-            addFile(proj,"pythonBuild.mat");
 
       - name: Compile
         uses: matlab-actions/run-command@v2
