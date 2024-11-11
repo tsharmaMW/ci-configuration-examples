@@ -44,6 +44,7 @@ jobs:
             addpath(genpath(pwd))
             KgToPounds([1,2,3,4,5]);
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "pythonBuild");
+            addpath(genpath(pythonBuild));
             save("pythonBuild.mat","buildResults");
             runtests("tests/KgToPoundsEquivalenceTest.m");
 
