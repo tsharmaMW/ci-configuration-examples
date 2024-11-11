@@ -46,6 +46,7 @@ jobs:
         uses: matlab-actions/run-command@v2
         with:
           command: |
+            pyenv
             mex src/arrayProduct.c
             addpath(genpath(pwd))
             KgToPounds([1,2,3,4,5]);
