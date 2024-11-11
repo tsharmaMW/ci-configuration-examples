@@ -35,11 +35,11 @@ jobs:
             MATLAB_Compiler_SDK
             MATLAB_Test
 
-      # Installs Python and add it to the Path
-      - name: Setup Python
-        uses: actions/setup-python@v5 
-        with:
-          python-version: '3.11'
+      # # Installs Python and add it to the Path
+      # - name: Setup Python
+      #   uses: actions/setup-python@v5 
+      #   with:
+      #     python-version: '3.11'
  
       # Compiles MATLAB function for deployment
       - name: Compile
