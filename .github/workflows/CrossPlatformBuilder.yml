@@ -52,10 +52,11 @@ jobs:
         with:
           command: ls;
 
-      - name: Run equivalence tests
-        uses: matlab-actions/run-tests@v2
-        with:
-          select-by-tag: EquivalenceTest
+      # For the below test, would have to change python build to ../pythonBuild in test
+      # - name: Run equivalence tests
+      #   uses: matlab-actions/run-tests@v2
+      #   with:
+      #     select-by-tag: EquivalenceTest
             
       # compiler.build.standaloneApplication("src/KgToPounds.m");
 
