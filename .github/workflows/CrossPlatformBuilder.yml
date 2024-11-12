@@ -17,7 +17,7 @@ jobs:
     # A job will run for all combinations of OS and release present in the matrix
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2022, macos-12]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         release: [R2024a, R2024b]
  
     # The type of runner that the job will run on
@@ -50,7 +50,7 @@ jobs:
             mex src/arrayProduct.c
             addpath(genpath(pwd))
             KgToPounds([1,2,3,4,5]);
-            buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "pythonBuild");
+            buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
             save("pythonBuild.mat","buildResults");
             
       # runtests("tests/KgToPoundsEquivalenceTest.m");
