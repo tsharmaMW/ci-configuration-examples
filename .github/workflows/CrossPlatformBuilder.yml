@@ -40,6 +40,19 @@ jobs:
         uses: actions/setup-python@v5 
         with:
           python-version: '3.11'
+
+      # List contents of MATLAB Runtime Directory on Windows
+      - name: List MATLAB Runtime Directory (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          $runtimePath = "D:\hostedtoolcache\windows\MATLAB\2024.1.999\x64\runtime\win64"
+          if (Test-Path $runtimePath) {
+            Write-Host "Contents of $runtimePath:"
+            Get-ChildItem -Path $runtimePath | Format-Table -Property Name, Length, LastWriteTime
+          } else {
+            Write-Host "Directory $runtimePath does not exist."
+            exit 1
+          }
  
       # Compiles MATLAB function for deployment
       - name: Compile
