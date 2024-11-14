@@ -47,10 +47,10 @@ jobs:
         run: |
           $runtimePath = "D:\hostedtoolcache\windows\MATLAB\2024.1.999\x64\runtime\win64"
           if (Test-Path $runtimePath) {
-            Write-Host "Contents of $runtimePath:"
+            Write-Host "Contents of ${runtimePath}:"
             Get-ChildItem -Path $runtimePath | Format-Table -Property Name, Length, LastWriteTime
           } else {
-            Write-Host "Directory $runtimePath does not exist."
+            Write-Host "Directory ${runtimePath} does not exist."
             exit 1
           }
  
