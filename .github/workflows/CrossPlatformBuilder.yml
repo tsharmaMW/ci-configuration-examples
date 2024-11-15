@@ -41,6 +41,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Compile
+        uses: matlab-actions/run-command@v2
+        with:
+          command: ver;
+
       # List contents of MATLAB Runtime Directory on Windows
       - name: List MATLAB Runtime Directory (Windows)
         if: runner.os == 'Windows'
