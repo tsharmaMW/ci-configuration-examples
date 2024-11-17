@@ -44,7 +44,11 @@ jobs:
       - name: Compile
         uses: matlab-actions/run-command@v2
         with:
-          command: ver;
+          command: |
+            ver;
+            matlabRoot = matlabroot;
+            fprintf('MATLAB is installed in: %s\n', matlabRoot);
+
 
       # List contents of MATLAB Runtime Directory on Windows
       - name: List MATLAB Runtime Directory (Windows)
@@ -58,6 +62,32 @@ jobs:
             Write-Host "Directory ${runtimePath} does not exist."
             exit 1
           }
+
+      # List contents of MATLAB Runtime Directory on Linux
+      - name: List MATLAB Runtime Directory (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          runtimePath="/usr/local/MATLAB/R2024a/runtime/glnxa64"
+          if [ -d "$runtimePath" ]; then
+            echo "Contents of $runtimePath:"
+            ls -la "$runtimePath"
+          else
+            echo "Directory $runtimePath does not exist."
+            exit 1
+          fi
+
+      # List contents of MATLAB Runtime Directory on macOS
+      - name: List MATLAB Runtime Directory (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          runtimePath="/Applications/MATLAB_R2024a.app/runtime/maci64"
+          if [ -d "$runtimePath" ]; then
+            echo "Contents of $runtimePath:"
+            ls -la "$runtimePath"
+          else
+            echo "Directory $runtimePath does not exist."
+            exit 1
+          fi
  
       # Compiles MATLAB function for deployment
       - name: Compile
