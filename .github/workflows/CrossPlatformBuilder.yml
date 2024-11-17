@@ -65,31 +65,19 @@ jobs:
           runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
             runtimePath="${runtimePath}\\win64"
-            if [ -d "$runtimePath" ]; then
-              echo "Contents of $runtimePath:"
-              ls -la "$runtimePath"
-            else
-              echo "Directory $runtimePath does not exist."
-              exit 1
-            fi
           elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
             runtimePath="${runtimePath}/glnxa64"
-            if [ -d "$runtimePath" ]; then
-              echo "Contents of $runtimePath:"
-              ls -la "$runtimePath"
-            else
-              echo "Directory $runtimePath does not exist."
-              exit 1
-            fi
           elif [ "${{ matrix.os }}" == "macos-latest" ]; then
             runtimePath="${runtimePath}/maci64"
-            if [ -d "$runtimePath" ]; then
-              echo "Contents of $runtimePath:"
-              ls -la "$runtimePath"
-            else
-              echo "Directory $runtimePath does not exist."
-              exit 1
-            fi
+          fi
+          
+          # Check if the directory exists and list its contents
+          if [ -d "$runtimePath" ]; then
+            echo "Contents of $runtimePath:"
+            ls -la "$runtimePath"
+          else
+            echo "Directory $runtimePath does not exist."
+            exit 1
           fi
  
       # Compiles MATLAB function for deployment
