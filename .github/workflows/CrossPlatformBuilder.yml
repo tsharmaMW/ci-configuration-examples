@@ -59,21 +59,20 @@ jobs:
             fprintf('Runtime path: %s\n', runtimePath);
             save('matlab_paths.mat', 'matlabRoot', 'runtimePath');
 
-      # List contents of MATLAB Runtime Directory
+       # List contents of MATLAB Runtime Directory
       - name: List MATLAB Runtime Directory
         run: |
+          runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
             runtimePath="${runtimePath}\\win64"
-            if (Test-Path $runtimePath) {
-              Write-Host "Contents of ${runtimePath}:"
-              Get-ChildItem -Path $runtimePath | Format-Table -Property Name, Length, LastWriteTime
-            } else {
-              Write-Host "Directory ${runtimePath} does not exist."
+            if [ -d "$runtimePath" ]; then
+              echo "Contents of $runtimePath:"
+              ls -la "$runtimePath"
+            else
+              echo "Directory $runtimePath does not exist."
               exit 1
-            }
+            fi
           elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
             runtimePath="${runtimePath}/glnxa64"
             if [ -d "$runtimePath" ]; then
               echo "Contents of $runtimePath:"
@@ -83,7 +82,6 @@ jobs:
               exit 1
             fi
           elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
             runtimePath="${runtimePath}/maci64"
             if [ -d "$runtimePath" ]; then
               echo "Contents of $runtimePath:"
