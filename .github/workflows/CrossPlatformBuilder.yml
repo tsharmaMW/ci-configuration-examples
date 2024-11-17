@@ -56,6 +56,17 @@ jobs:
             runtimePath = fullfile(matlabRoot, 'runtime');
             fprintf('::set-output name=runtimePath::%s\n', runtimePath);
 
+      - name: Verify MATLAB Runtime Directory
+        run: |
+          runtimePath="${{ steps.set-runtime-path.outputs.runtimePath }}"
+          
+          # Print the runtime path for debugging
+          echo "Runtime Path: $runtimePath"
+          
+          # List the contents of the runtime directory
+          echo "Contents of $runtimePath:"
+          ls -la "$runtimePath"
+
       - name: List MATLAB Runtime Directory
         run: |
           runtimePath="${{ steps.set-runtime-path.outputs.runtimePath }}"
