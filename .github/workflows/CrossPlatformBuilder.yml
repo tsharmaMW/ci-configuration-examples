@@ -47,22 +47,20 @@ jobs:
           command: |
             ver;
 
-       # Print MATLAB root directory and determine runtime path
-      - name: Print MATLAB Root Directory
-        id: matlab-root
+      - name: Extract and Set MATLAB Runtime Path
+        id: set-runtime-path
         uses: matlab-actions/run-command@v2
         with:
           command: |
             matlabRoot = matlabroot;
-            fprintf('MATLAB is installed in: %s\n', matlabRoot);
             runtimePath = fullfile(matlabRoot, 'runtime');
-            fprintf('Runtime path: %s\n', runtimePath);
-            save('matlab_paths.mat', 'matlabRoot', 'runtimePath');
+            fprintf('::set-output name=runtimePath::%s\n', runtimePath);
 
-       # List contents of MATLAB Runtime Directory
       - name: List MATLAB Runtime Directory
         run: |
-          runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
+          runtimePath="${{ steps.set-runtime-path.outputs.runtimePath }}"
+          
+          # Adjust the path based on the operating system
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
             runtimePath="${runtimePath}\\win64"
           elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
@@ -70,6 +68,9 @@ jobs:
           elif [ "${{ matrix.os }}" == "macos-latest" ]; then
             runtimePath="${runtimePath}/maci64"
           fi
+          
+          # Print the runtime path for debugging
+          echo "Runtime Path: $runtimePath"
           
           # Check if the directory exists and list its contents
           if [ -d "$runtimePath" ]; then
