@@ -77,7 +77,7 @@ jobs:
           elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
             runtimePath="${runtimePath}/glnxa64"
           elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            runtimePath="${runtimePath}/maci64"
+            runtimePath="${runtimePath}/maca64"
           fi
           
           # Print the runtime path for debugging
