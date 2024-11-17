@@ -46,47 +46,52 @@ jobs:
         with:
           command: |
             ver;
+
+       # Print MATLAB root directory and determine runtime path
+      - name: Print MATLAB Root Directory
+        id: matlab-root
+        uses: matlab-actions/run-command@v2
+        with:
+          command: |
             matlabRoot = matlabroot;
             fprintf('MATLAB is installed in: %s\n', matlabRoot);
+            runtimePath = fullfile(matlabRoot, 'runtime');
+            fprintf('Runtime path: %s\n', runtimePath);
+            save('matlab_paths.mat', 'matlabRoot', 'runtimePath');
 
-
-      # List contents of MATLAB Runtime Directory on Windows
-      - name: List MATLAB Runtime Directory (Windows)
-        if: runner.os == 'Windows'
+      # List contents of MATLAB Runtime Directory
+      - name: List MATLAB Runtime Directory
         run: |
-          $runtimePath = "D:\hostedtoolcache\windows\MATLAB\2024.1.999\x64\runtime\win64"
-          if (Test-Path $runtimePath) {
-            Write-Host "Contents of ${runtimePath}:"
-            Get-ChildItem -Path $runtimePath | Format-Table -Property Name, Length, LastWriteTime
-          } else {
-            Write-Host "Directory ${runtimePath} does not exist."
-            exit 1
-          }
-
-      # List contents of MATLAB Runtime Directory on Linux
-      - name: List MATLAB Runtime Directory (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          runtimePath="/usr/local/MATLAB/R2024a/runtime/glnxa64"
-          if [ -d "$runtimePath" ]; then
-            echo "Contents of $runtimePath:"
-            ls -la "$runtimePath"
-          else
-            echo "Directory $runtimePath does not exist."
-            exit 1
-          fi
-
-      # List contents of MATLAB Runtime Directory on macOS
-      - name: List MATLAB Runtime Directory (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          runtimePath="/Applications/MATLAB_R2024a.app/runtime/maci64"
-          if [ -d "$runtimePath" ]; then
-            echo "Contents of $runtimePath:"
-            ls -la "$runtimePath"
-          else
-            echo "Directory $runtimePath does not exist."
-            exit 1
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
+            runtimePath="${runtimePath}\\win64"
+            if (Test-Path $runtimePath) {
+              Write-Host "Contents of ${runtimePath}:"
+              Get-ChildItem -Path $runtimePath | Format-Table -Property Name, Length, LastWriteTime
+            } else {
+              Write-Host "Directory ${runtimePath} does not exist."
+              exit 1
+            }
+          elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
+            runtimePath="${runtimePath}/glnxa64"
+            if [ -d "$runtimePath" ]; then
+              echo "Contents of $runtimePath:"
+              ls -la "$runtimePath"
+            else
+              echo "Directory $runtimePath does not exist."
+              exit 1
+            fi
+          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+            runtimePath=$(matlab -batch "load('matlab_paths.mat', 'runtimePath'); disp(runtimePath);")
+            runtimePath="${runtimePath}/maci64"
+            if [ -d "$runtimePath" ]; then
+              echo "Contents of $runtimePath:"
+              ls -la "$runtimePath"
+            else
+              echo "Directory $runtimePath does not exist."
+              exit 1
+            fi
           fi
  
       # Compiles MATLAB function for deployment
