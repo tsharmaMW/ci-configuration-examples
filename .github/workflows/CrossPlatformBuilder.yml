@@ -110,9 +110,14 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           $runtimePath = "${{ steps.set-runtime-path.outputs.runtimePath }}\win64"
-          $env:PATH = "$env:PATH;$runtimePath"
+          [System.IO.File]::AppendAllText("$env:GITHUB_ENV", "`nPATH=$env:PATH;$runtimePath`n")
           Write-Host "Updated PATH: $env:PATH"
         shell: pwsh
+
+      - name: Verify Updated PATH
+        run: |
+          echo $PATH
+        shell: bash
  
       # Compiles MATLAB function for deployment
       - name: Compile
