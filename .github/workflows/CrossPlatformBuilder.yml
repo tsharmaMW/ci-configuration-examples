@@ -59,38 +59,52 @@ jobs:
       - name: Verify MATLAB Runtime Directory
         run: |
           runtimePath="${{ steps.set-runtime-path.outputs.runtimePath }}"
-          
-          # Print the runtime path for debugging
-          echo "Runtime Path: $runtimePath"
-          
-          # List the contents of the runtime directory
-          echo "Contents of $runtimePath:"
-          ls -la "$runtimePath"
+
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            # PowerShell syntax for Windows
+            echo "Runtime Path: ${runtimePath}"
+            echo "Contents of ${runtimePath}"
+            ls -la "${runtimePath}"
+          else
+            # Bash syntax for Linux and macOS
+            echo "Runtime Path: $runtimePath"
+            echo "Contents of $runtimePath:"
+            ls -la "$runtimePath"
+          fi
+        shell: bash
 
       - name: List MATLAB Runtime Directory
         run: |
           runtimePath="${{ steps.set-runtime-path.outputs.runtimePath }}"
-          
-          # Adjust the path based on the operating system
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            # PowerShell syntax for Windows
             runtimePath="${runtimePath}\\win64"
-          elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            runtimePath="${runtimePath}/glnxa64"
-          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            runtimePath="${runtimePath}/maca64"
-          fi
-          
-          # Print the runtime path for debugging
-          echo "Runtime Path: $runtimePath"
-          
-          # Check if the directory exists and list its contents
-          if [ -d "$runtimePath" ]; then
-            echo "Contents of $runtimePath:"
-            ls -la "$runtimePath"
+            echo "Runtime Path: ${runtimePath}"
+            if [ -d "${runtimePath}" ]; then
+              echo "Contents of ${runtimePath}"
+              ls -la "${runtimePath}"
+            else
+              echo "Directory $runtimePath does not exist."
+              exit 1
+            fi
           else
-            echo "Directory $runtimePath does not exist."
-            exit 1
+            # Bash syntax for Linux and macOS
+            
+            if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+              runtimePath="${runtimePath}/glnxa64"
+            elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+              runtimePath="${runtimePath}/maca64"
+            fi
+            echo "Runtime Path: $runtimePath"
+            if [ -d "$runtimePath" ]; then
+              echo "Contents of $runtimePath:"
+              ls -la "$runtimePath"
+            else
+              echo "Directory $runtimePath does not exist."
+              exit 1
+            fi
           fi
+        shell: bash
  
       # Compiles MATLAB function for deployment
       - name: Compile
