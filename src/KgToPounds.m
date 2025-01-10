@@ -1,8 +1,7 @@
 function weightInPounds = KgToPounds(weightInKg)
 
-    % Define the multiplier and the input matrix
+    % Define the multiplier to convert kilograms to pounds
     multiplier = 2.20462262;
-    % weightInKg = [1, 2, 3, 4, 5];
 
     % Call the arrayProduct function
     weightInPounds = arrayProduct(multiplier, weightInKg);

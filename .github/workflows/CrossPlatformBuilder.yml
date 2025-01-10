@@ -41,12 +41,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Compile
-        uses: matlab-actions/run-command@v2
-        with:
-          command: |
-            ver;
-
       - name: Extract and Set MATLAB Runtime Path
         id: set-runtime-path
         uses: matlab-actions/run-command@v2
@@ -56,56 +50,6 @@ jobs:
             runtimePath = fullfile(matlabRoot, 'runtime');
             fprintf('::set-output name=runtimePath::%s\n', runtimePath);
 
-      - name: Verify MATLAB Runtime Directory
-        run: |
-          runtimePath="${{ steps.set-runtime-path.outputs.runtimePath }}"
-
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            # PowerShell syntax for Windows
-            echo "Runtime Path: ${runtimePath}"
-            echo "Contents of ${runtimePath}"
-            ls -la "${runtimePath}"
-          else
-            # Bash syntax for Linux and macOS
-            echo "Runtime Path: $runtimePath"
-            echo "Contents of $runtimePath:"
-            ls -la "$runtimePath"
-          fi
-        shell: bash
-
-      - name: List MATLAB Runtime Directory
-        run: |
-          runtimePath="${{ steps.set-runtime-path.outputs.runtimePath }}"
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            # PowerShell syntax for Windows
-            runtimePath="${runtimePath}\\win64"
-            echo "Runtime Path: ${runtimePath}"
-            if [ -d "${runtimePath}" ]; then
-              echo "Contents of ${runtimePath}"
-              ls -la "${runtimePath}"
-            else
-              echo "Directory $runtimePath does not exist."
-              exit 1
-            fi
-          else
-            # Bash syntax for Linux and macOS
-            
-            if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-              runtimePath="${runtimePath}/glnxa64"
-            elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-              runtimePath="${runtimePath}/maca64"
-            fi
-            echo "Runtime Path: $runtimePath"
-            if [ -d "$runtimePath" ]; then
-              echo "Contents of $runtimePath:"
-              ls -la "$runtimePath"
-            else
-              echo "Directory $runtimePath does not exist."
-              exit 1
-            fi
-          fi
-        shell: bash
-
       - name: Add MATLAB runtime to PATH for Windows
         if: matrix.os == 'windows-latest'
         run: |
@@ -113,39 +57,22 @@ jobs:
           [System.IO.File]::AppendAllText("$env:GITHUB_ENV", "`nPATH=$env:PATH;$runtimePath`n")
           Write-Host "Updated PATH: $env:PATH"
         shell: pwsh
-
-      - name: Verify Updated PATH
-        run: |
-          echo $PATH
-        shell: bash
  
       # Compiles MATLAB function for deployment
       - name: Compile
         uses: matlab-actions/run-command@v2
         with:
           command: |
-            pyenv
-            mex src/arrayProduct.c
-            addpath(genpath(pwd))
-            KgToPounds([1,2,3,4,5]);
+            mex src/arrayProduct.c;
+            addpath(genpath(pwd));
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
             save("pythonBuild.mat","buildResults");
-            
-      # runtests("tests/KgToPoundsEquivalenceTest.m");
 
-      - name: Compile
-        uses: matlab-actions/run-command@v2
-        with:
-          command: ls;
-
-      # For the below test, would have to change python build to ../pythonBuild in test
       - name: Run equivalence tests
         uses: matlab-actions/run-tests@v2
         with:
           select-by-tag: EquivalenceTest
           source-folder: ../
-            
-      # compiler.build.standaloneApplication("src/KgToPounds.m");
 
       # Uploads the generated executable as an artifact to GitHub
       - name: Upload generated binary
