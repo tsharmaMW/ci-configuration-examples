@@ -1,4 +1,4 @@
-name: Build and Deploy MATLAB standalone applications
+name: Build and Deploy Python Package
  
 on:
   push:
@@ -11,8 +11,8 @@ env:
   MLM_LICENSE_TOKEN: ${{ secrets.MLM_LICENSE_TOKEN }}
  
 jobs:
-  # This workflow contains a single job called "build-and-upload"
-  build-and-upload:
+  # This workflow contains a single job called "build-and-deploy"
+  build-and-deploy:
      
     # A job will run for all combinations of OS and release present in the matrix
     strategy:
