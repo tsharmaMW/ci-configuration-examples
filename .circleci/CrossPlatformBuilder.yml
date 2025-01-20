@@ -41,7 +41,7 @@ jobs:
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
             save("pythonBuild.mat","buildResults");
 
-      - matlab/run-tests@v2:
+      - matlab/run-tests:
           select-by-tag: EquivalenceTest
           source-folder: ../
 
