@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   matlab: mathworks/matlab@1.3.0
-  python: circleci/python@3.0.0
 
 executors:
   linux:
@@ -36,8 +35,8 @@ jobs:
       - matlab/run-command:
           command: |
             mex src/arrayProduct.c;
-            addpath(genpath(pwd));
-            pyenv;
+            addpath(pwd);
+            pyenv
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
             save("pythonBuild.mat","buildResults");
 
