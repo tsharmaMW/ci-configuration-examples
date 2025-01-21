@@ -32,7 +32,7 @@ jobs:
         inputs:
           command: |
             mex src/arrayProduct.c
-            addpath(pwd)
+            addpath(genpath(pwd));
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
             save("pythonBuild.mat","buildResults");
         env:
