@@ -41,6 +41,8 @@ jobs:
         inputs:
           select-by-tag: EquivalenceTest
           source-folder: ../
+        env:
+          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: 'KgToPoundsPythonBuild'
