@@ -36,7 +36,6 @@ jobs:
           command: |
             mex src/arrayProduct.c;
             addpath(pwd);
-            pyenv
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
             save("pythonBuild.mat","buildResults");
 
