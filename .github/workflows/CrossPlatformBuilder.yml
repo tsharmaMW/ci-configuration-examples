@@ -66,7 +66,7 @@ jobs:
 
       # Uploads the generated executable as an artifact to GitHub
       - name: Upload generated binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: KgToPounds-${{ matrix.release }}-${{ matrix.os }}
           path: KgToPounds*

@@ -30,13 +30,13 @@ jobs:
 
       # Uploads the test results and MEX files to GitHub
       - name: Upload test results          
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.os }}
           path: test-results/results.xml
 
       - name: Upload mex file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mex-${{ matrix.os }}
           path: toolbox/**/*.mex*
