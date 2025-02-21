@@ -31,16 +31,18 @@ jobs:
             MATLAB_Compiler_SDK
             MATLAB_Test
 
+      # if [[ "<<parameters.os>>" == "windows" ]]; then
+      # fi
+
       # Extract and Add MATLAB runtime to PATH for Windows
       - run:
           name: Extract and Add MATLAB runtime to PATH for Windows
           command: |
-            if [[ "<<parameters.os>>" == "windows" ]]; then
               matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
               echo 'export PATH="$matlab_root/runtime/win64:$PATH"' >> $BASH_ENV
               export PATH="$matlab_root/runtime/win64:$PATH"
               echo "The updated PATH is: $PATH"
-            fi
+            
           
       # Compiles MATLAB function for deployment
       - matlab/run-command:
