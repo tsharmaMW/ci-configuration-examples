@@ -37,8 +37,8 @@ jobs:
           command: |
             if [ "<<parameters.os>>" == "windows" ]; then
               matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
-              runtime_path = "$matlab_root\runtime\win64"
-              echo "export PATH=$PATH;$runtime_path" >> "$BASH_ENV"
+              runtime_path = "$matlab_root\\runtime\\win64"
+              echo "export PATH="$PATH";$runtime_path" >> "$BASH_ENV"
             fi
           
       # Compiles MATLAB function for deployment
