@@ -28,6 +28,7 @@ jobs:
        
       # Sets up MATLAB on the GitHub Actions runner using setup-matlab@v2 and download MATLAB_Compiler_SDK
       - name: Setup MATLAB
+        id: setup-matlab
         uses: matlab-actions/setup-matlab@v2
         with:
           release: ${{ matrix.release }}
@@ -41,21 +42,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Extract and Set MATLAB Runtime Path
-        id: set-runtime-path
-        uses: matlab-actions/run-command@v2
-        with:
-          command: |
-            matlabRoot = matlabroot;
-            runtimePath = fullfile(matlabRoot, 'runtime');
-            fprintf('::set-output name=runtimePath::%s\n', runtimePath);
-
       - name: Add MATLAB runtime to PATH for Windows
         if: matrix.os == 'windows-latest'
         run: |
-          $runtimePath = "${{ steps.set-runtime-path.outputs.runtimePath }}\win64"
-          [System.IO.File]::AppendAllText("$env:GITHUB_ENV", "`nPATH=$env:PATH;$runtimePath`n")
-          Write-Host "Updated PATH: $env:PATH"
+          echo "PATH=$env:PATH;${{ steps.setup-matlab.outputs.matlabroot }}\runtime\win64" >> $env:GITHUB_ENV
         shell: pwsh
  
       # Compiles MATLAB function for deployment
