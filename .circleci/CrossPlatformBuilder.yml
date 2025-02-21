@@ -13,7 +13,6 @@ executors:
     resource_class: "windows.medium"
     machine:
       image: 'windows-server-2022-gui:current'
-      shell: "powershell.exe -ExecutionPolicy Bypass"
 
 jobs:
   build_and_deploy:
@@ -36,16 +35,12 @@ jobs:
       - run:
           name: Extract and Add MATLAB runtime to PATH for Windows
           command: |
-            if ("<< parameters.os >>" -eq "windows") {
-              $matlab_root = matlab -batch "disp(matlabroot)" | Select-String -Pattern '.*'
-              $env:PATH = "$env:PATH;$matlab_root\runtime\win64"
-            }
-
-      # Step to verify that the MATLAB_RUNTIME_PATH is set
-      - run:
-          name: Verify MATLAB_RUNTIME_PATH
-          command: |
-            echo "The updated PATH is: $PATH"
+            if [ "<<parameters.os>>" == "windows" ]; then
+              matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
+              echo 'export PATH="$matlab_root/runtime/win64:$PATH"' >> $BASH_ENV
+              export PATH="$matlab_root/runtime/win64:$PATH"
+              echo "The updated PATH is: $PATH"
+            fi
           
       # Compiles MATLAB function for deployment
       - matlab/run-command:
