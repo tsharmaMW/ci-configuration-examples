@@ -30,6 +30,16 @@ jobs:
           products: >
             MATLAB_Compiler_SDK
             MATLAB_Test
+
+      # Extract and Add MATLAB runtime to PATH for Windows
+      - run:
+          name: Extract and Add MATLAB runtime to PATH for Windows
+          command: |
+            if [ "<<parameters.os>>" == "windows" ]; then
+              matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
+              runtime_path = "$matlab_root\runtime\win64"
+              echo "PATH=$PATH;$runtime_path" >> $BASH_ENV
+            fi
           
       # Compiles MATLAB function for deployment
       - matlab/run-command:
