@@ -13,6 +13,7 @@ executors:
     resource_class: "windows.medium"
     machine:
       image: 'windows-server-2022-gui:current'
+      shell: "powershell.exe -ExecutionPolicy Bypass"
 
 jobs:
   build_and_deploy:
