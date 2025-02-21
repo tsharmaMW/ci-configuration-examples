@@ -35,7 +35,6 @@ jobs:
       # Extract and Add MATLAB runtime to PATH for Windows
       - run:
           name: Extract and Add MATLAB runtime to PATH for Windows
-          shell: powershell.exe
           command: |
             if [ "<<parameters.os>>" == "windows" ]; then
               matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
