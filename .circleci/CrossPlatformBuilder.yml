@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  matlab: mathworks/matlab@1.3.0
+  matlab: mathworks/matlab@a2f4d5a66070144ef13ab4b0565775be222bee3e
 
 executors:
   linux:
@@ -34,15 +34,18 @@ jobs:
       # if [[ "<<parameters.os>>" == "windows" ]]; then
       # fi
 
-      # Extract and Add MATLAB runtime to PATH for Windows
-      - run:
-          name: Extract and Add MATLAB runtime to PATH for Windows
-          command: |
-              matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
-              echo 'export PATH="$matlab_root/runtime/win64:$PATH"' >> $BASH_ENV
-              export PATH="$matlab_root/runtime/win64:$PATH"
-              echo "The updated PATH is: $PATH"
-            
+      # - matlab/run-command:
+      #     command: |
+
+
+      # # Extract and Add MATLAB runtime to PATH for Windows
+      # - run:
+      #     name: Extract and Add MATLAB runtime to PATH for Windows
+      #     command: |
+      #         matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
+      #         echo 'export PATH="$matlab_root/runtime/win64:$PATH"' >> $BASH_ENV
+      #         export PATH="$matlab_root/runtime/win64:$PATH"
+      #         echo "The updated PATH is: $PATH"
           
       # Compiles MATLAB function for deployment
       - matlab/run-command:
