@@ -29,26 +29,21 @@ jobs:
           products: >
             MATLAB_Compiler_SDK
             MATLAB_Test
-
-      # if [[ "<<parameters.os>>" == "windows" ]]; then
-      # fi
-
-      # - matlab/run-command:
-      #     command: |
-
-
-      # # Extract and Add MATLAB runtime to PATH for Windows
-      # - run:
-      #     name: Extract and Add MATLAB runtime to PATH for Windows
-      #     command: |
-      #         matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
-      #         echo 'export PATH="$matlab_root/runtime/win64:$PATH"' >> $BASH_ENV
-      #         export PATH="$matlab_root/runtime/win64:$PATH"
-      #         echo "The updated PATH is: $PATH"
           
       # Verify if the MATLAB runtime is added to the PATH
       - matlab/run-command:
           command: mcrversion
+
+      - run:
+          name: Verify MATLAB runtime in PATH
+          command: |
+            set -e
+            if [[ ":$PATH:" == *"runtime"* ]]; then
+              echo "MATLAB Runtime path is correctly set in PATH."
+            else
+              echo "MATLAB Runtime path is NOT set in PATH."
+              exit 1
+            fi
 
       - matlab/run-command:
           command: |
