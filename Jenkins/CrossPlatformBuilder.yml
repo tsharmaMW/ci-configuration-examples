@@ -10,7 +10,7 @@ pipeline {
                     }
                     axis {
                         name 'RELEASE'
-                        values 'R2023a', 'R2023b'
+                        values 'R2024a', 'R2024b'
                     }
                 }
                 stages {
