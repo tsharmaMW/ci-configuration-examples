@@ -38,7 +38,30 @@ jobs:
           name: Verify the DLL files exist in MATLAB Runtime directory
           command: |
             echo $PATH
-            found_dll=$(find ${PATH//:/ } -name "mclmcrrt24_1.dll" 2>/dev/null)
+            os=$(uname)
+            
+            if [[ $os = CYGWIN* || $os = MINGW* || $os = MSYS* ]]; then
+              # For Windows environments using a Bash shell
+              found_dll=""
+              
+              # Convert PATH into an array of directories
+              IFS=':' read -r -a path_array <<< "$PATH"
+              
+              # Search for DLL in each directory
+              for dir in "${path_array[@]}"; do
+                if [ -d "$dir" ]; then
+                  result=$(find "$dir" -maxdepth 1 -name "mclmcrrt*.dll" 2>/dev/null)
+                  if [ -n "$result" ]; then
+                    found_dll="$result"
+                    break
+                  fi
+                fi
+              done
+            else
+              # For Unix-like systems (Linux, macOS)
+              found_dll=$(find ${PATH//:/ } -name "mclmcrrt*.dll" 2>/dev/null)
+            fi
+
             if [ -n "$found_dll" ]; then
               echo "Found mclmcrrt DLL: $found_dll"
             else
