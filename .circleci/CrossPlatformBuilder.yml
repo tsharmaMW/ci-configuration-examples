@@ -35,6 +35,18 @@ jobs:
           command: mcrversion
 
       - run:
+          name: Verify the DLL files exist in MATLAB Runtime directory
+          command: |
+            found_dll=$(find ${PATH//:/ } -name "mclmcrrt*.dll")
+            if [ -n "$found_dll" ]; then
+              echo "Found mclmcrrt DLL: $found_dll"
+            else
+              echo "No mclmcrrt DLL found in PATH."
+              exit 1
+            fi
+          shell: bash
+
+      - run:
           name: Verify MATLAB runtime in PATH
           command: |
             echo "$(which mwregsvr)"
