@@ -48,9 +48,8 @@ jobs:
                 if [ -d "$dir" ]; then
                   echo "Contents of $dir:"
                   ls "$dir"
-                  result=$(find "$dir" -maxdepth 1 -name "mclmcrrt*.dll" 2>/dev/null)
-                  if [ -n "$result" ]; then
-                    found_dll="$result"
+                  if ls "$dir/mclmcrrt"*.dll 1> /dev/null 2>&1; then
+                    found_dll=$(ls "$dir/mclmcrrt"*.dll)
                     break
                   fi
                 fi
