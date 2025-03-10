@@ -40,17 +40,19 @@ jobs:
             echo $PATH
             os=$(uname)
             
-            if [[ $os = CYGWIN* || $os = MINGW* || $os = MSYS* ]]; then
+            if [[ $os == CYGWIN* || $os == MINGW* || $os == MSYS* ]]; then
               # For Windows environments using a Bash shell
               found_dll=""
-              echo "$PATH" | tr ':' '\n' | while read -r dir; do
+              IFS=':' read -ra ADDR <<< "$PATH"
+              for dir in "${ADDR[@]}"; do
                 echo "Checking directory: $dir"
                 if [ -d "$dir" ]; then
                   echo "Contents of $dir:"
                   ls "$dir"
-                  match=$(ls "$dir" | grep -i '^mclmcrrt.*\.dll$')
-                  if [ -n "$match" ]; then
-                    found_dll="$dir/$match"
+                  # Use dir and findstr to match the pattern mclmcrrt*.dll
+                  result=$(dir "$dir" /b | findstr /i "^mclmcrrt.*\.dll$")
+                  if [ -n "$result" ]; then
+                    found_dll="$dir\\$result"
                     break
                   fi
                 fi
