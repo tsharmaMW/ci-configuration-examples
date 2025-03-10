@@ -44,8 +44,9 @@ jobs:
               # For Windows environments using a Bash shell
               found_dll=""
               
-              # Convert PATH into an array of directories
-              IFS=':' read -r -a path_array <<< "$PATH"
+              # Process PATH variable
+              path_var="$PATH"
+              IFS=':' read -r -a path_array <<< "$path_var"
               
               # Search for DLL in each directory
               for dir in "${path_array[@]}"; do
