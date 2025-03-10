@@ -37,11 +37,12 @@ jobs:
       - run:
           name: Verify MATLAB runtime in PATH
           command: |
+            echo "$(which mwregsvr)"
             set -e
-            if [[ ":$PATH:" == *"runtime"* ]]; then
-              echo "MATLAB Runtime path is correctly set in PATH."
+            if [[ "${PATH}" == *"runtime"* ]]; then
+              echo "MATLAB Runtime is correctly set in PATH."
             else
-              echo "MATLAB Runtime path is NOT set in PATH."
+              echo "MATLAB Runtime is NOT set in PATH."
               exit 1
             fi
 
