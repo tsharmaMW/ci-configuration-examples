@@ -49,6 +49,7 @@ jobs:
               echo "No mclmcrrt DLL found in PATH. Verify MATLAB Runtime is added to PATH."
               exit 1
             fi
+          shell: bash
 
       - matlab/run-command:
           command: |
