@@ -37,6 +37,7 @@ jobs:
       - run:
           name: Verify MATLAB Runtime libraries in PATH
           command: |
+            os=$(uname)
             if [[ $os == CYGWIN* || $os == MINGW* || $os == MSYS* ]]; then
               found_dll=$(where mclmcrrt*.dll 2>/dev/null)
             else
@@ -44,7 +45,7 @@ jobs:
             fi
 
             if [ -n "$found_dll" ]; then
-              echo "Found mclmcrrt DLL: $found_dll"
+              echo "MATLAB Runtime is correctly set in PATH. Found mclmcrrt DLL: $found_dll"
             else
               echo "No mclmcrrt DLL found in PATH. Verify MATLAB Runtime is added to PATH."
               exit 1
