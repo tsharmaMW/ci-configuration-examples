@@ -41,30 +41,11 @@ jobs:
             os=$(uname)
             
             if [[ $os == CYGWIN* || $os == MINGW* || $os == MSYS* ]]; then
-              # For Windows environments using a Bash shell
-              found_dll=""
-              OLD_IFS=$IFS
-              IFS=':'
-              ADDR=($PATH)
-              IFS=$OLD_IFS
-              for dir in "${ADDR[@]}"; do
-                echo "Checking directory: $dir"
-                if [ -d "$dir" ]; then
-                  echo "Contents of $dir:"
-                  ls "$dir"
-                  # Use dir and findstr to match the pattern mclmcrrt*.dll
-                  result=$(dir "$dir" /b | findstr /i "^mclmcrrt.*\.dll$")
-                  if [ -n "$result" ]; then
-                    found_dll="$dir\\$result"
-                    break
-                  fi
-                fi
-              done
+              found_dll=$(where mclmcrrt*.dll 2> nul)
             else
               # For Unix-like systems (Linux, macOS)
               found_dll=$(find ${PATH//:/ } -name "mclmcrrt*.dll" 2>/dev/null)
             fi
-
             if [ -n "$found_dll" ]; then
               echo "Found mclmcrrt DLL: $found_dll"
             else
