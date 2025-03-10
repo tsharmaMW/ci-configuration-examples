@@ -43,9 +43,11 @@ jobs:
             if [[ $os = CYGWIN* || $os = MINGW* || $os = MSYS* ]]; then
               # For Windows environments using a Bash shell
               found_dll=""
-              # Iterate over each directory in PATH
               echo "$PATH" | tr ':' '\n' | while read -r dir; do
+                echo "Checking directory: $dir"
                 if [ -d "$dir" ]; then
+                  echo "Contents of $dir:"
+                  ls "$dir"
                   result=$(find "$dir" -maxdepth 1 -name "mclmcrrt*.dll" 2>/dev/null)
                   if [ -n "$result" ]; then
                     found_dll="$result"
