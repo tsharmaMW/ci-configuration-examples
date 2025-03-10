@@ -48,8 +48,9 @@ jobs:
                 if [ -d "$dir" ]; then
                   echo "Contents of $dir:"
                   ls "$dir"
-                  if ls "$dir/mclmcrrt"*.dll 1> /dev/null 2>&1; then
-                    found_dll=$(ls "$dir/mclmcrrt"*.dll)
+                  match=$(ls "$dir" | grep -i '^mclmcrrt.*\.dll$')
+                  if [ -n "$match" ]; then
+                    found_dll="$dir/$match"
                     break
                   fi
                 fi
