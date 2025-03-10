@@ -39,11 +39,7 @@ jobs:
           command: |
             echo $PATH
             set -e
-            os=$(uname)
-            if [[ $os = CYGWIN* || $os = MINGW* || $os = MSYS* ]]; then
-              PATH=$(echo "$PATH" | tr ';' ':')
-            fi
-            found_dll=$(find ${PATH//:/ } -name "mclmcrrt*.dll" 2>/dev/null)
+            found_dll=$(find ${PATH//:/ } -name "mclmcrrt24_1.dll" 2>/dev/null)
             if [ -n "$found_dll" ]; then
               echo "Found mclmcrrt DLL: $found_dll"
             else
