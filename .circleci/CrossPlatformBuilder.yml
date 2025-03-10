@@ -29,10 +29,6 @@ jobs:
           # products: >
           #   MATLAB_Compiler_SDK
           #   MATLAB_Test
-          
-      # Verify if the MATLAB runtime is added to the PATH
-      - matlab/run-command:
-          command: mcrversion
 
       - run:
           name: Verify MATLAB Runtime libraries in PATH
