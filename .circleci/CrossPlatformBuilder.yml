@@ -43,7 +43,10 @@ jobs:
             if [[ $os == CYGWIN* || $os == MINGW* || $os == MSYS* ]]; then
               # For Windows environments using a Bash shell
               found_dll=""
-              IFS=':' read -ra ADDR <<< "$PATH"
+              OLD_IFS=$IFS
+              IFS=':'
+              ADDR=($PATH)
+              IFS=$OLD_IFS
               for dir in "${ADDR[@]}"; do
                 echo "Checking directory: $dir"
                 if [ -d "$dir" ]; then
