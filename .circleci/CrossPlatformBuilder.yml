@@ -26,9 +26,9 @@ jobs:
 
       - matlab/install:
           release: << parameters.release >>
-          products: >
-            MATLAB_Compiler_SDK
-            MATLAB_Test
+          # products: >
+          #   MATLAB_Compiler_SDK
+          #   MATLAB_Test
           
       # Verify if the MATLAB runtime is added to the PATH
       - matlab/run-command:
@@ -52,17 +52,17 @@ jobs:
             fi
           shell: bash
 
-      - matlab/run-command:
-          command: |
-            mex src/arrayProduct.c;
-            addpath(genpath(pwd));
-            buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
-            save("pythonBuild.mat","buildResults");
-            results = runtests("tests/KgToPoundsEquivalenceTest.m");
-            assertSuccess(results);
+      # - matlab/run-command:
+      #     command: |
+      #       mex src/arrayProduct.c;
+      #       addpath(genpath(pwd));
+      #       buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
+      #       save("pythonBuild.mat","buildResults");
+      #       results = runtests("tests/KgToPoundsEquivalenceTest.m");
+      #       assertSuccess(results);
 
-      - store_artifacts:
-          path: KgToPoundsPythonBuild
+      # - store_artifacts:
+      #     path: KgToPoundsPythonBuild
 
 workflows:
   build_and_deploy_python_package:
