@@ -31,6 +31,21 @@ jobs:
           #   MATLAB_Test
 
       - run:
+          name: Verify MATLAB runtime in PATH for Windows
+          command: |
+            set -e
+            os=$(uname)
+            if [[ $os = CYGWIN* || $os = MINGW* || $os = MSYS* ]]; then
+              if [[ "${PATH}" == *"runtime"* ]]; then
+                echo "MATLAB Runtime is correctly set in PATH."
+              else
+                echo "MATLAB Runtime is NOT set in PATH."
+                exit 1
+              fi
+            fi
+          shell: bash
+
+      - run:
           name: Verify MATLAB Runtime libraries in PATH
           command: |
             os=$(uname)
