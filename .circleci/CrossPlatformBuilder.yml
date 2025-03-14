@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  matlab: mathworks/matlab@dev:8bc1e6ffbe2e10c5f97d0dc42db3c21fdd1abf1a
+  matlab: mathworks/matlab@dev:3a2df7f0404d6804917f1cdb7199862167943f48
 executors:
   linux:
     machine:
@@ -26,54 +26,21 @@ jobs:
 
       - matlab/install:
           release: << parameters.release >>
-          # products: >
-          #   MATLAB_Compiler_SDK
-          #   MATLAB_Test
+          products: >
+            MATLAB_Compiler_SDK
+            MATLAB_Test
 
-      - run:
-          name: Verify MATLAB runtime in PATH for Windows
+      - matlab/run-command:
           command: |
-            set -e
-            os=$(uname)
-            if [[ $os = CYGWIN* || $os = MINGW* || $os = MSYS* ]]; then
-              if [[ "${PATH}" == *"runtime"* ]]; then
-                echo "MATLAB Runtime is correctly set in PATH."
-              else
-                echo "MATLAB Runtime is NOT set in PATH."
-                exit 1
-              fi
-            fi
-          shell: bash
+            mex src/arrayProduct.c;
+            addpath(genpath(pwd));
+            buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
+            save("pythonBuild.mat","buildResults");
+            results = runtests("tests/KgToPoundsEquivalenceTest.m");
+            assertSuccess(results);
 
-      - run:
-          name: Verify MATLAB Runtime libraries in PATH
-          command: |
-            os=$(uname)
-            if [[ $os == CYGWIN* || $os == MINGW* || $os == MSYS* ]]; then
-              found_dll=$(where mclmcrrt*.dll 2>/dev/null)
-            else
-              found_dll=$(find ${PATH//:/ } -name "mclmcrrt*.dll" 2>/dev/null)
-            fi
-
-            if [ -n "$found_dll" ]; then
-              echo "MATLAB Runtime is correctly set in PATH. Found mclmcrrt DLL: $found_dll"
-            else
-              echo "No mclmcrrt DLL found in PATH. Verify MATLAB Runtime is added to PATH."
-              exit 1
-            fi
-          shell: bash
-
-      # - matlab/run-command:
-      #     command: |
-      #       mex src/arrayProduct.c;
-      #       addpath(genpath(pwd));
-      #       buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
-      #       save("pythonBuild.mat","buildResults");
-      #       results = runtests("tests/KgToPoundsEquivalenceTest.m");
-      #       assertSuccess(results);
-
-      # - store_artifacts:
-      #     path: KgToPoundsPythonBuild
+      - store_artifacts:
+          path: KgToPoundsPythonBuild
 
 workflows:
   build_and_deploy_python_package:
