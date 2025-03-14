@@ -30,6 +30,12 @@ jobs:
             MATLAB_Compiler_SDK
             MATLAB_Test
 
+      - run:
+          name: Verify MATLAB runtime in PATH for Windows
+          command: |
+            echo <<parameters.os>>
+          shell: bash
+
       - matlab/run-command:
           command: |
             mex src/arrayProduct.c;
