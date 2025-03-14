@@ -8,7 +8,7 @@ executors:
   macos:
     macos:
       xcode: 14.2.0
-  windows:
+  windows: &windows-executor
     resource_class: "windows.medium"
     machine:
       image: 'windows-server-2022-gui:current'
@@ -24,17 +24,18 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Verify MATLAB runtime in PATH for Windows
+          command: |
+            echo *windows-executor
+            echo <<parameters.os>>
+          shell: bash
+
       - matlab/install:
           release: << parameters.release >>
           products: >
             MATLAB_Compiler_SDK
             MATLAB_Test
-
-      - run:
-          name: Verify MATLAB runtime in PATH for Windows
-          command: |
-            echo <<parameters.os>>
-          shell: bash
 
       - matlab/run-command:
           command: |
