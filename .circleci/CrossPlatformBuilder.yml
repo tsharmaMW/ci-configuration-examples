@@ -33,7 +33,7 @@ jobs:
       
       - when:
           condition: 
-            equal: [ *windows-executor, <<parameters.executor>> ]
+            equal: [ *windows-executor, <<parameters.os>> ]
           steps:
             - run:
                 name: Condition verified
