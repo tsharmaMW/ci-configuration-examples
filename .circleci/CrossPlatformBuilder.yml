@@ -30,6 +30,16 @@ jobs:
             echo *windows-executor
             echo <<parameters.os>>
           shell: bash
+      
+      - when:
+          condition: 
+            equal: [ *windows-executor, <<parameters.executor>> ]
+          steps:
+            - run:
+                name: Condition verified
+                command: |
+                  echo "this is windows-executor"
+                shell: bash
 
       - matlab/install:
           release: << parameters.release >>
