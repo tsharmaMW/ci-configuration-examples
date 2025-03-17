@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  matlab: mathworks/matlab@dev:3a2df7f0404d6804917f1cdb7199862167943f48
+  matlab: mathworks/matlab@1.7.0
 executors:
   linux:
     machine:
