@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   matlab: mathworks/matlab@dev:3a2df7f0404d6804917f1cdb7199862167943f48
-  win: circleci/windows@5.0 #remove
 executors:
   linux:
     machine:
@@ -9,41 +8,21 @@ executors:
   macos:
     macos:
       xcode: 14.2.0
-  windows: &windows-executor
-    win/default
-  
-  
-  # windows: &windows-executor
-  #   resource_class: "windows.medium"
-  #   machine:
-  #     image: 'windows-server-2022-gui:current'
+  windows:
+    resource_class: "windows.medium"
+    machine:
+      image: 'windows-server-2022-gui:current'
 
 jobs:
   build_and_deploy:
     parameters:
       os:
-        type: string
+        type: executor
       release:
         type: string
     executor: << parameters.os >>
     steps:
       - checkout
-
-      - run:
-          name: Verify MATLAB runtime in PATH for Windows
-          command: |
-            echo <<parameters.os>>
-          shell: bash
-      
-      - when:
-          condition: 
-            equal: [ "windows", <<parameters.os>> ]
-          steps:
-            - run:
-                name: Condition verified
-                command: |
-                  echo "this is windows-executor"
-                shell: bash
 
       - matlab/install:
           release: << parameters.release >>
