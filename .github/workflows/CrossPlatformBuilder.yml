@@ -33,7 +33,7 @@ jobs:
           repo: matlab-actions/setup-matlab
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow_search: true
-          commit: 94e87238756845a653cac6251e89d8e549529ecb
+          commit: 867efa5908aa04af0c987331f157989559533c85
           name: built-action
 
       - name: install products using updated setup-matlab
