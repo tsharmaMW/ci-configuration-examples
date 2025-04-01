@@ -30,6 +30,7 @@ jobs:
         id: download-artifact
         uses: dawidd6/action-download-artifact@v9
         with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
           workflow_search: true
           commit: 94e87238756845a653cac6251e89d8e549529ecb
           name: built-action
