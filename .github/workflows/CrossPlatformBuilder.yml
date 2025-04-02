@@ -26,45 +26,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Download updated setup-matlab
-        id: download-artifact
-        uses: dawidd6/action-download-artifact@v9
-        with:
-          repo: matlab-actions/setup-matlab
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow_search: true
-          commit: 867efa5908aa04af0c987331f157989559533c85
-          name: built-action
-
-      - name: install products using updated setup-matlab
-        uses: ./
+      # Sets up MATLAB on the GitHub Actions runner using setup-matlab@v2 and download MATLAB_Compiler_SDK
+      - name: Setup MATLAB
+        id: setup-matlab
+        uses: matlab-actions/setup-matlab@v2.4.0
         with:
           release: ${{ matrix.release }}
           products: >
             MATLAB_Compiler_SDK
             MATLAB_Test
-       
-      # # Sets up MATLAB on the GitHub Actions runner using setup-matlab@v2 and download MATLAB_Compiler_SDK
-      # - name: Setup MATLAB
-      #   id: setup-matlab
-      #   uses: matlab-actions/setup-matlab@94e87238756845a653cac6251e89d8e549529ecb
-      #   with:
-      #     release: ${{ matrix.release }}
-      #     products: >
-      #       MATLAB_Compiler_SDK
-      #       MATLAB_Test
 
       # Installs Python and add it to the Path
       - name: Setup Python
         uses: actions/setup-python@v5 
         with:
           python-version: '3.11'
-
-      # - name: Add MATLAB runtime to PATH for Windows
-      #   if: matrix.os == 'windows-latest'
-      #   run: |
-      #     echo "PATH=$env:PATH;${{ steps.setup-matlab.outputs.matlabroot }}\runtime\win64" >> $env:GITHUB_ENV
-      #   shell: pwsh
  
       # Compiles MATLAB function for deployment
       - name: Compile
