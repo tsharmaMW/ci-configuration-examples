@@ -5,28 +5,24 @@ jobs:
         linux-R2024a:
           imageName: ubuntu-latest
           release: R2024a
-        linux-R2024b:
-          imageName: ubuntu-latest
-          release: R2024b
-        mac-R2024a:
-          imageName: macOS-latest
-          release: R2024a
-        mac-R2024b:
-          imageName: macOS-latest
-          release: R2024b
-        windows-R2024a:
-          imageName: windows-latest
-          release: R2024a
+        # linux-R2024b:
+        #   imageName: ubuntu-latest
+        #   release: R2024b
+        # mac-R2024a:
+        #   imageName: macOS-latest
+        #   release: R2024a
+        # mac-R2024b:
+        #   imageName: macOS-latest
+        #   release: R2024b
+        # windows-R2024a:
+        #   imageName: windows-latest
+        #   release: R2024a
         windows-R2024b:
           imageName: windows-latest
           release: R2024b
     pool:
       vmImage: $(imageName)
     steps:
-      # matlab_root=$(matlab -batch "disp(matlabroot)" | tail -n 1 | tr -d '\r')
-      #         echo 'export PATH="$matlab_root/runtime/win64:$PATH"' >> $BASH_ENV
-      #         export PATH="$matlab_root/runtime/win64:$PATH"
-      #         echo "The updated PATH is: $PATH"
       - task: InstallMATLAB@1
         inputs:
           release: '$(release)'
