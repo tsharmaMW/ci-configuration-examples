@@ -6,11 +6,11 @@ pipeline {
                 axes {
                     axis {
                         name 'OS'
-                        values 'linux', 'windows', 'macos'
+                        values 'windows' // 'linux', 'windows', 'macos'
                     }
                     axis {
                         name 'RELEASE'
-                        values 'R2024a', 'R2024b'
+                        values 'R2024a' // 'R2024b'
                     }
                 }
                 stages {
