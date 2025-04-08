@@ -24,7 +24,7 @@ jobs:
       vmImage: $(imageName)
     steps:
       # - task: InstallMATLAB@1.12.63
-      - task: MathWorks.matlab-azure-devops-extension-dev.InstallMATLAB.InstallMATLAB@v1
+      - task: MathWorks.matlab-azure-devops-extension-dev.InstallMATLAB.InstallMATLAB@1.12.63
         inputs:
           release: '$(release)'
           products: 'MATLAB_Compiler_SDK MATLAB_Test'
