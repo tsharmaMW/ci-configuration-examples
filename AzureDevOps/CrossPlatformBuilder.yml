@@ -2,21 +2,21 @@ jobs:
   - job: build_and_deploy_python_package
     strategy:
       matrix:
-        linux-R2024a:
-          imageName: ubuntu-latest
-          release: R2024a
-        linux-R2024b:
-          imageName: ubuntu-latest
-          release: R2024b
-        mac-R2024a:
-          imageName: macOS-latest
-          release: R2024a
-        mac-R2024b:
-          imageName: macOS-latest
-          release: R2024b
-        windows-R2024a:
-          imageName: windows-latest
-          release: R2024a 
+        # linux-R2024a:
+        #   imageName: ubuntu-latest
+        #   release: R2024a
+        # linux-R2024b:
+        #   imageName: ubuntu-latest
+        #   release: R2024b
+        # mac-R2024a:
+        #   imageName: macOS-latest
+        #   release: R2024a
+        # mac-R2024b:
+        #   imageName: macOS-latest
+        #   release: R2024b
+        # windows-R2024a:
+        #   imageName: windows-latest
+        #   release: R2024a 
         windows-R2024b:
           imageName: windows-latest
           release: R2024b
