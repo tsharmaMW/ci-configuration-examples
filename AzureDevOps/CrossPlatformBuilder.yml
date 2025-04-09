@@ -34,12 +34,8 @@ jobs:
             addpath(genpath(pwd));
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
             save("pythonBuild.mat","buildResults");
-            # results = runtests("tests/KgToPoundsEquivalenceTest.m");
-            # assertSuccess(results);
-      - task: RunMATLABTests@1
-        inputs:
-          selectByTag: EquivalenceTest
-          sourceFolder: ../
+            results = runtests("tests/KgToPoundsEquivalenceTest.m");
+            assertSuccess(results);
         env:
           MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       - task: PublishBuildArtifacts@1

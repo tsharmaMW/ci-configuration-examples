@@ -36,10 +36,8 @@ jobs:
             addpath(genpath(pwd));
             buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
             save("pythonBuild.mat","buildResults");
-
-      - matlab/run-tests:
-          select-by-tag: EquivalenceTest
-          source-folder: ../     
+            results = runtests("tests/KgToPoundsEquivalenceTest.m");
+            assertSuccess(results);
 
       - store_artifacts:
           path: KgToPoundsPythonBuild
