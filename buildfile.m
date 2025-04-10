@@ -9,7 +9,7 @@ plan = buildplan(localfunctions);
 plan("mex") = MexTask("src/arrayProduct.c","toolbox");
 
 % Add a task to run tests and generate test and coverage results
-plan("test") = TestTask(TestResults="test-results/results.xml");
+plan("test") = TestTask("tests/arrayProductTest.m", TestResults="test-results/results.xml");
 plan("test").Dependencies = ["mex"];
 
 end
