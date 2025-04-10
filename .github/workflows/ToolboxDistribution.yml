@@ -55,7 +55,7 @@ jobs:
 
       # Downloads all mex files uploaded to GitHub in the previous job
       - name: Download mex files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           path: toolbox    
           pattern: mex-*
