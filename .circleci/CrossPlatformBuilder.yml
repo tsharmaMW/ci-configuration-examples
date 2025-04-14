@@ -22,13 +22,11 @@ jobs:
     executor: << parameters.os >>
     steps:
       - checkout
-
       - matlab/install:
           release: << parameters.release >>
           products: >
             MATLAB_Compiler_SDK
             MATLAB_Test
-
       - matlab/run-command:
           command: |
             mex src/arrayProduct.c;
