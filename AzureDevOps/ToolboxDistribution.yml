@@ -15,8 +15,6 @@ jobs:
       - task: RunMATLABBuild@1
         inputs:
           tasks: mex test
-        env:
-          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       - publish: 'test-results/results.xml'
         artifact: 'test-results-$(imageName)'
       - task: CopyFiles@2
@@ -45,8 +43,6 @@ jobs:
       - task: RunMATLABBuild@1
         inputs:
           tasks: packageToolbox
-        env:
-          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       - task: GitHubRelease@1
         inputs:
           gitHubConnection: tsharmaMW
@@ -55,3 +51,6 @@ jobs:
           tagSource: 'userSpecifiedTag'
           tag: '$(Build.BuildNumber)'
     dependsOn: CompileAndTestMex
+
+env:
+  MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)

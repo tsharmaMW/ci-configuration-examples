@@ -6,12 +6,13 @@ pipeline {
                 axes {
                     axis {
                         name 'OS'
-                        values 'linux', 'windows', 'macos'
+                        values 'windows' // values 'linux', 'windows', 'macos'
                     }
                 }
                 stages {
                     stage("Compile and test MEX") {
-                        agent { label "${OS}" } // Assumes you have labels corresponding to the OS types
+                        // Assumes you have labels corresponding to the OS types
+                        agent { label "${OS}" }
                         tools {
                             matlab 'R2024a'
                         }
@@ -32,19 +33,20 @@ pipeline {
                 GITHUB_TOKEN = credentials('github-token') // Store your GitHub token as a Jenkins credential
             }
             tools {
-                matlab 'R2024b'
+                matlab 'R2024a' // matlab 'R2024b'
             }
             steps {
                 script {
                     // Loop through agents to unstash files
-                    def agents = ['linux', 'windows', 'macos']
+                    def agents = ['windows'] // def agents = ['linux', 'windows', 'macos']
                     agents.each { OS ->
                         unstash "mex-${OS}"
                     }
                 }
                 runMATLABBuild(tasks: 'packageToolbox')
                 script {
-                    sh "gh release create v1.${env.BUILD_NUMBER}.0 toolbox.mltbx --title 'Cross-Platform Array Product Toolbox' --repo https://github.com/tsharmaMW/ci-configuration-examples"
+                    // Create GitHub release
+                    sh "gh release create v1.${env.BUILD_NUMBER}.0 toolbox.mltbx --title 'Cross-Platform Array Product Toolbox' --repo ${env.GIT_URL}"
                 }
             }
         }
