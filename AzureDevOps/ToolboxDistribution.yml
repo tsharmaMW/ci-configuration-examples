@@ -1,7 +1,3 @@
-variables:
-- name: MLM_LICENSE_TOKEN
-  value: $(MLM_LICENSE_TOKEN)
-   
 jobs:
   # This job compiles MEX files and runs tests across different platforms
   - job: CompileAndTestMex
