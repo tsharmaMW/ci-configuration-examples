@@ -1,8 +1,6 @@
 variables:
-- name: one
-  value: some_value
-# - MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
-# - TEMP_VAR: 123
+- name: MLM_LICENSE_TOKEN
+  value: $(MLM_LICENSE_TOKEN)
    
 jobs:
   # This job compiles MEX files and runs tests across different platforms
