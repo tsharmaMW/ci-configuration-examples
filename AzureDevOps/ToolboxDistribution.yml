@@ -1,3 +1,6 @@
+variables:
+  MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
+
 jobs:
   # This job compiles MEX files and runs tests across different platforms
   - job: CompileAndTestMex
@@ -18,8 +21,6 @@ jobs:
       - task: RunMATLABBuild@1
         inputs:
           tasks: mex test
-        env:
-          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       
       # Uploads the test results
       - publish: 'test-results/results.xml'
@@ -57,8 +58,6 @@ jobs:
       - task: RunMATLABBuild@1
         inputs:
           tasks: packageToolbox
-        env:
-          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       
       # The packaged toolbox is distributed as a GitHub release
       - task: GitHubRelease@1
