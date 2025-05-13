@@ -15,6 +15,10 @@ plan("mex").Outputs = "toolbox/arrayProduct*";
 plan("test") = TestTask("tests/arrayProductTest.m", TestResults="test-results/results.xml");
 plan("test").Dependencies = "mex";
 
+% Add a task to run equivalence tests
+plan("equivalenceTest") = TestTask("tests/KgToPoundsEquivalenceTest.m");
+plan("equivalenceTest").Dependencies = "buildPythonPackage";
+
 % Add a task to package the toolbox   
 plan("packageToolbox").Dependencies = "test";
 plan("packageToolbox").Inputs = plan("mex").Outputs;
@@ -35,4 +39,10 @@ function packageToolboxTask(~)
     opts.MinimumMatlabRelease = "R2024a";
 
     matlab.addons.toolbox.packageToolbox(opts);
+end
+
+function buildPythonPackageTask(~)
+    % Build a Python Package from MATLAB function
+    buildResults = compiler.build.pythonPackage("src/KgToPounds.m", OutputDir = "KgToPoundsPythonBuild");
+    save("pythonBuild.mat","buildResults");
 end
