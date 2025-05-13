@@ -17,7 +17,7 @@ plan("test").Dependencies = "mex";
 
 % Add a task to run equivalence tests
 plan("equivalenceTest") = TestTask("tests/KgToPoundsEquivalenceTest.m");
-plan("equivalenceTest").Dependencies = "buildPythonPackage";
+plan("equivalenceTest").Dependencies = ["mex" "buildPythonPackage"];
 
 % Add a task to package the toolbox   
 plan("packageToolbox").Dependencies = "test";

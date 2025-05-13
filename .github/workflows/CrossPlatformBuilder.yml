@@ -43,7 +43,7 @@ jobs:
       - name: Compile and Verify Python Package
         uses: matlab-actions/run-build@v2
         with:
-          tasks: buildPythonPackage equivalenceTest
+          tasks: mex buildPythonPackage equivalenceTest
         # uses: matlab-actions/run-command@v2
         # with:
         #   command: |
