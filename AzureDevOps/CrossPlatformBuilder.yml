@@ -38,6 +38,8 @@ jobs:
       - task: RunMATLABCommand@1
         inputs:
           command: pyenv
+        env:
+          MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       
       # # Builds Python package from MATLAB function and verifies functionality through equivalence tests
       # - task: RunMATLABBuild@1
