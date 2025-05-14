@@ -33,6 +33,7 @@ jobs:
       # Test Python location
       - script: |
           which python
+          python --version
       
       # # Builds Python package from MATLAB function and verifies functionality through equivalence tests
       # - task: RunMATLABBuild@1
