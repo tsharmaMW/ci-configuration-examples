@@ -37,7 +37,7 @@ jobs:
 
       - task: RunMATLABCommand@1
         inputs:
-          command: pyenv
+          command: pyenv, pyenv("Version","/usr/bin/python3")
         env:
           MLM_LICENSE_TOKEN: $(MLM_LICENSE_TOKEN)
       
