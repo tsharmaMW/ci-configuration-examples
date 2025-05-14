@@ -34,6 +34,10 @@ jobs:
       - script: |
           which python
           python --version
+
+      - task: RunMATLABCommand@1
+        inputs:
+          command: pyenv
       
       # # Builds Python package from MATLAB function and verifies functionality through equivalence tests
       # - task: RunMATLABBuild@1
